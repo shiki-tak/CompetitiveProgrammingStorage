@@ -1,3 +1,4 @@
+# Modified to algorithm to compare arbitrary number of numbers
 class Datacompare
   # create instance
   datacompare = Datacompare.new()
