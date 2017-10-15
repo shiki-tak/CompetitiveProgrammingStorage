@@ -15,7 +15,7 @@ class Datacompare
   # Compare numbers
   def compare(compare_number_set)
     max_number = 0
-    for i in 1..compare_number_set.length - 1
+    for i in 1...compare_number_set.length
       if i == 1
         if compare_number_set[i-1] < compare_number_set[i]
           max_number = compare_number_set[i]
