@@ -8,7 +8,7 @@ class Binarysearchmethod
   @search = Search.new()
 
   puts "****************************"
-  puts "*** Start @binary Search! ***"
+  puts "*** Start binary Search! ***"
   puts "****************************"
   puts "Input search number"
 
