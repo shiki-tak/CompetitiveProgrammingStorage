@@ -1,9 +1,10 @@
-pragma solidity ^0.4.16;
+pragma solidity ^0.4.15;
 
+import 'zeppelin-solidity/contracts/ownership/Ownable.sol';
 import './Owned.sol';
 import './OreOreCoin.sol';
 
-contract Crowdsale is Owned {
+contract Crowdsale is Owned, Ownable {
   uint256 public fundingGoal;
   uint256 public deadline;
   uint256 public price;
