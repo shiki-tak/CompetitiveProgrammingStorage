@@ -1,8 +1,9 @@
 pragma solidity ^0.4.15;
 
-contract Auction {
+contract AuctionWithdraw {
   address public highestBidder;
   uint public highestBid;
+  mapping (address => uint) public usersBalances; // 返金額を管理するマップ
 
   function Auction() payable {
     highestBidder = msg.sender;
@@ -12,13 +13,25 @@ contract Auction {
   function bid() public payable {
     require(msg.value > highestBid);
 
-    uint refundAmount = highestBid;
+    /*uint refundAmount = highestBid;*/
+    /*address currentHighestBidder = highestBidder;*/
 
-    address currentHighestBidder = highestBidder;
-
+    // 最高額提示アドレスの返金額を更新する
+    usersBalances[highestBidder] += highestBid;
     highestBid = msg.value;
     highestBidder = msg.sender;
+  }
 
-    require(!currentHighestBidder.send(refundAmount));
+  // bid部分と返金部分を独立させる
+  function withdraw() public {
+    require(usersBalances[msg.sender] > 0);
+
+    uint refundAmount = usersBalances[msg.sender];
+
+    usersBalances[msg.sender] = 0;
+
+    if (!msg.sender.send(refundAmount)) {
+      throw;
+    }
   }
 }
