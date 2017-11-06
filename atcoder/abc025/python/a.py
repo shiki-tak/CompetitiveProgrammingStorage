@@ -1,15 +1,10 @@
-s = list(input())
+s = input()
 n = int(input())
-x = ''
-count = 1
+count = 0
 flag = False
-for i in range(4):
-    for j in range(4):
-        x = s[i] + s[j]
+for i in s:
+    for j in s:
         count += 1
         if n == count:
-            flag = True
+            print(i + j)
             break
-    if flag == True:
-        break
-print(x)
