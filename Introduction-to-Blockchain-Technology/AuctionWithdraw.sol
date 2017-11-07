@@ -30,8 +30,6 @@ contract AuctionWithdraw {
 
     usersBalances[msg.sender] = 0;
 
-    if (!msg.sender.send(refundAmount)) {
-      throw;
-    }
+    require(!msg.sender.send(refundAmount));
   }
 }
