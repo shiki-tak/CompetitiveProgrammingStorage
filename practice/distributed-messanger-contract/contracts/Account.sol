@@ -27,6 +27,21 @@ contract Account {
     }
   }
 
+  function signIn(string _name, string _strPassword) constant returns (bool flag, bytes32 certification_token){
+    require(bytes(_strPassword).length > 0);
+    for (uint i = 0; i < id; i++) {
+      if (StringUtils.equal(users[i].name,  _name) && users[i].password == keccak256(_strPassword)) {
+        flag = true;
+        // session（もしくはcookie）として持たせて、messageの送信時に利用する
+        certification_token = keccak256(_name, _strPassword);
+      }
+    }
+    flag = false;
+    certification_token = '';
+  }
+
+  // 開発用にquery methodを追加
+  // 本番環境にdeployする時には不要
   function query(uint _id) constant returns (string name, bytes32 password, address owner) {
     name = users[_id].name;
     password = users[_id].password;
