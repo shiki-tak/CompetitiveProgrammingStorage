@@ -12,6 +12,7 @@
 		A86324E41FAEC79C00D0B079 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86324E31FAEC79C00D0B079 /* Repository.swift */; };
 		A86324E61FAEC7EE00D0B079 /* JSONDecodeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86324E51FAEC7EE00D0B079 /* JSONDecodeError.swift */; };
 		A86324E81FB3C7A400D0B079 /* JSONDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86324E71FB3C7A400D0B079 /* JSONDecodable.swift */; };
+		A86324EA1FB3CA1400D0B079 /* SearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86324E91FB3CA1400D0B079 /* SearchResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,6 +34,7 @@
 		A86324E31FAEC79C00D0B079 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		A86324E51FAEC7EE00D0B079 /* JSONDecodeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecodeError.swift; sourceTree = "<group>"; };
 		A86324E71FB3C7A400D0B079 /* JSONDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecodable.swift; sourceTree = "<group>"; };
+		A86324E91FB3CA1400D0B079 /* SearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +80,7 @@
 				A86324E31FAEC79C00D0B079 /* Repository.swift */,
 				A86324E51FAEC7EE00D0B079 /* JSONDecodeError.swift */,
 				A86324E71FB3C7A400D0B079 /* JSONDecodable.swift */,
+				A86324E91FB3CA1400D0B079 /* SearchResponse.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -142,6 +145,7 @@
 			files = (
 				A86324E61FAEC7EE00D0B079 /* JSONDecodeError.swift in Sources */,
 				A86324E81FB3C7A400D0B079 /* JSONDecodable.swift in Sources */,
+				A86324EA1FB3CA1400D0B079 /* SearchResponse.swift in Sources */,
 				A86324E21FAEC77300D0B079 /* User.swift in Sources */,
 				A86324DA1FAEC61C00D0B079 /* main.swift in Sources */,
 				A86324E41FAEC79C00D0B079 /* Repository.swift in Sources */,
