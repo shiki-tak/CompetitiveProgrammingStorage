@@ -34,6 +34,7 @@ contract Account {
         flag = true;
         // session（もしくはcookie）として持たせて、messageの送信時に利用する
         certification_token = keccak256(_name, _strPassword);
+        return;
       }
     }
     flag = false;
