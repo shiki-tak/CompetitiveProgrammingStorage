@@ -1,6 +1,6 @@
 pragma solidity ^0.4.15;
 
-import '../lib/StringUtils.sol';
+import './lib/StringUtils.sol';
 
 contract Account {
   uint256 public id;
@@ -12,6 +12,7 @@ contract Account {
   }
 
   event RegisterUser(uint id, string name, bytes32 password, address owner);
+  event SignIn(bool flag, bytes32 certification_token);
 
   mapping(uint => User) private users;
 
@@ -20,7 +21,6 @@ contract Account {
     require(duplicatedCheckName(_name));
     address _owner = msg.sender;
     bytes32 _password = keccak256(_strPassword);
-    // contractの生成と同時にユーザ登録
     if (register(_name, _password, _owner) == true) {
       RegisterUser(id, _name, _password, _owner);
       id++;
@@ -32,13 +32,18 @@ contract Account {
     for (uint i = 0; i < id; i++) {
       if (StringUtils.equal(users[i].name,  _name) && users[i].password == keccak256(_strPassword)) {
         flag = true;
-        // session（もしくはcookie）として持たせて、messageの送信時に利用する
+        /*
+        ** session（もしくはcookie）として持たせて、messageの送信時に利用する
+        ** （messageの署名に利用する）
+        */
         certification_token = keccak256(_name, _strPassword);
+        SignIn(flag, certification_token);
         return;
       }
     }
     flag = false;
     certification_token = '';
+    SignIn(flag, certification_token);
   }
 
   // 開発用にquery methodを追加
@@ -58,7 +63,6 @@ contract Account {
     }
     return true;
   }
-
 
   function register(string _name, bytes32 _password, address _owner) private constant returns (bool) {
     users[id].name = _name;
