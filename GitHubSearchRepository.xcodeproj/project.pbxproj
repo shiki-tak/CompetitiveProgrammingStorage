@@ -17,6 +17,7 @@
 		A86324EF1FB3CC7A00D0B079 /* GitHubAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86324EE1FB3CC7A00D0B079 /* GitHubAPIError.swift */; };
 		A86324F21FB3D17700D0B079 /* GitHubRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86324F11FB3D17700D0B079 /* GitHubRequest.swift */; };
 		A86324F41FB3D22200D0B079 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86324F31FB3D22200D0B079 /* HTTPMethod.swift */; };
+		A86324F61FB3D5EB00D0B079 /* GitHubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86324F51FB3D5EB00D0B079 /* GitHubAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,6 +44,7 @@
 		A86324EE1FB3CC7A00D0B079 /* GitHubAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubAPIError.swift; sourceTree = "<group>"; };
 		A86324F11FB3D17700D0B079 /* GitHubRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubRequest.swift; sourceTree = "<group>"; };
 		A86324F31FB3D22200D0B079 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
+		A86324F51FB3D5EB00D0B079 /* GitHubAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 			children = (
 				A86324F11FB3D17700D0B079 /* GitHubRequest.swift */,
 				A86324F31FB3D22200D0B079 /* HTTPMethod.swift */,
+				A86324F51FB3D5EB00D0B079 /* GitHubAPI.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -180,6 +183,7 @@
 				A86324EF1FB3CC7A00D0B079 /* GitHubAPIError.swift in Sources */,
 				A86324F21FB3D17700D0B079 /* GitHubRequest.swift in Sources */,
 				A86324F41FB3D22200D0B079 /* HTTPMethod.swift in Sources */,
+				A86324F61FB3D5EB00D0B079 /* GitHubAPI.swift in Sources */,
 				A86324E41FAEC79C00D0B079 /* Repository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
