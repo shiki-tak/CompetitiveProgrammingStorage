@@ -14,15 +14,15 @@ struct SearchResponse<Item: JSONDecodable>: JSONDecodable {
     
     init(json:Any) throws {
         guard let dictionary = json as? [String: Any] else {
-            throw JSONDEcodeError.invalidFormat(json: json)
+            throw JSONDecodeError.invalidFormat(json: json)
         }
         
         guard let totalCount = dictionary["total_count"] as? Int else {
-            throw JSONDEcodeError.missingValue(key: "total_count", actualValue: dictionary["total_count"])
+            throw JSONDecodeError.missingValue(key: "total_count", actualValue: dictionary["total_count"])
         }
         
         guard let itemObjects = dictionary["items"] as? [Any] else {
-            throw JSONDEcodeError.missingValue(key: "items", actualValue: dictionary["items"])
+            throw JSONDecodeError.missingValue(key: "items", actualValue: dictionary["items"])
         }
         
         let items = try itemObjects.map {
