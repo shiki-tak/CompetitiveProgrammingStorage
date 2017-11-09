@@ -43,4 +43,15 @@ extension GitHubRequest {
         
         return urlRequest
     }
+    
+    func response(from data: Data, urlResponse: URLResponse) throws -> Response {
+        let json = try JSONSerialization.jsonObject(
+            with: data, options: [])
+        
+        if case (200..<300)? = (urlResponse as? HTTPURLResponse)?.statusCode {
+            return try Response(json: json)
+        } else {
+            throw try GitHubAPIError(json: json)
+        }
+    }
 }
