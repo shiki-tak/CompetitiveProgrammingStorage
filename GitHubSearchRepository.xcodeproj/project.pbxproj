@@ -18,6 +18,8 @@
 		A86324F21FB3D17700D0B079 /* GitHubRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86324F11FB3D17700D0B079 /* GitHubRequest.swift */; };
 		A86324F41FB3D22200D0B079 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86324F31FB3D22200D0B079 /* HTTPMethod.swift */; };
 		A86324F61FB3D5EB00D0B079 /* GitHubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86324F51FB3D5EB00D0B079 /* GitHubAPI.swift */; };
+		A8D88CE01FB3DCC000D25D8F /* GitHubClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D88CDF1FB3DCC000D25D8F /* GitHubClient.swift */; };
+		A8D88CE21FB3DDA200D25D8F /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D88CE11FB3DDA200D25D8F /* Result.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -45,6 +47,8 @@
 		A86324F11FB3D17700D0B079 /* GitHubRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubRequest.swift; sourceTree = "<group>"; };
 		A86324F31FB3D22200D0B079 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		A86324F51FB3D5EB00D0B079 /* GitHubAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubAPI.swift; sourceTree = "<group>"; };
+		A8D88CDF1FB3DCC000D25D8F /* GitHubClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubClient.swift; sourceTree = "<group>"; };
+		A8D88CE11FB3DDA200D25D8F /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +116,8 @@
 				A86324F11FB3D17700D0B079 /* GitHubRequest.swift */,
 				A86324F31FB3D22200D0B079 /* HTTPMethod.swift */,
 				A86324F51FB3D5EB00D0B079 /* GitHubAPI.swift */,
+				A8D88CDF1FB3DCC000D25D8F /* GitHubClient.swift */,
+				A8D88CE11FB3DDA200D25D8F /* Result.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -175,8 +181,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				A86324E61FAEC7EE00D0B079 /* JSONDecodeError.swift in Sources */,
+				A8D88CE21FB3DDA200D25D8F /* Result.swift in Sources */,
 				A86324E81FB3C7A400D0B079 /* JSONDecodable.swift in Sources */,
 				A86324EA1FB3CA1400D0B079 /* SearchResponse.swift in Sources */,
+				A8D88CE01FB3DCC000D25D8F /* GitHubClient.swift in Sources */,
 				A86324E21FAEC77300D0B079 /* User.swift in Sources */,
 				A86324DA1FAEC61C00D0B079 /* main.swift in Sources */,
 				A86324ED1FB3CBFA00D0B079 /* GitHubClientError.swift in Sources */,
