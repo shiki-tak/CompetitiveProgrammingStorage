@@ -1,7 +1,8 @@
 {
-  "startBlock": 67821,
-  "icoStartTime": 1510796341,
-  "endBlock": 77821,
+  "startBlock": 10,
+  "icoStartTime": 1510821900,
+  "icoEndTime": 1510990800,
+  "endBlock": 1000,
   "cap": 12500,
   "tokenCap": 500000000,
   "initialTakFundBalance": 250000000,
@@ -10,6 +11,8 @@
     "base": 2000
   },
   "whiteList": [
-    "0xd4232bdbc4cdbdc9d131103de55b9a2b68d45c78"
+    "0xaa1228ce47fddbb94e309c70d4353363976c76e7",
+    "0x6dc48ec99f1b4121c6205a205923a30284be5d91",
+    "0xbb0679000c61876cd48a85312f4fc701cf77772f"
   ]
 }
