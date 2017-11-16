@@ -9,7 +9,7 @@ import './TakToken.sol';
 
 contract TakCrowdsale is CappedCrowdsale, RefundableCrowdsale, Pausable {
 
-  uint256 constant RATE_PRE_SLAE = 20000;
+  uint256 constant RATE_PRE_SALE = 20000;
   uint256 constant RATE_WEEK_1 = 2900;
   uint256 constant RATE_WEEK_2 = 2600;
   uint256 constant RATE_WEEK_3 = 2300;
@@ -104,7 +104,7 @@ contract TakCrowdsale is CappedCrowdsale, RefundableCrowdsale, Pausable {
       weiRaised = weiRaised.add(weiAmount);
 
       token.mint(beneficiary, tokens);
-      TokenPurchase(msg.sender beneficiary, weiAmount, tokens);
+      TokenPurchase(msg.sender, beneficiary, weiAmount, tokens);
 
       forwardFunds();
     }
@@ -129,6 +129,11 @@ contract TakCrowdsale is CappedCrowdsale, RefundableCrowdsale, Pausable {
         currentRate = RATE_WEEK_3;
       }
       return currentRate;
+    }
+
+    // @return true if crowd sale is accepting.
+    function saleAccepting() internal constant returns (bool) {
+      return !isPresale();
     }
 
     // @return true if crowd sale is accepting.
