@@ -19,6 +19,6 @@ module.exports = function deployContracts(deployer) {
   deployer.deploy(TakFund, fundParams.owners, fundParams.required).then(() =>
     deployer.deploy(TakCrowdsale, crowdsaleParams.startBlock, crowdsaleParams.icoStartTime,
       crowdsaleParams.endBlock, rate.base, TakFund.address, actualCap, actualTokenCap,
-      actualInitialTakFundBalance, actualGoal
+      actualInitialTakFundBalance, actualGoal, crowdsaleParams.whiteList,
     ));
 };
