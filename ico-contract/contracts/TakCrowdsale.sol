@@ -30,17 +30,20 @@ contract TakCrowdsale is CappedCrowdsale, RefundableCrowdsale, Pausable, Whiteli
     uint256 _cap,
     uint256 _tokenCap,
     uint256 _initialTakFundBalance,
-    uint256 _goal
+    uint256 _goal,
+    address[] _whiteList
     )
     // 継承元のcontractのconstractorを実行する
     Crowdsale(_icoStartTime, _icoEndTime, _baseRate, _wallet)
     CappedCrowdsale(_cap)
-    RefundableCrowdsale(_goal) {
+    RefundableCrowdsale(_goal)
+    WhitelistedCrowdsale(_whiteList)
+    {
       icoStartTime = _icoStartTime;
       tokenCap = _tokenCap;
 
       // Tokenの総量
-      token.mint(_wallet, _initialTakFundBalance);
+      token.mint(wallet, _initialTakFundBalance);
     }
 
     // overriding Crowdsale#createTokenContract to change token to TakToken.
