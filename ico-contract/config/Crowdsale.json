@@ -1,0 +1,12 @@
+{
+  "startBlock": 67821,
+  "icoStartTime": 1510796341,
+  "endBlock": 77821,
+  "cap": 12500,
+  "tokenCap": 500000000,
+  "initialTakFundBalance": 250000000,
+  "goal": 1000,
+  "rate": {
+    "base": 2000
+  }
+}
