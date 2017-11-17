@@ -20,7 +20,7 @@ module.exports = function deployContracts(deployer) {
   deployer.deploy(TakFund, fundParams.owners, fundParams.required).then(() =>
     // Set TakFund address to wallet of TakCrowdsale.
     deployer.deploy(TakCrowdsale, crowdsaleParams.startBlock, crowdsaleParams.icoStartTime,
-      crowdsaleParams.endTime, rate.base, TakFund.address, actualCap, actualTokenCap,
+      crowdsaleParams.endBlock, rate.base, TakFund.address, actualCap, actualTokenCap,
       actualInitialTakFundBalance, actualGoal, crowdsaleParams.whiteList
     ));
 };
