@@ -1,9 +1,9 @@
 pragma solidity ^0.4.15;
 
-import 'zeppelin-solidity/contracts/crowdsale/CappedCrowdsale.sol';
-import 'zeppelin-solidity/contracts/crowdsale/RefundableCrowdsale.sol';
-import 'zeppelin-solidity/contracts/token/MintableToken.sol';
-import 'zeppelin-solidity/contracts/lifecycle/Pausable.sol';
+import 'zeppelin/contracts/crowdsale/CappedCrowdsale.sol';
+import 'zeppelin/contracts/crowdsale/RefundableCrowdsale.sol';
+import 'zeppelin/contracts/token/MintableToken.sol';
+import 'zeppelin/contracts/lifecycle/Pausable.sol';
 import './WhitelistedCrowdsale.sol';
 import './TakToken.sol';
 

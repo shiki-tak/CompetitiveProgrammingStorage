@@ -1,7 +1,7 @@
 pragma solidity ^0.4.15;
 
-import 'zeppelin-solidity/contracts/crowdsale/Crowdsale.sol';
-import 'zeppelin-solidity/contracts/math/SafeMath.sol';
+import 'zeppelin/contracts/crowdsale/Crowdsale.sol';
+import 'zeppelin/contracts/math/SafeMath.sol';
 
 /**
 * @title WhitelistedCrowdsale
