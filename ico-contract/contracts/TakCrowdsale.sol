@@ -24,7 +24,7 @@ contract TakCrowdsale is CappedCrowdsale, RefundableCrowdsale, Pausable, Whiteli
   function TakCrowdsale (
     uint256 _startBlock,
     uint256 _icoStartTime,
-    uint256 _icoEndTime,
+    uint256 _endBlock,
     uint256 _baseRate,
     address _wallet,
     uint256 _cap,
@@ -34,7 +34,7 @@ contract TakCrowdsale is CappedCrowdsale, RefundableCrowdsale, Pausable, Whiteli
     address[] _whiteList
     )
     // 継承元のcontractのconstractorを実行する
-    Crowdsale(_icoStartTime, _icoEndTime, _baseRate, _wallet)
+    Crowdsale(_startBlock, _endBlock, _baseRate, _wallet)
     CappedCrowdsale(_cap)
     RefundableCrowdsale(_goal)
     WhitelistedCrowdsale(_whiteList)
