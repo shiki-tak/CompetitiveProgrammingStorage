@@ -1,6 +1,7 @@
 pragma solidity ^0.4.15;
 
 import 'zeppelin/contracts/token/MintableToken.sol';
+import './lib/BurnableToken.sol';
 
 contract TakToken is MintableToken {
 
