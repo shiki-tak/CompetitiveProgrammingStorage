@@ -7,7 +7,7 @@ contract MetaCoin {
 
   event Transfer(address indexed _from, address indexed _to, uint256 _value);
 
-  function MetaCoint() public {
+  function MetaCoin() public {
     balances[msg.sender] = 10000;
   }
 
