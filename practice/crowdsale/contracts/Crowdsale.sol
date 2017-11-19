@@ -1,8 +1,9 @@
 pragma solidity ^0.4.15;
 
 import "./TestToken.sol";
+import "./lib/Owned.sol";
 
-contract Crowdsale is TestToken {
+contract Crowdsale is Owned {
   uint256 public fundingGoal;
   uint256 public deadline;
   uint256 public price;
@@ -36,7 +37,8 @@ contract Crowdsale is TestToken {
     uint _transferableToken,
     uint _amountOfTokenPerEther,
     TestToken _addressOfTokenUsedAsReward
-  ) {
+  )
+  {
     fundingGoal = _fundingGoalInEters * 1 ether;
     price = 1 ether / _amountOfTokenPerEther;
     transferableToken = _transferableToken;
