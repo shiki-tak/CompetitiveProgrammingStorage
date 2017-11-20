@@ -1,11 +1,18 @@
 pragma solidity ^0.4.15;
 
 contract HelloWorld {
-  event ExecHello(address from, string operation);
+  string public greeting;
 
-  function Hello() constant returns (string) {
-    ExecHello(msg.sender, "Exec Hello!");
+  function HelloWorld(string _greeting) {
+    greeting = _greeting;
+  }
 
-    return "Hello, World!";
+  function setGreeting(string _greeting) returns (string){
+    greeting = _greeting;
+    return greeting;
+  }
+
+  function say() constant returns (string) {
+    return greeting;
   }
 }
