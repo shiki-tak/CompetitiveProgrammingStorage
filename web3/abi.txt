@@ -1,0 +1,33 @@
+[
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "Hello",
+      "outputs": [
+        {
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "operation",
+          "type": "string"
+        }
+      ],
+      "name": "ExecHello",
+      "type": "event"
+    }
+  ]
