@@ -9,32 +9,16 @@ var abi = [{"constant": true,"inputs": [],"name": "say","outputs": [{"name": "",
 
 var contract = web3.eth.contract(abi).at(address);
 
-let promise = new Promise((resolve, reject) => {
-  var response = contract.say.call();
-  console.log("Initial value");
-  console.log(response);
-  resolve();
-})
+greeting = 'Hello, World!';
 
-promise.then(() => { // #2
-  return new Promise((resolve, reject) => {
-    var greeting = 'Hello, Ethereum!';
+var response = contract.say.call();
+console.log("Initial value");
+console.log(response);
 
-    var result = contract.setGreeting(greeting, {from: web3.eth.accounts[0]}, function(err, res) {
-      if (err) console.log(err);
-      else {
-        console.log("set result");
-        console.log("response: ", res);
-
-      }
-    });
-    resolve();
-    return result;
-  })
-}).then(() => { // #3
-  var response = contract.say.call();
-  console.log("Second value");
-  console.log(response);
-}).catch(() => { // エラーハンドリング
-  console.error('Something wrong!')
-})
+contract.setGreeting(greeting, {from: web3.eth.accounts[0]}, function(err, res) {
+  if (err) console.log(err);
+  else {
+    console.log("set result");
+    console.log("response: ", res);
+  }
+});
