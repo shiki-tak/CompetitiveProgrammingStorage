@@ -1,0 +1,12 @@
+{
+  "name": "contracts",
+  "version": "0.1.0",
+  "description": "Token contracts of RULi",
+  "main": "index.js",
+  "repository": "git@github.com:shiki-tak/ico-contracts.git",
+  "author": "shiki-tak",
+  "license": "MIT",
+  "devDependencies": {
+    "truffle": "^4.0.1"
+  }
+}
