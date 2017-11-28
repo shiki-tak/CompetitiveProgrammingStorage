@@ -1,9 +1,13 @@
 pragma solidity ^0.4.15;
 
-import "tokens/HumanStandardToken.sol";
-import "zeppelin/contracts/ownership/Ownable.sol";
+import "zeppelin/contracts/token/MintableToken.sol";
 
-contract RuliToken is HumanStandardToken, Ownable {
+contract RuliToken is MintableToken {
+
+  string public name;
+  string public symbol;
+  uint public decimals;
+  address public multisig;
 
   function RuliToken(
     uint256 _initialAmount,
@@ -11,6 +15,13 @@ contract RuliToken is HumanStandardToken, Ownable {
     uint8 _decimal,
     string _tokenSymbol
     )
-    HumanStandardToken(_initialAmount, _tokenName, _decimal, _tokenSymbol) {
+    {
+      name = _tokenName;
+      symbol = _tokenSymbol;
+      decimals = _decimal;
+
+      multisig = 0x0;
+
+      balances[msg.sender] = _initialAmount;
     }
 }
