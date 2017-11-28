@@ -1,6 +1,7 @@
 {
   "symbol": "RULI",
   "name": "RuliToken",
-  "amount": 300000000,
+  "initialAmount": 300000000,
+  "offeredAmount": 150000000,
   "decimal": 18
 }
