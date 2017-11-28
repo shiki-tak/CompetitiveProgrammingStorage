@@ -10,5 +10,5 @@ module.exports = function deployContracts(deployer) {
   return deployer.deploy(
     RuliToken, tokenParams.initialAmount, tokenParams.name, tokenParams.decimal,
     tokenParams.symbol, tokenParams.offeredAmount).then(() =>
-  deployer.deploy(Crowdsale, RuliToken.address, crowdsaleParams.fundAddress));
+  deployer.deploy(Crowdsale, RuliToken.address, crowdsaleParams.fundAddress, crowdsaleParams.initialRate));
 };
