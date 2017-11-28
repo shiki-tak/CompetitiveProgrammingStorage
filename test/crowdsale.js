@@ -20,9 +20,14 @@ contract('Crowdsale', () => {
         assert.equal(fund, '0x0000000000000000000000000000000000000000', `wrong token address: ${fund}`);
       }
     ));
+    it('should has offered RULi Toke amount 150,000,000', () => crowdSale.offeredAmount().then(
+      offeredAmount => {
+        assert.equal(offeredAmount, 150000000, `wrong amount: ${offeredAmount}`);
+      }
+    ));
     it('should has exchange rate 2,800 of ETH to RULi', () => crowdSale.rate().then(
       rate => {
-        assert.equal(rate, 2800, `wrong token address: ${rate}`);
+        assert.equal(rate, 2800, `wrong rate: ${rate}`);
       }
     ));
   });
