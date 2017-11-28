@@ -2,14 +2,13 @@ const fs = require('fs');
 
 const RuliToken = artifacts.require('RuliToken.sol');
 const Crowdsale = artifacts.require('Crowdsale.sol');
-const initParams = JSON.parse(fs.readFileSync('../config/RuliToken.json', 'utf8'));
+const tokenParams = JSON.parse(fs.readFileSync('../config/RuliToken.json', 'utf8'));
+const crowdsaleParams = JSON.parse(fs.readFileSync('../config/Crowdsale.json', 'utf8'));
 
 module.exports = function deployContracts(deployer) {
 
-  const fund = '0x0000000000000000000000000000000000000000';
-
   return deployer.deploy(
-    RuliToken, initParams.initialAmount, initParams.name, initParams.decimal,
-    initParams.symbol, initParams.offeredAmount).then(() =>
-  deployer.deploy(Crowdsale, RuliToken.address, fund));
+    RuliToken, tokenParams.initialAmount, tokenParams.name, tokenParams.decimal,
+    tokenParams.symbol, tokenParams.offeredAmount).then(() =>
+  deployer.deploy(Crowdsale, RuliToken.address, crowdsaleParams.fundAddress));
 };
