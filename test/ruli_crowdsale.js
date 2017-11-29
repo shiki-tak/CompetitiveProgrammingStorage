@@ -2,12 +2,12 @@ let RuliToken = artifacts.require('RuliToken.sol');
 let RuliCrowdsale = artifacts.require('RuliCrowdsale.sol');
 
 contract('Crowdsale', () => {
-  let crowdSale;
+  let crowdsale;
 
   describe('CONTRACT DEPLOYMENT', () => {
     it('should has deployed address of RuliToken', () => RuliCrowdsale.deployed().then(
       instance => {
-        crowdSale = instance;
+        crowdsale = instance;
         console.log(RuliToken.address);
 
         return crowdsale.token().then(
