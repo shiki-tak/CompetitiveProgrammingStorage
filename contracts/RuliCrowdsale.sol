@@ -1,29 +1,26 @@
 pragma solidity ^0.4.15;
 
 import 'zeppelin/contracts/crowdsale/Crowdsale.sol';
+import 'zeppelin/contracts/token/MintableToken.sol';
 import './RuliToken.sol';
 
 contract RuliCrowdsale is Crowdsale {
 
-  RuliToken public token;
-  address public fund;
-  uint256 public offeredAmount;
-  uint public rate;
-
   function RuliCrowdsale(
-    address _RuliTokenAddress,
-    address _fundAddress,
-    uint256 _offeredAmount,
-    uint _rate
+    uint256 start,
+    uint256 end,
+    uint _rate,
+    address _fundAddress
     )
-    Crowdsale(26900, 30000, _rate, _fundAddress)
+    Crowdsale(start, end, _rate, _fundAddress)
     {
-      token = RuliToken(_RuliTokenAddress);
-      fund = _fundAddress;
-      offeredAmount = _offeredAmount;
-      rate = _rate;
+      token = createTokenContract();
   }
   function createTokenContract() internal returns (MintableToken) {
     return new RuliToken();
+  }
+
+  function forwardFunds() internal {
+    wallet.transfer(msg.value);
   }
 }

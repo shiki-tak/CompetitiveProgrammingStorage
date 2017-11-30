@@ -12,5 +12,5 @@ module.exports = function deployContracts(deployer) {
   deployer.link(RuliToken, RuliCrowdsale);
 
   // TODO: start & end block.
-  deployer.deploy(RuliCrowdsale, 900000, 1000000, crowdsaleParams.initialRate, crowdsaleParams.fundAddress));
+  deployer.deploy(RuliCrowdsale, 900000, 1000000, crowdsaleParams.initialRate, crowdsaleParams.fundAddress);
 };
