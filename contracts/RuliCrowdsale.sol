@@ -12,15 +12,10 @@ contract RuliCrowdsale is Crowdsale {
     uint _rate,
     address _fundAddress
     )
-    Crowdsale(start, end, _rate, _fundAddress)
-    {
-      token = createTokenContract();
+    Crowdsale(start, end, _rate, _fundAddress) {
+
   }
   function createTokenContract() internal returns (MintableToken) {
     return new RuliToken();
-  }
-
-  function forwardFunds() internal {
-    wallet.transfer(msg.value);
   }
 }
