@@ -2,7 +2,7 @@ import ruli from '../utilities/ruli';
 import advanceToBlock from './helpers/advanceToBlock';
 import EVMThrow from './helpers/EVMThrow';
 
-import { RiliToken, RuliCrowdsale, ruliFundAddress, cap, rate, initialRuliFundBalance, should } from './helpers/ruli_crowdsale_helper';
+import { RuliToken, RuliCrowdsale, ruliFundAddress, cap, rate, initialRuliFundBalance, should } from './helpers/ruli_crowdsale_helper';
 
 contract('RuliCrowdSale', ([investor, wallet, purchaser]) => {
   const someOfTokenAmount = ruli(42);
