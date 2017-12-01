@@ -27,8 +27,9 @@
   "scripts": {
     "test": "scripts/test.sh",
     "lint:sol": "yarn run solium -- --dir ./contracts",
-    "lint": "yarn run eslint . -- --fix && yarn solium -- --dir ./contracts",
-    "clean": "rm -rf ./build/* && yarn lint:sol",
+    "lint": "yarn run eslint . -- --fix && yarn lint:sol",
+    "compile": "rm -rf ./build/* && truffle compile",
+    "clean": "rm -rf ./build/* && yarn truffle networks -- clean",
     "rpc": "yarn run testrpc -a 3 -i 10 -u 0 -u 1 -u 3",
     "deploy": "yarn run clean && yarn truffle compile && truffle deploy --network development"
   }
