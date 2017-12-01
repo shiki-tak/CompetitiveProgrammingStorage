@@ -1,5 +1,7 @@
 {
   "ruliFundAddress": "0xd4232bdbc4cdbdc9d131103de55b9a2b68d45c78",
+  "startBlock": 900000,
+  "endBlock": 1000000,
   "cap": 300000000,
   "initialRuliFundBalance": 150000000,
   "rate": 2800
