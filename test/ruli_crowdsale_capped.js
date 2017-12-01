@@ -23,6 +23,16 @@ contract('RuliCrowdsale', ([wallet]) => {
 
   const lessThanCap = cap.div(3);
 
+  beforeEach(async function () {
+    this.startBlock = web3.eth.blockNumber + 10;
+    this.endBlock = web3.eth.blockNumber + 20;
+
+    this.crowdsale = await RuliCrowdsale.new(this.startBlock, this.endBlock, rate, wallet,
+      cap, initialRuliFundBalance);
+
+    this.token = RuliToken.at(await this.crowdsale.token());
+  });
+
   describe('creating a valid crowdsale', () => {
     it('should fail with zero cap', async function () {
       await RuliCrowdsale.new(this.startBlock, this.endBlock, rate, wallet, 0, initialRuliFundBalance)
@@ -34,16 +44,6 @@ contract('RuliCrowdsale', ([wallet]) => {
       const tokenCap = await this.crowdsale.cap();
       await tokenCap.toNumber().should.be.equal(expect);
     });
-  });
-
-  beforeEach(async function () {
-    this.startBlock = web3.eth.blockNumber + 10;
-    this.endBlock = web3.eth.blockNumber + 20;
-
-    this.crowdsale = await RuliCrowdsale.new(this.startBlock, this.endBlock, rate, wallet,
-      cap, initialRuliFundBalance);
-
-    this.token = RuliToken.at(await this.crowdsale.token());
   });
 
   describe('accepting payments', () => {
