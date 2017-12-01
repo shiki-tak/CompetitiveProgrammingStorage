@@ -167,7 +167,7 @@ contract('RuliCrowdSale', ([investor, wallet, purchaser]) => {
     });
 
     it('should increase totalSupply', async function () {
-      await this.crowdsale.buyTokens(investor, { value, from: purchaser });
+      await this.crowdsale.buyTokens(investor, { value: someOfTokenAmount, from: purchaser });
       const totalSupply = await this.token.totalSupply();
       totalSupply.should.be.bignumber.equal(expectedInitialTokenAmount);
     });
