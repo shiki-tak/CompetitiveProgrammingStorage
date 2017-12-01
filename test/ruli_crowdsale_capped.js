@@ -2,24 +2,8 @@ import ruli from '../utilities/ruli';
 import advanceToBlock from './helpers/advanceToBlock';
 import EVMThrow from './helpers/EVMThrow';
 
-const fs = require('fs');
-
-const crowdsaleParams = JSON.parse(fs.readFileSync('../config/Crowdsale.json', 'utf8'));
-const BigNumber = web3.BigNumber;
-
-require('chai')
-  .use(require('chai-as-promised'))
-  .use(require('chai-bignumber')(BigNumber))
-  .should();
-
-const RuliCrowdsale = artifacts.require('RuliCrowdsale');
-const RuliToken = artifacts.require('RuliToken');
-
+import { RuliToken, RuliCrowdsale, cap, rate, initialRuliFundBalance } from './helpers/ruli_crowdsale_helper';
 contract('RuliCrowdsale', ([wallet]) => {
-  const cap = ruli(crowdsaleParams.cap);
-  const rate = crowdsaleParams.rate;
-  const initialRuliFundBalance = ruli(crowdsaleParams.initialRuliFundBalance);
-
   const lessThanCap = cap.div(3);
 
   beforeEach(async function () {
