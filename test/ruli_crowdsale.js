@@ -1,11 +1,12 @@
 import ruli from '../utilities/ruli';
+import ether from './helpers/ether';
 import advanceToBlock from './helpers/advanceToBlock';
 import EVMThrow from './helpers/EVMThrow';
 
 import { RuliToken, RuliCrowdsale, ruliFundAddress, cap, rate, initialRuliFundBalance, should } from './helpers/ruli_crowdsale_helper';
 
 contract('RuliCrowdSale', ([investor, wallet, purchaser]) => {
-  const someOfTokenAmount = ruli(42);
+  const someOfTokenAmount = ether(42);
   const expectedTokenAmount = rate.mul(someOfTokenAmount);
 
   const expectedInitialTokenAmount = expectedTokenAmount.add(initialRuliFundBalance);
@@ -109,6 +110,26 @@ contract('RuliCrowdSale', ([investor, wallet, purchaser]) => {
       await advanceToBlock(this.endBlock);
       await this.crowdsale.send(someOfTokenAmount).should.be.rejectedWith(EVMThrow);
       await this.crowdsale.buyTokens(investor, {value: someOfTokenAmount, from: purchaser}).should.be.rejectedWith(EVMThrow);
+    });
+  });
+
+  describe('token amount adjustments', () => {
+    it('should fund has 150 million tokens after received ether', async function () {
+      await advanceToBlock(this.startBlock - 1);
+      await this.crowdsale.send(someOfTokenAmount);
+      const expect = ruli(150000000);
+      const actual = await this.token.balanceOf(wallet);
+      await actual.should.be.bignumber.equal(expect);
+    });
+
+    // initial + (received ether * decimals ) = total supply
+    // 150000000 + ( 10000 * 2800 ) = 178000000
+    it('should total supply be 1.78 million tokens after received 10,000 ether', async function () {
+      await advanceToBlock(this.startBlock - 1);
+      await this.crowdsale.send(ether(10000));
+      const expect = ruli(178000000);
+      const actual = await this.token.totalSupply();
+      await actual.should.be.bignumber.equal(expect);
     });
   });
 
