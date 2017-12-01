@@ -1,3 +1,3 @@
 export default function ruli(n) {
-  return new web3.BigNumber(n).mul(1000000000000000000);
+  return new web3.BigNumber(web3.toWei(n, 'ether'));
 }

@@ -53,6 +53,12 @@ contract('RuliCrowdSale', ([investor, wallet, purchaser]) => {
       actual.toNumber().should.be.equal(expect);
     });
 
+    it('should be same decimals of ether', async function () {
+      const expect = web3.toWei(1, 'ether');
+      const tokenDecimals = await this.token.decimals();
+      const actual = new web3.BigNumber(1 * Math.pow(10, tokenDecimals))
+    })
+
     it('should be correct fund address', async function () {
       const expect = "0xd4232bdbc4cdbdc9d131103de55b9a2b68d45c78";
       const ruliFundAddress = crowdsaleParams.ruliFundAddress;

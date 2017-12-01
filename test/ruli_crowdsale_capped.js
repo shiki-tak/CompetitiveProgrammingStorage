@@ -1,3 +1,4 @@
+import ruli from '../utilities/ruli';
 import advanceToBlock from './helpers/advanceToBlock';
 import EVMThrow from './helpers/EVMThrow';
 
@@ -15,11 +16,9 @@ const RuliCrowdsale = artifacts.require('RuliCrowdsale');
 const RuliToken = artifacts.require('RuliToken');
 
 contract('RuliCrowdsale', ([wallet]) => {
-  // TODO: improve decimal calculation.
-  const cap = new BigNumber(crowdsaleParams.cap * (1000000000000000000));
+  const cap = ruli(crowdsaleParams.cap);
   const rate = crowdsaleParams.rate;
-  const initialRuliFundBalance = new BigNumber(
-    crowdsaleParams.initialRuliFundBalance * (1000000000000000000));
+  const initialRuliFundBalance = ruli(crowdsaleParams.initialRuliFundBalance);
 
   const lessThanCap = cap.div(3);
 
@@ -40,9 +39,9 @@ contract('RuliCrowdsale', ([wallet]) => {
     });
 
     it('should total supply of RULI token be 300 million', async function () {
-      const expect = (300000000 * 1000000000000000000);
+      const expect = ruli(300000000);
       const tokenCap = await this.crowdsale.cap();
-      await tokenCap.toNumber().should.be.equal(expect);
+      await tokenCap.toNumber().should.be.bignumber.equal(expect);
     });
   });
 
