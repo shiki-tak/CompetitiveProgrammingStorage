@@ -4,13 +4,8 @@ import "zeppelin/contracts/token/MintableToken.sol";
 
 contract RuliToken is MintableToken {
 
-  string public name = 'RuliToken';
-  string public symbol = 'RULI';
-  uint public decimals = 18;
+  string public constant name = 'RuliToken';
+  string public constant symbol = 'RULI';
+  uint public constant decimals = 18;
 
-  function RuliToken(
-
-  )
-  MintableToken() {
-  }
 }

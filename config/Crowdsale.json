@@ -1,5 +1,6 @@
 {
-  "fundAddress": "0xd4232bdbc4cdbdc9d131103de55b9a2b68d45c78",
-  "offeredAmount": 150000000,
-  "initialRate": 2800
+  "ruliFundAddress": "0xd4232bdbc4cdbdc9d131103de55b9a2b68d45c78",
+  "cap": 300000000,
+  "initialRuliFundBalance": 150000000,
+  "rate": 2800
 }
