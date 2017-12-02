@@ -46,7 +46,7 @@ contract('RuliCrowdSale', ([investor, wallet, purchaser]) => {
     })
 
     it('should be correct fund address', async function () {
-      const expect = "0xd4232bdbc4cdbdc9d131103de55b9a2b68d45c78";
+      const expect = web3.eth.accounts[3];
       const cs = await RuliCrowdsale.new(this.startBlock, this.endBlock, rate, ruliFundAddress, cap, initialRuliFundBalance);
       const actual = await cs.wallet();
       actual.should.be.equal(expect);
