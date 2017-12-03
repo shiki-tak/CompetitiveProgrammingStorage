@@ -9,7 +9,7 @@ contract('RuliToken', (accounts) => {
       token = await RuliToken.new();
     });
 
-    it('should start with a totalSupply of 0', async () => {
+    it('should start with a totalSupply of 0 when deployed alone', async () => {
       const totalSupply = await token.totalSupply();
       assert.equal(totalSupply, 0);
     });
