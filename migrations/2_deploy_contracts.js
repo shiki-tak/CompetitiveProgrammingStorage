@@ -13,6 +13,6 @@ module.exports = function deployContracts(deployer) {
 
   deployer.deploy(
     RuliCrowdsale, crowdsaleParams.startBlock, crowdsaleParams.endBlock,
-    crowdsaleParams.rate, web3.eth.accounts[3], actualCap, actualInitialRuliFundBalance, crowdsaleParams.goal,
+    crowdsaleParams.rate, web3.eth.accounts[3], actualCap, actualInitialRuliFundBalance, crowdsaleParams.goal
   );
 };

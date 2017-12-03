@@ -13,7 +13,7 @@ contract('RuliCrowdsale', ([wallet]) => {
 
     this.crowdsale = await RuliCrowdsale.new(
       this.startBlock, this.endBlock, rate, wallet,
-      cap, initialRuliFundBalance, goal,
+      cap, initialRuliFundBalance, goal
     );
 
     this.token = RuliToken.at(await this.crowdsale.token());
