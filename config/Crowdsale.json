@@ -1,5 +1,4 @@
 {
-  /*"ruliFundAddress": "0x84bc16f3183e0ea36bd1a324f8db869f8dd92672",*/
   "startBlock": 900000,
   "endBlock": 1000000,
   "cap": 300000000,
