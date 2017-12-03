@@ -29,7 +29,8 @@ contract('RuliToken', (accounts) => {
     it('should be same decimals of ether', async () => {
       const expect = web3.toWei(1, 'ether');
       const tokenDecimals = await token.decimals();
-      const actual = new web3.BigNumber(1 * Math.pow(10, tokenDecimals));
+      const actual = new web3.BigNumber(1 * (10 ** tokenDecimals));
+      actual.toNumber().should.be.bignumber.equal(expect);
     });
 
     it('should start with a totalSupply of 0 when deployed alone', async () => {

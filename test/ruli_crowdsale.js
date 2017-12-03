@@ -3,7 +3,8 @@ import ether from './helpers/ether';
 import advanceToBlock from './helpers/advanceToBlock';
 import EVMThrow from './helpers/EVMThrow';
 
-import { RuliToken, RuliCrowdsale, ruliFundAddress, cap, rate, initialRuliFundBalance, should, goal } from './helpers/ruli_helper';
+import { RuliToken, RuliCrowdsale, ruliFundAddress,
+  cap, rate, initialRuliFundBalance, should, goal } from './helpers/ruli_helper';
 
 contract('RuliCrowdSale', ([investor, wallet, purchaser]) => {
   const someOfTokenAmount = ether(21);
@@ -15,15 +16,21 @@ contract('RuliCrowdSale', ([investor, wallet, purchaser]) => {
     this.startBlock = web3.eth.blockNumber + 10;
     this.endBlock = web3.eth.blockNumber + 20;
 
-    this.crowdsale = await RuliCrowdsale.new(this.startBlock, this.endBlock, rate, wallet, cap, initialRuliFundBalance, goal);
+    this.crowdsale = await RuliCrowdsale.new(
+      this.startBlock, this.endBlock, rate,
+      wallet, cap, initialRuliFundBalance, goal,
+    );
 
     this.token = RuliToken.at(await this.crowdsale.token());
   });
 
   describe('initialized correctly', () => {
     it('should be correct fund address', async function () {
-      const expect = "0xd34da9604e5e9c2a9cc0aa481b6b24a72af3253b";
-      const cs = await RuliCrowdsale.new(this.startBlock, this.endBlock, rate, ruliFundAddress, cap, initialRuliFundBalance, goal);
+      const expect = '0xd34da9604e5e9c2a9cc0aa481b6b24a72af3253b';
+      const cs = await RuliCrowdsale.new(
+        this.startBlock, this.endBlock, rate, ruliFundAddress,
+        cap, initialRuliFundBalance, goal,
+      );
       const actual = await cs.wallet();
       actual.should.be.equal(expect);
     });
@@ -63,7 +70,10 @@ contract('RuliCrowdSale', ([investor, wallet, purchaser]) => {
   describe('accepting payments', () => {
     it('should reject payments before start', async function () {
       await this.crowdsale.send(someOfTokenAmount).should.be.rejectedWith(EVMThrow);
-      await this.crowdsale.buyTokens(investor, { from: purchaser, value: someOfTokenAmount }).should.be.rejectedWith(EVMThrow);
+      await this.crowdsale.buyTokens(investor, {
+        from: purchaser,
+        value: someOfTokenAmount,
+      }).should.be.rejectedWith(EVMThrow);
     });
 
     it('should accept payments after start', async function () {
@@ -75,7 +85,10 @@ contract('RuliCrowdSale', ([investor, wallet, purchaser]) => {
     it('should reject payments after end', async function () {
       await advanceToBlock(this.endBlock);
       await this.crowdsale.send(someOfTokenAmount).should.be.rejectedWith(EVMThrow);
-      await this.crowdsale.buyTokens(investor, { value: someOfTokenAmount, from: purchaser }).should.be.rejectedWith(EVMThrow);
+      await this.crowdsale.buyTokens(investor, {
+        value: someOfTokenAmount,
+        from: purchaser,
+      }).should.be.rejectedWith(EVMThrow);
     });
   });
 

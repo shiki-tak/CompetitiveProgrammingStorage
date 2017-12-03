@@ -5,7 +5,7 @@ import EVMThrow from './helpers/EVMThrow';
 import { RuliToken, RuliCrowdsale, cap, rate, initialRuliFundBalance, goal } from './helpers/ruli_helper';
 
 contract('RuliCrowdsale', ([wallet]) => {
-  const lessThanCap = cap.div(3);
+  const lessThanCap = cap.div(10);
 
   beforeEach(async function () {
     this.startBlock = web3.eth.blockNumber + 10;
@@ -13,7 +13,7 @@ contract('RuliCrowdsale', ([wallet]) => {
 
     this.crowdsale = await RuliCrowdsale.new(
       this.startBlock, this.endBlock, rate, wallet,
-      cap, initialRuliFundBalance, goal
+      cap, initialRuliFundBalance, goal,
     );
 
     this.token = RuliToken.at(await this.crowdsale.token());
