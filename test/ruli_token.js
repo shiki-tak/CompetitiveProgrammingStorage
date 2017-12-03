@@ -1,7 +1,6 @@
 import { RuliToken } from './helpers/ruli_helper';
 
 contract('RuliToken', (accounts) => {
-
   describe('CONTRACT DEPLOYMENT', () => {
     let token;
 
@@ -30,7 +29,7 @@ contract('RuliToken', (accounts) => {
       it('should be same decimals of ether', async function () {
         const expect = web3.toWei(1, 'ether');
         const tokenDecimals = await this.token.decimals();
-        const actual = new web3.BigNumber(1 * Math.pow(10, tokenDecimals))
+        const actual = new web3.BigNumber(1 * Math.pow(10, tokenDecimals));
       });
     });
 
@@ -41,7 +40,6 @@ contract('RuliToken', (accounts) => {
   });
 
   describe('functions', () => {
-
     it('should return mintingFinished false after construction', async () => {
       const mintingFinished = await token.mintingFinished();
 

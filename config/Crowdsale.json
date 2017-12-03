@@ -3,5 +3,6 @@
   "endBlock": 1000000,
   "cap": 300000000,
   "initialRuliFundBalance": 150000000,
-  "rate": 2800
+  "rate": 2800,
+  "goal": 14000
 }

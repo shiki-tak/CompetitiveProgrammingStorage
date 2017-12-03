@@ -21,7 +21,6 @@ contract('RuliCrowdSale', ([investor, wallet, purchaser]) => {
   });
 
   describe('initialized correctly', () => {
-
     it('should be correct fund address', async function () {
       const expect = web3.eth.accounts[3];
       const cs = await RuliCrowdsale.new(this.startBlock, this.endBlock, rate, ruliFundAddress, cap, initialRuliFundBalance, goal);
@@ -64,19 +63,19 @@ contract('RuliCrowdSale', ([investor, wallet, purchaser]) => {
   describe('accepting payments', () => {
     it('should reject payments before start', async function () {
       await this.crowdsale.send(someOfTokenAmount).should.be.rejectedWith(EVMThrow);
-      await this.crowdsale.buyTokens(investor, {from: purchaser, value: someOfTokenAmount}).should.be.rejectedWith(EVMThrow);
+      await this.crowdsale.buyTokens(investor, { from: purchaser, value: someOfTokenAmount }).should.be.rejectedWith(EVMThrow);
     });
 
     it('should accept payments after start', async function () {
       await advanceToBlock(this.startBlock - 1);
       await this.crowdsale.send(someOfTokenAmount).should.be.fulfilled;
-      await this.crowdsale.buyTokens(investor, {value: someOfTokenAmount, from: purchaser}).should.be.fulfilled;
+      await this.crowdsale.buyTokens(investor, { value: someOfTokenAmount, from: purchaser }).should.be.fulfilled;
     });
 
     it('should reject payments after end', async function () {
       await advanceToBlock(this.endBlock);
       await this.crowdsale.send(someOfTokenAmount).should.be.rejectedWith(EVMThrow);
-      await this.crowdsale.buyTokens(investor, {value: someOfTokenAmount, from: purchaser}).should.be.rejectedWith(EVMThrow);
+      await this.crowdsale.buyTokens(investor, { value: someOfTokenAmount, from: purchaser }).should.be.rejectedWith(EVMThrow);
     });
   });
 
