@@ -20,3 +20,4 @@ export const rate = new BigNumber(crowdsaleParams.rate);
 // export const ruliFundAddress = crowdsaleParams.ruliFundAddress;
 export const ruliFundAddress = web3.eth.accounts[3];
 export const initialRuliFundBalance = ruli(crowdsaleParams.initialRuliFundBalance);
+export const goal = ruli(crowdsaleParams.goal)

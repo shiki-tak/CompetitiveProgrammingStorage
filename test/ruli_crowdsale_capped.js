@@ -2,7 +2,7 @@ import ruli from '../utilities/ruli';
 import advanceToBlock from './helpers/advanceToBlock';
 import EVMThrow from './helpers/EVMThrow';
 
-import { RuliToken, RuliCrowdsale, cap, rate, initialRuliFundBalance } from './helpers/ruli_helper';
+import { RuliToken, RuliCrowdsale, cap, rate, initialRuliFundBalance, goal } from './helpers/ruli_helper';
 contract('RuliCrowdsale', ([wallet]) => {
   const lessThanCap = cap.div(3);
 
@@ -11,14 +11,14 @@ contract('RuliCrowdsale', ([wallet]) => {
     this.endBlock = web3.eth.blockNumber + 20;
 
     this.crowdsale = await RuliCrowdsale.new(this.startBlock, this.endBlock, rate, wallet,
-      cap, initialRuliFundBalance);
+      cap, initialRuliFundBalance, goal);
 
     this.token = RuliToken.at(await this.crowdsale.token());
   });
 
   describe('creating a valid capped crowdsale', () => {
     it('should fail with zero cap', async function () {
-      await RuliCrowdsale.new(this.startBlock, this.endBlock, rate, wallet, 0, initialRuliFundBalance)
+      await RuliCrowdsale.new(this.startBlock, this.endBlock, rate, wallet, 0, initialRuliFundBalance, goal)
         .should.be.rejectedWith(EVMThrow);
     });
 

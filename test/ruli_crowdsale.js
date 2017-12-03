@@ -3,7 +3,7 @@ import ether from './helpers/ether';
 import advanceToBlock from './helpers/advanceToBlock';
 import EVMThrow from './helpers/EVMThrow';
 
-import { RuliToken, RuliCrowdsale, ruliFundAddress, cap, rate, initialRuliFundBalance, should } from './helpers/ruli_helper';
+import { RuliToken, RuliCrowdsale, ruliFundAddress, cap, rate, initialRuliFundBalance, should, goal } from './helpers/ruli_helper';
 
 contract('RuliCrowdSale', ([investor, wallet, purchaser]) => {
   const someOfTokenAmount = ether(42);
@@ -15,7 +15,7 @@ contract('RuliCrowdSale', ([investor, wallet, purchaser]) => {
     this.startBlock = web3.eth.blockNumber + 10;
     this.endBlock = web3.eth.blockNumber + 20;
 
-    this.crowdsale = await RuliCrowdsale.new(this.startBlock, this.endBlock, rate, wallet, cap, initialRuliFundBalance);
+    this.crowdsale = await RuliCrowdsale.new(this.startBlock, this.endBlock, rate, wallet, cap, initialRuliFundBalance, goal);
 
     this.token = RuliToken.at(await this.crowdsale.token());
   });
@@ -24,7 +24,7 @@ contract('RuliCrowdSale', ([investor, wallet, purchaser]) => {
 
     it('should be correct fund address', async function () {
       const expect = web3.eth.accounts[3];
-      const cs = await RuliCrowdsale.new(this.startBlock, this.endBlock, rate, ruliFundAddress, cap, initialRuliFundBalance);
+      const cs = await RuliCrowdsale.new(this.startBlock, this.endBlock, rate, ruliFundAddress, cap, initialRuliFundBalance, goal);
       const actual = await cs.wallet();
       actual.should.be.equal(expect);
     });
@@ -129,11 +129,11 @@ contract('RuliCrowdSale', ([investor, wallet, purchaser]) => {
       balance.should.be.bignumber.equal(expectedTokenAmount);
     });
 
-    it('should forward funds to wallet', async function () {
+    it('should not forward funds to wallet', async function () {
       const pre = web3.eth.getBalance(wallet);
       await this.crowdsale.sendTransaction({ value: someOfTokenAmount, from: investor });
       const post = web3.eth.getBalance(wallet);
-      post.minus(pre).should.be.bignumber.equal(someOfTokenAmount);
+      post.should.be.bignumber.equal(pre);
     });
   });
 
@@ -166,11 +166,11 @@ contract('RuliCrowdSale', ([investor, wallet, purchaser]) => {
       balance.should.be.bignumber.equal(expectedTokenAmount);
     });
 
-    it('should forward funds to wallet', async function () {
+    it('should not forward funds to wallet', async function () {
       const pre = web3.eth.getBalance(wallet);
       await this.crowdsale.buyTokens(investor, { value: someOfTokenAmount, from: purchaser });
       const post = web3.eth.getBalance(wallet);
-      post.minus(pre).should.be.bignumber.equal(someOfTokenAmount);
+      post.should.be.bignumber.equal(pre);
     });
   });
 
