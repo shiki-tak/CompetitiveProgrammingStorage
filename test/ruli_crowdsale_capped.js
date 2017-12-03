@@ -2,7 +2,7 @@ import ruli from '../utilities/ruli';
 import advanceToBlock from './helpers/advanceToBlock';
 import EVMThrow from './helpers/EVMThrow';
 
-import { RuliToken, RuliCrowdsale, cap, rate, initialRuliFundBalance } from './helpers/ruli_crowdsale_helper';
+import { RuliToken, RuliCrowdsale, cap, rate, initialRuliFundBalance } from './helpers/ruli_helper';
 contract('RuliCrowdsale', ([wallet]) => {
   const lessThanCap = cap.div(3);
 

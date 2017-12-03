@@ -1,4 +1,4 @@
-import { RuliToken } from './helpers/ruli_crowdsale_helper';
+import { RuliToken } from './helpers/ruli_helper';
 
 contract('RuliToken', (accounts) => {
 
@@ -41,7 +41,7 @@ contract('RuliToken', (accounts) => {
   });
 
   describe('functions', () => {
-    
+
     it('should return mintingFinished false after construction', async () => {
       const mintingFinished = await token.mintingFinished();
 

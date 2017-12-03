@@ -3,7 +3,7 @@ import ether from './helpers/ether';
 import advanceToBlock from './helpers/advanceToBlock';
 import EVMThrow from './helpers/EVMThrow';
 
-import { RuliToken, RuliCrowdsale, ruliFundAddress, cap, rate, initialRuliFundBalance, should } from './helpers/ruli_crowdsale_helper';
+import { RuliToken, RuliCrowdsale, ruliFundAddress, cap, rate, initialRuliFundBalance, should } from './helpers/ruli_helper';
 
 contract('RuliCrowdSale', ([investor, wallet, purchaser]) => {
   const someOfTokenAmount = ether(42);
@@ -21,7 +21,7 @@ contract('RuliCrowdSale', ([investor, wallet, purchaser]) => {
   });
 
   describe('initialized correctly', () => {
-    
+
     it('should be correct fund address', async function () {
       const expect = web3.eth.accounts[3];
       const cs = await RuliCrowdsale.new(this.startBlock, this.endBlock, rate, ruliFundAddress, cap, initialRuliFundBalance);
