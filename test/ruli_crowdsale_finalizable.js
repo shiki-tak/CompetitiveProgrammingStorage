@@ -1,3 +1,5 @@
+import ruli from '../utilities/ruli';
+import ether from './helpers/ether';
 import advanceToBlock from './helpers/advanceToBlock';
 import EVMThrow from './helpers/EVMThrow';
 
@@ -33,6 +35,31 @@ contract('RuliCrowdsale', ([owner, wallet, thirdparty]) => {
       await this.crowdsale.finalize({ from: owner });
       const finished = await this.token.mintingFinished();
       finished.should.equal(true);
+    });
+  });
+
+  describe('remaining tokens', () => {
+    it('should store to RULI fund if tokens are remain', async function () {
+      await advanceToBlock(this.startBlock - 1);
+
+      // ether * rate = sold amount
+      // 50,000 * 2,800 = 140,000,000
+      await this.crowdsale.send(ether(50000));
+
+      // offered amount - sold amount = remain
+      // 150,000,000 - 140,000,000 = 10,000,000
+      const remainingTokens = ruli(10000000);
+
+      let expect = ruli(150000000);
+      let actual = await this.token.balanceOf(wallet);
+      await actual.should.be.bignumber.equal(expect);
+
+      await advanceToBlock(this.endBlock);
+      await this.crowdsale.finalize({ from: owner });
+
+      expect = expect.plus(remainingTokens);
+      actual = await this.token.balanceOf(wallet);
+      await actual.should.be.bignumber.equal(expect);
     });
   });
 
