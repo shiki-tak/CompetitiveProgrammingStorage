@@ -83,6 +83,7 @@ contract('RuliCrowdsale', ([owner, wallet, thirdparty]) => {
     it('should not do anything if no remaining token', async function () {
       this.crowdsale = await RuliCrowdsale.new(this.startBlock, this.endBlock, rate, wallet,
         initialRuliFundBalance, initialRuliFundBalance, goal, { from: owner });
+        this.token = RuliToken.at(await this.crowdsale.token());
 
         const expect = ruli(150000000);
         let actual = await this.token.balanceOf(wallet);
