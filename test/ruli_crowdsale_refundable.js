@@ -90,7 +90,7 @@ contract('RuliCrowdsale', ([owner, wallet, investor, notInvestor]) => {
     });
   });
 
-  it('should allow refunds after end if goal was only 1 ether missing', async function () {
+  it('should allow refunds after end if goal was only 1 ether missing', async function() {
     await advanceToBlock(this.startBlock - 1);
     const onlyOneEtherMissing = ether(goal - 1);
     await this.crowdsale.sendTransaction({ value: onlyOneEtherMissing, from: investor });
@@ -100,6 +100,7 @@ contract('RuliCrowdsale', ([owner, wallet, investor, notInvestor]) => {
     const pre = web3.eth.getBalance(investor);
     await this.crowdsale.claimRefund({ from: investor, gasPrice: 0 }).should.be.fulfilled;
     const post = web3.eth.getBalance(investor);
+
     post.minus(pre).should.be.bignumber.equal(onlyOneEtherMissing);
   });
 
