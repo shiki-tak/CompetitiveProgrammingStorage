@@ -34,6 +34,15 @@ contract('RuliCrowdsale', ([owner, wallet, investor]) => {
     });
   });
 
+  it('should has enough RULI token to reach the goal', async function () {
+    let hasEnded = await this.crowdsale.hasEnded();
+    hasEnded.should.equal(false);
+    await advanceToBlock(this.startBlock - 1);
+    await this.crowdsale.sendTransaction({ value: ether(goal), from: investor });
+    hasEnded = await this.crowdsale.hasEnded();
+    hasEnded.should.equal(false);
+  });
+
   describe('deny refunds', () => {
     it('should deny refunds before end', async function () {
       await this.crowdsale.claimRefund({ from: investor }).should.be.rejectedWith(EVMThrow);
