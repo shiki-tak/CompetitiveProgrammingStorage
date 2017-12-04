@@ -11,8 +11,10 @@ contract('RuliCrowdsale', ([owner, wallet, investor, notInvestor]) => {
     this.startBlock = web3.eth.blockNumber + 10;
     this.endBlock = web3.eth.blockNumber + 20;
 
-    this.crowdsale = await RuliCrowdsale.new(this.startBlock, this.endBlock, rate, wallet,
-    cap, initialRuliFundBalance, ether(goal), { from: owner });
+    this.crowdsale = await RuliCrowdsale.new(
+      this.startBlock, this.endBlock, rate, wallet,
+      cap, initialRuliFundBalance, ether(goal), { from: owner },
+    );
   });
 
   describe('creating a valid refundable crowdsale', () => {
@@ -26,7 +28,7 @@ contract('RuliCrowdsale', ([owner, wallet, investor, notInvestor]) => {
       await actual.should.be.bignumber.equal(expect);
     });
 
-    it('should goal be 105, 000,000 JPY', async function () {
+    it('should goal be 105, 000,000 JPY', async () => {
       const goalAsJPY = new BigNumber(10500000);
       const expectedEtherPrice = new BigNumber(15000);
       const convertedGoal = expectedEtherPrice.times(goal);
@@ -65,7 +67,7 @@ contract('RuliCrowdsale', ([owner, wallet, investor, notInvestor]) => {
       await this.crowdsale.claimRefund({ from: investor }).should.be.rejectedWith(EVMThrow);
     });
 
-    it('should deny refunds if cap was reached', async function() {
+    it('should deny refunds if cap was reached', async function () {
       await advanceToBlock(this.startBlock - 1);
       await this.crowdsale.send(cap);
       await this.crowdsale.claimRefund({ from: investor }).should.be.rejectedWith(EVMThrow);
@@ -81,11 +83,24 @@ contract('RuliCrowdsale', ([owner, wallet, investor, notInvestor]) => {
 
       const pre = web3.eth.getBalance(investor);
       // TODO: gasPrice
-      await this.crowdsale.claimRefund( { from: investor, gasPrice: 0 })
+      await this.crowdsale.claimRefund({ from: investor, gasPrice: 0 })
         .should.be.fulfilled;
       const post = web3.eth.getBalance(investor);
       post.minus(pre).should.be.bignumber.equal(lessThanGoal);
     });
+  });
+
+  it('should allow refunds after end if goal was only 1 ether missing', async function () {
+    await advanceToBlock(this.startBlock - 1);
+    const onlyOneEtherMissing = ether(goal - 1);
+    await this.crowdsale.sendTransaction({ value: onlyOneEtherMissing, from: investor });
+    await advanceToBlock(this.endBlock);
+    await this.crowdsale.finalize({ from: owner });
+
+    const pre = web3.eth.getBalance(investor);
+    await this.crowdsale.claimRefund({ from: investor, gasPrice: 0 }).should.be.fulfilled;
+    const post = web3.eth.getBalance(investor);
+    post.minus(pre).should.be.bignumber.equal(onlyOneEtherMissing);
   });
 
   it('should return 0 ether to non investors', async function () {
