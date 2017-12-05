@@ -22,6 +22,7 @@
     "ethereumjs-testrpc": "4.0.1",
     "fs": "0.0.1-security",
     "mocha-junit-reporter": "^1.15.0",
+    "moment": "^2.19.3",
     "solgraph": "^0.2.6",
     "solium": "^1.0.8",
     "truffle": "^4.0.1"
