@@ -22,7 +22,19 @@ contract RuliCrowdsale is CappedCrowdsale, RefundableCrowdsale {
     {
       token.mint(wallet, _initialRuliFundBalance);
   }
+
   function createTokenContract() internal returns (MintableToken) {
     return new RuliToken();
+  }
+
+  // overriding RefundableCrowdsale#finalization to store remaining tokens.
+  function finalization() internal {
+    uint256 remaining = cap.sub(token.totalSupply());
+
+    if (remaining > 0) {
+      token.mint(wallet, remaining);
+    }
+
+    super.finalization();
   }
 }
