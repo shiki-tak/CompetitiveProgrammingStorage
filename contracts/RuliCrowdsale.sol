@@ -20,7 +20,6 @@ contract RuliCrowdsale is CappedCrowdsale, RefundableCrowdsale {
     CappedCrowdsale(_cap)
     RefundableCrowdsale(_goal)
     {
-      cap = _cap;
       token.mint(wallet, _initialRuliFundBalance);
   }
 
@@ -62,10 +61,10 @@ contract RuliCrowdsale is CappedCrowdsale, RefundableCrowdsale {
   //
   // This is created to compatible PR below:
   // - https://github.com/OpenZeppelin/zeppelin-solidity/pull/317
-  function getRate() returns (uint256) {
+  function getRate() constant returns (uint256) {
     uint256 currentRate = rate;
 
-    uint256 tokenSaleStartTimeStamp = 1512486000;
+    uint256 tokenSaleStartTimeStamp = 1514732400;
     uint256 week = 604800; // 60 * 60 * 24 * 7
 
     // 2018/01/01/ 00:00 UTC

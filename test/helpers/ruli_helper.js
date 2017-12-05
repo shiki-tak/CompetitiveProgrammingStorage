@@ -27,7 +27,7 @@ export const goal = new BigNumber(crowdsaleParams.goal);
 
 export async function setTimeingToTokenSaleStart() {
   const now = await Math.floor(Date.now() / 1000);
-  const IncreaseDuration = 1512486000 - now;
+  const IncreaseDuration = 1514732400 - now;
   await increaseTime(moment.duration(IncreaseDuration, 'second'));
 }
 
