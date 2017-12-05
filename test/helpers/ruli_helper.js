@@ -25,8 +25,14 @@ export const ruliFundAddress = '0xd34da9604e5e9c2a9cc0aa481b6b24a72af3253b';
 export const initialRuliFundBalance = ruli(crowdsaleParams.initialRuliFundBalance);
 export const goal = new BigNumber(crowdsaleParams.goal);
 
-export async function setTimeingToBaseTokenRate() {
+export async function setTimeingToTokenSaleStart() {
   const now = await Math.floor(Date.now() / 1000);
-  const IncreaseDuration = 1504231200 - now;
-  await increaseTime(moment.duration(IncreaseDuration + 100, 'second'));
+  const IncreaseDuration = 1512486000 - now;
+  await increaseTime(moment.duration(IncreaseDuration, 'second'));
+}
+
+// Set time to after week4 when token rate is base.
+export async function setTimeingToBaseTokenRate() {
+  await setTimeingToTokenSaleStart();
+  await increaseTime(moment.duration(3, 'weeks'));
 }

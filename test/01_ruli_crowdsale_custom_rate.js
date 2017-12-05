@@ -1,8 +1,10 @@
+import moment from 'moment';
 import ether from './helpers/ether';
 import advanceToBlock from './helpers/advanceToBlock';
 import increaseTime from './helpers/increaseTime';
 
-import { RuliCrowdsale, cap, rate, initialRuliFundBalance, goal, setTimeingToBaseTokenRate } from './helpers/ruli_helper';
+import { RuliCrowdsale, cap, rate, initialRuliFundBalance, goal,
+  setTimeingToTokenSaleStart, setTimeingToBaseTokenRate } from './helpers/ruli_helper';
 
 contract('RuliCrowdsale', ([owner, wallet]) => {
   beforeEach(async function () {
@@ -20,7 +22,40 @@ contract('RuliCrowdsale', ([owner, wallet]) => {
       const actual = await this.crowdsale.getRate();
       await actual.should.be.bignumber.equal(expect);
     });
+  });
 
+  describe('Week1', () => {
+    it('should rate of week1 be 2,800 RULI when just started', async function () {
+      await setTimeingToTokenSaleStart();
+
+      const expect = 2800;
+      await advanceToBlock(this.endBlock - 1);
+      const actual = await this.crowdsale.getRate();
+      await actual.should.be.bignumber.equal(expect);
+    });
+
+    it('should rate of week1 be 2,800 RULI when 1 minute after started', async function () {
+      const duration = 60;
+      await increaseTime(moment.duration(duration, 'second'));
+
+      const expect = 2800;
+      await advanceToBlock(this.endBlock - 1);
+      const actual = await this.crowdsale.getRate();
+      await actual.should.be.bignumber.equal(expect);
+    });
+
+    it('should rate of week1 be 2,800 RULI when 1 minute before ended', async function () {
+      const duration = (60 * 60 * 24 * 7) - 120; // 1 week - 2minute.
+      await increaseTime(moment.duration(duration, 'second'));
+
+      const expect = 2800;
+      await advanceToBlock(this.endBlock - 1);
+      const actual = await this.crowdsale.getRate();
+      await actual.should.be.bignumber.equal(expect);
+    });
+  });
+
+  describe('base', () => {
     it('should base rate be 2,000 RULI', async function () {
       // Increase current time to ICO start datetime.
       await setTimeingToBaseTokenRate();
