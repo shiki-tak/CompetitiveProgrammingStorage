@@ -44,11 +44,74 @@ contract('RuliCrowdsale', ([owner, wallet]) => {
       await actual.should.be.bignumber.equal(expect);
     });
 
-    it('should rate of week1 be 2,800 RULI when 1 minute before ended', async function () {
+    it('should rate of week1 be 2,800 RULI when 2 minute before ended', async function () {
       const duration = (60 * 60 * 24 * 7) - 120; // 1 week - 2minute.
       await increaseTime(moment.duration(duration, 'second'));
 
       const expect = 2800;
+      await advanceToBlock(this.endBlock - 1);
+      const actual = await this.crowdsale.getRate();
+      await actual.should.be.bignumber.equal(expect);
+    });
+  });
+
+  describe('Week2', () => {
+    it('should rate of week2 be 2,500 RULI when just started', async function () {
+      const duration = 60;
+      await increaseTime(moment.duration(duration, 'second'));
+
+      const expect = 2500;
+      await advanceToBlock(this.endBlock - 1);
+      const actual = await this.crowdsale.getRate();
+      await actual.should.be.bignumber.equal(expect);
+    });
+
+    it('should rate of week2 be 2,500 RULI when 1 minute after started', async function () {
+      const duration = 60;
+      await increaseTime(moment.duration(duration, 'second'));
+
+      const expect = 2500;
+      await advanceToBlock(this.endBlock - 1);
+      const actual = await this.crowdsale.getRate();
+      await actual.should.be.bignumber.equal(expect);
+    });
+
+    it('should rate of week2 be 2,500 RULI when 2 minute before ended', async function () {
+      const duration = (60 * 60 * 24 * 7) - 120; // 1 week - 2minute.
+      await increaseTime(moment.duration(duration, 'second'));
+
+      const expect = 2500;
+      await advanceToBlock(this.endBlock - 1);
+      const actual = await this.crowdsale.getRate();
+      await actual.should.be.bignumber.equal(expect);
+    });
+  });
+  describe('Week3', () => {
+    it('should rate of week3 be 2,200 RULI when just started', async function () {
+      const duration = 60;
+      await increaseTime(moment.duration(duration, 'second'));
+
+      const expect = 2200;
+      await advanceToBlock(this.endBlock - 1);
+      const actual = await this.crowdsale.getRate();
+      await actual.should.be.bignumber.equal(expect);
+    });
+
+    it('should rate of week3 be 2,200 RULI when 1 minute after started', async function () {
+      const duration = 60;
+      await increaseTime(moment.duration(duration, 'second'));
+
+      const expect = 2200;
+      await advanceToBlock(this.endBlock - 1);
+      const actual = await this.crowdsale.getRate();
+      await actual.should.be.bignumber.equal(expect);
+    });
+
+    it('should rate of week3 be 2,200 RULI when few minute before ended', async function () {
+      const duration = (60 * 60 * 24 * 7) - 600; // 1 week - 10 minute.
+      await increaseTime(moment.duration(duration, 'second'));
+
+      const expect = 2200;
       await advanceToBlock(this.endBlock - 1);
       const actual = await this.crowdsale.getRate();
       await actual.should.be.bignumber.equal(expect);

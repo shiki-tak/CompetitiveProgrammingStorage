@@ -69,10 +69,17 @@ contract RuliCrowdsale is CappedCrowdsale, RefundableCrowdsale {
 
     // 2018/01/01/ 00:00 UTC
     if (now <= tokenSaleStartTimeStamp) {
+      // before 2018/01/01/ 00:00 UTC
       currentRate = 20000;
     } else if (now <= tokenSaleStartTimeStamp.add(week)) {
-      // until 2018/01/08/ 00:00 UTC
+      // before 2018/01/08/ 00:00 UTC
       currentRate = 2800;
+    } else if (now <= tokenSaleStartTimeStamp.add(week * 2)) {
+      // before 2018/01/15/ 00:00 UTC
+      currentRate = 2500;
+    } else if (now <= tokenSaleStartTimeStamp.add(week * 3)) {
+      // before 2018/01/22/ 00:00 UTC
+      currentRate = 2200;
     }
     return currentRate;
   }
