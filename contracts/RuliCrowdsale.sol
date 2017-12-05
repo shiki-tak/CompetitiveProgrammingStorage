@@ -27,6 +27,7 @@ contract RuliCrowdsale is CappedCrowdsale, RefundableCrowdsale {
     return new RuliToken();
   }
 
+  /*
   // overriding RefundableCrowdsale#finalization to store remaining tokens.
   function finalization() internal {
     uint256 remaining = cap.sub(token.totalSupply());
@@ -37,6 +38,7 @@ contract RuliCrowdsale is CappedCrowdsale, RefundableCrowdsale {
 
     super.finalization();
   }
+  */
 
   // overriding Crowdsale#buyTokens to rate customizable.
   // This is created to compatible PR below:
@@ -67,7 +69,7 @@ contract RuliCrowdsale is CappedCrowdsale, RefundableCrowdsale {
     uint256 currentRate = rate;
 
     // 2018/01/01/ 00:00 UTC
-    if (now <= 1514732400) {
+    if (now <= 1504231200) {
       currentRate = 20000;
     }
     return currentRate;
