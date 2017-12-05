@@ -4,7 +4,7 @@ import advanceToBlock from './helpers/advanceToBlock';
 import increaseTime from './helpers/increaseTime';
 
 import { RuliCrowdsale, cap, rate, initialRuliFundBalance, goal,
-  setTimeingToTokenSaleStart, setTimeingToBaseTokenRate } from './helpers/ruli_helper';
+  setTimeingToTokenSaleStart } from './helpers/ruli_helper';
 
 contract('RuliCrowdsale', ([owner, wallet]) => {
   beforeEach(async function () {
@@ -118,15 +118,36 @@ contract('RuliCrowdsale', ([owner, wallet]) => {
     });
   });
 
-  describe('base', () => {
-    it('should base rate be 2,000 RULI', async function () {
+  describe('From week4 to until the end of toke sale', () => {
+    it('should rate be 2,000 RULI when just started', async function () {
       // Increase current time to ICO start datetime.
-      await setTimeingToBaseTokenRate();
+      const duration = 600;
+      await increaseTime(moment.duration(duration, 'second'));
 
       const expect = 2000; // base
       await advanceToBlock(this.endBlock - 1);
       const actual = await this.crowdsale.getRate();
       await actual.should.be.bignumber.equal(expect);
     });
+
+    it('should rate of week4 be 2,000 RULI when few minute after started', async function () {
+      const duration = 60;
+      await increaseTime(moment.duration(duration, 'second'));
+
+      const expect = 2000;
+      await advanceToBlock(this.endBlock - 1);
+      const actual = await this.crowdsale.getRate();
+      await actual.should.be.bignumber.equal(expect);
+    });
+
+    it('should rate of week4 be 2,000 RULI when few minute before ended', async function () {
+      const duration = (60 * 60 * 24 * 7) - 1200;
+      await increaseTime(moment.duration(duration, 'second'));
+
+      const expect = 2000;
+      await advanceToBlock(this.endBlock - 1);
+      const actual = await this.crowdsale.getRate();
+      await actual.should.be.bignumber.equal(expect);
+    })
   });
 });
