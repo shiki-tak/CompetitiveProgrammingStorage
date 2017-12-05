@@ -4,13 +4,17 @@ import advanceToBlock from './helpers/advanceToBlock';
 import EVMThrow from './helpers/EVMThrow';
 
 import { RuliToken, RuliCrowdsale, ruliFundAddress,
-  cap, rate, initialRuliFundBalance, should, goal } from './helpers/ruli_helper';
+  cap, rate, initialRuliFundBalance, should, goal, setTimeingToBaseTokenRate } from './helpers/ruli_helper';
 
 contract('RuliCrowdSale', ([investor, wallet, purchaser]) => {
   const someOfTokenAmount = ether(21);
   const expectedTokenAmount = rate.mul(someOfTokenAmount);
 
   const expectedInitialTokenAmount = expectedTokenAmount.add(initialRuliFundBalance);
+
+  before(async () => {
+    await setTimeingToBaseTokenRate();
+  });
 
   beforeEach(async function () {
     this.startBlock = web3.eth.blockNumber + 10;

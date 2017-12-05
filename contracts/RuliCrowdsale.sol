@@ -20,6 +20,7 @@ contract RuliCrowdsale is CappedCrowdsale, RefundableCrowdsale {
     CappedCrowdsale(_cap)
     RefundableCrowdsale(_goal)
     {
+      cap = _cap;
       token.mint(wallet, _initialRuliFundBalance);
   }
 
@@ -27,7 +28,6 @@ contract RuliCrowdsale is CappedCrowdsale, RefundableCrowdsale {
     return new RuliToken();
   }
 
-  /*
   // overriding RefundableCrowdsale#finalization to store remaining tokens.
   function finalization() internal {
     uint256 remaining = cap.sub(token.totalSupply());
@@ -35,10 +35,7 @@ contract RuliCrowdsale is CappedCrowdsale, RefundableCrowdsale {
     if (remaining > 0) {
       token.mint(wallet, remaining);
     }
-
-    super.finalization();
   }
-  */
 
   // overriding Crowdsale#buyTokens to rate customizable.
   // This is created to compatible PR below:
