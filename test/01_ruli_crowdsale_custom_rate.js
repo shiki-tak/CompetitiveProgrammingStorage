@@ -11,8 +11,9 @@ contract('RuliCrowdsale', ([owner, wallet]) => {
     this.startBlock = web3.eth.blockNumber + 10;
     this.endBlock = web3.eth.blockNumber + 20;
 
-    this.crowdsale = await RuliCrowdsale.new(this.startBlock, this.endBlock, rate, wallet,
-      cap, initialRuliFundBalance, ether(goal), { from: owner });
+    this.crowdsale = await RuliCrowdsale.new(this.startBlock, this.endBlock, rate.base, wallet,
+      cap, initialRuliFundBalance, ether(goal),
+      rate.preSale, rate.week1, rate.week2, rate.week3, { from: owner });
   });
 
   describe('creating a valid rate customizable crowdsale', () => {

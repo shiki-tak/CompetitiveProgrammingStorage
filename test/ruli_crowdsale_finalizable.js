@@ -4,15 +4,21 @@ import advanceToBlock from './helpers/advanceToBlock';
 import EVMThrow from './helpers/EVMThrow';
 
 import { RuliToken, RuliCrowdsale, cap, rate,
-  initialRuliFundBalance, goal, should } from './helpers/ruli_helper';
+  initialRuliFundBalance, goal, should, setTimeingToBaseTokenRate } from './helpers/ruli_helper';
 
 contract('RuliCrowdsale', ([owner, wallet, thirdparty]) => {
+
+  before(async () => {
+    await setTimeingToBaseTokenRate();
+  });
+
   beforeEach(async function () {
     this.startBlock = web3.eth.blockNumber + 10;
     this.endBlock = web3.eth.blockNumber + 20;
 
-    this.crowdsale = await RuliCrowdsale.new(this.startBlock, this.endBlock, rate, wallet,
-      cap, initialRuliFundBalance, goal, { from: owner });
+    this.crowdsale = await RuliCrowdsale.new(this.startBlock, this.endBlock, rate.base, wallet,
+      cap, initialRuliFundBalance, goal,
+      rate.preSale, rate.week1, rate.week2, rate.week3, { from: owner });
 
     this.token = RuliToken.at(await this.crowdsale.token());
   });
@@ -81,8 +87,10 @@ contract('RuliCrowdsale', ([owner, wallet, thirdparty]) => {
     });
     */
     it('should not do anything if no remaining token', async function () {
+      const capSameAsInitialRuliFundBalance = initialRuliFundBalance;
       this.crowdsale = await RuliCrowdsale.new(this.startBlock, this.endBlock, rate, wallet,
-        initialRuliFundBalance, initialRuliFundBalance, goal, { from: owner });
+        capSameAsInitialRuliFundBalance, initialRuliFundBalance,
+        goal, rate.preSale, rate.week1, rate.week2, rate.week3, { from: owner });
         this.token = RuliToken.at(await this.crowdsale.token());
 
         const expect = ruli(150000000);

@@ -6,20 +6,39 @@ import 'zeppelin/contracts/token/MintableToken.sol';
 import './RuliToken.sol';
 
 contract RuliCrowdsale is CappedCrowdsale, RefundableCrowdsale {
+  // Seconds of one week. (60 * 60 * 24 * 7) = 604,800
+  uint256 constant WEEK = 604800;
+
+  /*
+  * Token exchange rates of ETH and RULI.
+  */
+  uint256 public ratePreSale;
+  uint256 public rateWeek1;
+  uint256 public rateWeek2;
+  uint256 public rateWeek3;
 
   function RuliCrowdsale(
     uint256 _startBlock,
     uint256 _endBlock,
-    uint _rate,
+    uint256 _baseRate,
     address _wallet,
     uint256 _cap,
     uint256 _initialRuliFundBalance,
-    uint256 _goal
+    uint256 _goal,
+    uint256 _ratePreSale,
+    uint256 _rateWeek1,
+    uint256 _rateWeek2,
+    uint256 _rateWeek3
     )
-    Crowdsale(_startBlock, _endBlock, _rate, _wallet)
+    Crowdsale(_startBlock, _endBlock, _baseRate, _wallet)
     CappedCrowdsale(_cap)
     RefundableCrowdsale(_goal)
     {
+      ratePreSale = _ratePreSale;
+      rateWeek1 = _rateWeek1;
+      rateWeek2 = _rateWeek2;
+      rateWeek3 = _rateWeek3;
+
       token.mint(wallet, _initialRuliFundBalance);
   }
 
@@ -34,6 +53,7 @@ contract RuliCrowdsale is CappedCrowdsale, RefundableCrowdsale {
     if (remaining > 0) {
       token.mint(wallet, remaining);
     }
+    super.finalization();
   }
 
   // overriding Crowdsale#buyTokens to rate customizable.
@@ -65,21 +85,20 @@ contract RuliCrowdsale is CappedCrowdsale, RefundableCrowdsale {
     uint256 currentRate = rate;
 
     uint256 tokenSaleStartTimeStamp = 1514732400;
-    uint256 week = 604800; // 60 * 60 * 24 * 7
 
     // 2018/01/01/ 00:00 UTC
     if (now <= tokenSaleStartTimeStamp) {
       // before 2018/01/01/ 00:00 UTC
-      currentRate = 20000;
-    } else if (now <= tokenSaleStartTimeStamp.add(week)) {
+      currentRate = ratePreSale;
+    } else if (now <= tokenSaleStartTimeStamp.add(WEEK)) {
       // before 2018/01/08/ 00:00 UTC
-      currentRate = 2800;
-    } else if (now <= tokenSaleStartTimeStamp.add(week * 2)) {
+      currentRate = rateWeek1;
+    } else if (now <= tokenSaleStartTimeStamp.add(WEEK.mul(2))) {
       // before 2018/01/15/ 00:00 UTC
-      currentRate = 2500;
-    } else if (now <= tokenSaleStartTimeStamp.add(week * 3)) {
+      currentRate = rateWeek2;
+    } else if (now <= tokenSaleStartTimeStamp.add(WEEK.mul(3))) {
       // before 2018/01/22/ 00:00 UTC
-      currentRate = 2200;
+      currentRate = rateWeek3;
     }
     return currentRate;
   }

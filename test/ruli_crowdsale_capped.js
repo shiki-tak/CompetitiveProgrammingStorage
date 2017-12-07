@@ -1,4 +1,5 @@
 import ruli from '../utilities/ruli';
+import ether from './helpers/ether';
 import advanceToBlock from './helpers/advanceToBlock';
 import EVMThrow from './helpers/EVMThrow';
 
@@ -12,8 +13,9 @@ contract('RuliCrowdsale', ([wallet]) => {
     this.endBlock = web3.eth.blockNumber + 20;
 
     this.crowdsale = await RuliCrowdsale.new(
-      this.startBlock, this.endBlock, rate, wallet,
+      this.startBlock, this.endBlock, rate.base, wallet,
       cap, initialRuliFundBalance, goal,
+      rate.preSale, rate.week1, rate.week2, rate.week3
     );
 
     this.token = RuliToken.at(await this.crowdsale.token());
@@ -21,7 +23,9 @@ contract('RuliCrowdsale', ([wallet]) => {
 
   describe('creating a valid capped crowdsale', () => {
     it('should fail with zero cap', async function () {
-      await RuliCrowdsale.new(this.startBlock, this.endBlock, rate, wallet, 0, initialRuliFundBalance, goal)
+      await RuliCrowdsale.new(this.startBlock, this.endBlock,
+        rate.base, wallet, 0, initialRuliFundBalance, ether(goal),
+        rate.preSale, rate.week1, rate.week2, rate.week3)
         .should.be.rejectedWith(EVMThrow);
     });
 

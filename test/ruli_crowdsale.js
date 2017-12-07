@@ -8,7 +8,7 @@ import { RuliToken, RuliCrowdsale, ruliFundAddress,
 
 contract('RuliCrowdSale', ([investor, wallet, purchaser]) => {
   const someOfTokenAmount = ether(21);
-  const expectedTokenAmount = rate.mul(someOfTokenAmount);
+  const expectedTokenAmount = new BigNumber(rate.base).mul(someOfTokenAmount);
 
   const expectedInitialTokenAmount = expectedTokenAmount.add(initialRuliFundBalance);
 
@@ -21,8 +21,9 @@ contract('RuliCrowdSale', ([investor, wallet, purchaser]) => {
     this.endBlock = web3.eth.blockNumber + 20;
 
     this.crowdsale = await RuliCrowdsale.new(
-      this.startBlock, this.endBlock, rate,
+      this.startBlock, this.endBlock, rate.base,
       wallet, cap, initialRuliFundBalance, goal,
+      rate.preSale, rate.week1, rate.week2, rate.week3
     );
 
     this.token = RuliToken.at(await this.crowdsale.token());
@@ -32,8 +33,9 @@ contract('RuliCrowdSale', ([investor, wallet, purchaser]) => {
     it('should be correct fund address', async function () {
       const expect = '0xd34da9604e5e9c2a9cc0aa481b6b24a72af3253b';
       const cs = await RuliCrowdsale.new(
-        this.startBlock, this.endBlock, rate, ruliFundAddress,
+        this.startBlock, this.endBlock, rate.base, ruliFundAddress,
         cap, initialRuliFundBalance, goal,
+        rate.preSale, rate.week1, rate.week2, rate.week3
       );
       const actual = await cs.wallet();
       actual.should.be.equal(expect);
