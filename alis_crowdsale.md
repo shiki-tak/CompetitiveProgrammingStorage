@@ -1,6 +1,6 @@
-# truffle v4.0から導入されたtruffle developでAlisTokenを送金してみた
-現在、ICOのスマートコントラクトを勉強しています。挙動を確かめるには公開されているコントラクトを
-動かしてみるのが一番ということで、　truffleを使って日本からのICOに成功したALISさんのコントラクトを動かしてみました。
+truffle 4.0で導入されたtruffle developを使って、AlisTokenをデプロイし、購入するところまで試してみた
+現在、ICOのスマートコントラクトを勉強しています。
+学習するにはまず、すでにあるコントラクトの挙動を確かめてみるのが良いと書いてあったので、日本からのICOに成功したALISさんのコントラクトを動かしてみました。
 
 ##1. AlisProjectからICO用のリポジトリをクローンする
 ```
@@ -19,7 +19,6 @@ package.jsonを開き、truffleのバージョンを修正します。
 ##3. 初期化を行う
 
 ```
-cd ico-contracts
 yarn
 yarn truffle install
 ```
@@ -76,7 +75,7 @@ null
 ##5. デプロイするためにCrowdsale.jsonを修正する
 クローンしたままのCrowdsale.jsonではICOの開始が"startBlock": 900000, "icoStartTime": 2145884400で設定されている。
 このままではいつまでたってもICOが開始しないので、適当に修正する。
-（タイムスタンプは http://url-c.com/tc/ を使って取得すると簡単。）
+（タイムスタンプは http://url-c.com/tc/ を使って取得すると簡単）
 
 ##6. コントラクトをデプロイする
 
@@ -108,18 +107,19 @@ Running migration: 2_deploy_contracts.js
   AlisCrowdsale: 0x9fbda871d559710256a2502a2517b794b482db40
 Saving artifacts...
 ```
+注）gas量の関係でエラーになった場合、truffle.jsのgas量を調節してみてください。また、invalid opcodeのエラーが発生した場合は、デプロイ時の例外チェックで引っかかっている可能性がありますので、クラウドセールの開始条件があっているかなどを確認してみてください。
 
-##7. トークンを購入してみる
-1. トークンを購入するユーザーを変数に入れる。
+##7. トークンを購入する
+1.　トークンを購入するユーザーを変数に入れる。
+
 ```
 truffle(develop)> bob = web3.eth.accounts[1]
 '0xf17f52151ebef6c7334fad080c5704d77216b732'
 ```
 
-2. migrateでデプロイしたAlisCrowdsaleの内容をcrowdsale変数に割り当てて、クラウドセールのトークンアドレスを取得する。
+2.　migrateでデプロイしたAlisCrowdsaleの内容をcrowdsale変数に割り当てて、クラウドセールのトークンアドレスを取得する。
+
 ```
-truffle(develop)> bob = web3.eth.accounts[1]
-'0xf17f52151ebef6c7334fad080c5704d77216b732'
 truffle(develop)> AlisCrowdsale.deployed().then(inst => { crowdsale = inst })
 undefined
 truffle(develop)> crowdsale.token().then(addr => { tokenAddress = addr } )
@@ -128,7 +128,8 @@ truffle(develop)> tokenAddress
 '0xa830ec357b950fde26d220b0f256b6d47529bdbd'
 ```
 
-3. AlisTokenのインスタンスを作る。以下で使用されているatメソッドに指定したクラウドセールのトークンアドレスからそのトークンインスタンスを取得する。
+3.　AlisTokenのインスタンスを作る。以下で使用されているatメソッドに指定したクラウドセールのトークンアドレスからそのトークンインスタンスを取得する。
+
 ```
 truffle(develop)> AlisTokenInstance = AlisToken.at(tokenAddress)
 TruffleContract {
@@ -143,14 +144,14 @@ constructor:
 〜〜（省略）〜〜
 ```
 
-4. AlisTokenを購入する予定のbobのアドレスのAlisTokenを確認する。
+4.　bobのトークン保有数を確認する。
 
 ```
 truffle(develop)> AlisTokenInstance.balanceOf(bob).then(balance => balance.toString(10))
 '0'
 ```
 
-5. AlisTokenを購入する。
+5.　AlisTokenを購入する。
 トークンセールの開始直後は1 ETH=2900 ALIS なので、5 ETH分のトークンを購入してみる。
 
 ```
@@ -177,16 +178,30 @@ truffle(develop)> AlisCrowdsale.deployed().then(inst => inst.sendTransaction({ f
        args: [Object] } ] }
 ```
 
-6. bobの購入したトークンを確認する。
+6.　bobの購入したトークンを確認する。
+
 ```
 truffle(develop)> AlisTokenInstance.balanceOf(bob).then(balance => account1GusTokenBalance = balance.toString(10))
 '14500000000000000000000'
 ```
 
-コントラクトでuint256 public decimals = 18;と指定していた影響で18個0が後ろにくっついる。実際にいくらトークンを買ったかを見るためにether単位でトークンの数を見てみる。
+コントラクトでuint256 public decimals = 18;と指定しているので後ろに0が18個くっついる。実際にいくらトークンを買ったかを見るためにether単位でトークンの数を見てみる。
+
 ```
 truffle(develop)> web3.fromWei(account1GusTokenBalance, "ether")
 '14500'
 ```
 
-5 EHT × 2900 ALIS分のトークンが購入できていることが確認できる。
+5 ETH × 2900 ALIS分のトークンが購入できていることが確認できる。
+
+なお、AlisFundに入っているトークンは以下のように確認することができる。
+
+```
+truffle(develop)> AlisTokenInstance.balanceOf(AlisFund.address)
+{ [String: '2.5e+26'] s: 1, e: 26, c: [ 2500000000000 ] }
+```
+
+##8. 今後の方針
+今回はAlisTokenを購入するまでを試してみました。
+今後はburnやMultiSigWalletの挙動を確認してみようと思います。（できるか分かりませんが...）
+ALISさんのコントラクトはテストもかなりしっかりと書かれているので非常に参考になります。ICO用のコントラクトを書きたい人はぜひALISさんのコントラクトを見てみることをおすすめします。
