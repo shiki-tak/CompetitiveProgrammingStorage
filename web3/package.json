@@ -21,7 +21,7 @@
     "moment": "^2.18.1",
     "solgraph": "^0.2.6",
     "solium": "^0.5.4",
-    "truffle": "^3.4.7"
+    "truffle": "^4.0.1"
   },
   "scripts": {
     "test": "scripts/test.sh",

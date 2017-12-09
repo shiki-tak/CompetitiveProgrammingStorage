@@ -9,7 +9,7 @@ var abi = [{"constant": true,"inputs": [],"name": "say","outputs": [{"name": "",
 
 var contract = web3.eth.contract(abi).at(address);
 
-greeting = 'Hello, World!';
+greeting = 'Hello, Ethereum!';
 
 var response = contract.say.call();
 console.log("Initial value");
