@@ -1,17 +1,30 @@
 pragma solidity ^0.4.15;
 
-contract GreetingContract {
+import './Owned.sol';
+
+contract GreetingContract is Owned {
   string public greet;
+  address public sender;
 
-  function GreetingContract(string _greet) {
+  function GreetingContract
+  (
+    string _greet
+    )
+    Owned() {
     greet = _greet;
+    sender =  msg.sender;
   }
 
-  function say() constant returns (string) {
-    return greet;
+  function say() constant returns (string, address) {
+    sender = msg.sender;
+    return (greet, sender);
   }
 
-  function setGreet(string _greet) returns (string) {
+  function getSender() constant returns (address) {
+    return sender;
+  }
+
+  function setGreet(string _greet) onlyOwner returns (string) {
     greet = _greet;
     return greet;
   }
