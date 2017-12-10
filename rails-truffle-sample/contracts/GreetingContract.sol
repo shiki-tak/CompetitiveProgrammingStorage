@@ -20,6 +20,12 @@ contract GreetingContract is Owned {
     return (greet, sender);
   }
 
+  // constantがないとコントラクト実行時にトランザクションが発生する
+  function sayChange() returns (string, address) {
+    sender = msg.sender;
+    return (greet, sender);
+  }
+
   function getSender() constant returns (address) {
     return sender;
   }
