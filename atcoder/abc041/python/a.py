@@ -1,6 +1,3 @@
 s = input()
 i = int(input())
-print(i)
-print(s[0])
-print(s[1])
 print(s[i-1])
