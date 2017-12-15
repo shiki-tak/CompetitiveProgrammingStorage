@@ -7,7 +7,4 @@ for i in range(N):
 
 count_result = Counter(candidate)
 result = [0 for i in range(N)]
-print(count_result)
-for key, value in count_result.items():
-    print(key)
-    print(value)
+print(count_result.most_common()[0][0])
