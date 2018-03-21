@@ -3,16 +3,13 @@
     <div>
       <app-logo/>
       <h1 class="title">
-        todo_frontend
+        Nuxt Todo
       </h1>
       <h2 class="subtitle">
-        Nuxt.js project
       </h2>
       <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green">Documentation</a>
+        <router-link to="todos" class="button--green">To Do List</router-link>
+
         <a
           href="https://github.com/nuxt/nuxt.js"
           target="_blank"
