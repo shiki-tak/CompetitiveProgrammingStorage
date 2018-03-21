@@ -23,15 +23,23 @@ module Api
 
       # GET /api/v1/todo/:id
       def show
+        render json: @todo
       end
 
       # PATCH /api/v1/todo/:id
       def update
+        if @todo.update(todo_params)
+          render json: @todo
+        else
+          render json: @todo.errors, status: :unprocessable_entity
+        end
 
       end
 
       # DELETE /api/v1/todo/:id
       def destroy
+        @todo.destroy
+         head :no_content
       end
 
       private
