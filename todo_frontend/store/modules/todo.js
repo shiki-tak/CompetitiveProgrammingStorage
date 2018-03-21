@@ -14,14 +14,14 @@ const getters = {
 const actions = {
 
   async getTodos({commit}) {
-    const todos = await axios.get(BASE_URL)
-    commit(types.TODOS, { todos })
+    const res = await axios.get(BASE_URL)
+    const todos = res.data
+    commit(types.SET_TODOS, { todos })
   }
-
 }
 
 const mutations = {
-  [types.TODOS](state, { todos }) {
+  [types.SET_TODOS](state, { todos }) {
     state.todos = todos
   }
 }

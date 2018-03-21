@@ -1,5 +1,9 @@
 <template>
   <h1>To Do List</h1>
+  <!-- <ul>
+    <li v-for="todo in todos">{{todo}}</li>
+  </ul> -->
+
 </template>
 
 <script>
@@ -7,18 +11,14 @@ export default {
 
   data() {
     return {
-      todos: ''
+      todos: []
     }
   },
 
-  mounted () {
-    this.load()
-  },
-
-  methods: {
-    load() {
-      const { todos } =this.$store.dispatch('getTodos')
-    }
+  async fetch ({ store }) {
+    await store.dispatch('getTodos')
+    this.todos = store.getters.todos
+    console.log(this.todos)
   }
 }
 </script>
