@@ -14,6 +14,7 @@
   transform: rotateX(180deg);
   position: relative;
   overflow: hidden;
+  margin-bottom: 15%;
   height: 180px;
   width: 245px;
 }

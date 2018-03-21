@@ -56,6 +56,6 @@ export default {
 }
 
 .links {
-  padding-top: 15px;
+  padding-top: 28px;
 }
 </style>
