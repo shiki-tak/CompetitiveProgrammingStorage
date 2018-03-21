@@ -1,9 +1,17 @@
 <template>
   <div>
     <h1>To Do List</h1>
-    <ul>
-      <li v-for="(todo, key, index) in todos" :key="index">{{ todo.title }}</li>
-    </ul>
+    <md-table>
+      <md-table-row>
+        <md-table-head>ID</md-table-head>
+        <md-table-head>Title</md-table-head>
+      </md-table-row>
+      <md-table-row v-for="(todo, key, index) in todos" :key="index">
+        <md-table-cell>{{ todo.id }}</md-table-cell>
+        <md-table-cell>{{ todo.title }}</md-table-cell>
+      </md-table-row>
+    </md-table>
+    <md-button class="md-raised">実行</md-button>
   </div>
 </template>
 
@@ -13,6 +21,7 @@ import axios from 'axios'
 const BASE_URL = 'http://localhost:8080/api/v1/todos/'
 
 export default {
+  name: 'TableBasic',
 
   data: function() {
     return {
