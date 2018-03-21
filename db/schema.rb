@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180321012438) do
+ActiveRecord::Schema.define(version: 20180321015107) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20180321012438) do
   create_table "todos", force: :cascade do |t|
     t.string "title"
     t.text "comment"
-    t.boolean "done"
+    t.boolean "done", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
