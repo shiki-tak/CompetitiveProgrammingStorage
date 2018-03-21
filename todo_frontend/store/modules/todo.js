@@ -4,24 +4,26 @@ import axios from 'axios'
 const BASE_URL = 'http://localhost:8080/api/v1/todos/'
 
 const state = () => ({
-
+  todos: []
 })
 
 const getters = {
-
+  todos: (state) => state.todos
 }
 
 const actions = {
 
   async getTodos({commit}) {
     const todos = await axios.get(BASE_URL)
-    console.log(todos)
+    commit(types.TODOS, { todos })
   }
 
 }
 
 const mutations = {
-
+  [types.TODOS](state, { todos }) {
+    state.todos = todos
+  }
 }
 
 export default {
