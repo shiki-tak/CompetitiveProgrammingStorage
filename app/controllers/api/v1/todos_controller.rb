@@ -8,7 +8,7 @@ module Api
 
       # GET /api/v1/todo
       def index
-        render json: Todo.all
+        @todos = Todo.all
       end
 
       # POST /api/v1/todo
