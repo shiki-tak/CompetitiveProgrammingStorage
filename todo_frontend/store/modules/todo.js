@@ -17,12 +17,13 @@ const actions = {
     const res = await axios.get(BASE_URL)
     const todos = res.data
     commit(types.SET_TODOS, { todos })
+    return { 'data': todos }
   },
 
-  async createTodo({commit}) {
-    const res = await axios.post(BASE_URL)
-    const todos = res.data
-    commit(types.SET_TODOS, { todos })
+  async createTodo({ commit }, { todo }) {
+    const res = await axios.post(BASE_URL, { todo })
+    const res_todo = res.data
+    return { 'todo': res_todo }
   }
 }
 

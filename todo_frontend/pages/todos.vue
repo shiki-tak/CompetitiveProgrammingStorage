@@ -59,24 +59,26 @@ export default {
   },
 
   methods: {
-    load() {
-      axios.get(BASE_URL).then((res) => {
+    async load() {
+      await this.$store.dispatch('getTodos').then((res) => {
         for(var i = 0; i < res.data.todos.length; i++) {
           this.todos.push(res.data.todos[i]);
         }
       }, (error) => {
         console.log(error);
-      });
+      })
     },
 
-    createTodo() {
-      axios.post(BASE_URL, {'title': this.title, 'comment': this.comment }).then((res) => {
-        this.todos.unshift(res.data.todo);
+    async createTodo() {
+      const todo = { 'title': this.title, 'comment': this.comment }
+      await this.$store.dispatch('createTodo', { todo }).then((res) => {
+        this.todos.unshift(res.todo.todo);
         this.title = '';
         this.comment = '';
+
       }, (error) => {
         console.log(error);
-      });
+      })
     }
   }
 }
