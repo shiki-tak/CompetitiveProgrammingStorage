@@ -1,6 +1,29 @@
 <template>
   <div>
     <h1>To Do List</h1>
+
+    <form novalidate class="md-layout" @submit.prevent="validateUser">
+      <md-card class="md-layout-item md-size-80 md-small-size-100">
+        <md-card-content>
+          <md-field>
+            <label for="title">Title</label>
+            <md-input type="title" name="title" id="title" autocomplete="title" v-model="title"  />
+          </md-field>
+        </md-card-content>
+        <md-card-content>
+          <md-field>
+            <label for="comment">Comment</label>
+            <md-input type="comment" name="comment" id="comment" autocomplete="comment" v-model="comment"  />
+          </md-field>
+        </md-card-content>
+      </md-card>
+      <md-card-actions>
+        <md-button class="md-fab" v-on:click="createTodo">
+          <md-icon>＋</md-icon>
+        </md-button>
+      </md-card-actions>
+    </form>
+
     <md-table>
       <md-table-row>
         <md-table-head>ID</md-table-head>
@@ -25,7 +48,9 @@ export default {
 
   data: function() {
     return {
-      todos: []
+      todos: [],
+      title: '',
+      comment: ''
     }
   },
 
@@ -37,16 +62,25 @@ export default {
     load() {
       axios.get(BASE_URL).then((res) => {
         for(var i = 0; i < res.data.todos.length; i++) {
-          console.log(res.data.todos[i])
           this.todos.push(res.data.todos[i]);
         }
       }, (error) => {
         console.log(error);
       });
+    },
+
+    createTodo() {
+      axios.post(BASE_URL, {'title': this.title, 'comment': this.comment }).then((res) => {
+        this.todos.unshift(res.data.todo);
+        this.title = '';
+        this.comment = '';
+      }, (error) => {
+        console.log(error);
+      });
     }
   }
-
 }
 </script>
 
-<style></style>
+<style>
+</style>

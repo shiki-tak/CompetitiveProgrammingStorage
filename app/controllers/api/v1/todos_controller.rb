@@ -8,14 +8,14 @@ module Api
 
       # GET /api/v1/todo
       def index
-        @todos = Todo.all
+        @todos = Todo.order('updated_at DESC')
       end
 
       # POST /api/v1/todo
       def create
         @todo = Todo.new(todo_params)
         if @todo.save
-          render json: @todo
+          render :show, status: :created
         else
           render json: @todo.errors, status: :unprocessable_entity
         end
