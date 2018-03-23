@@ -1,6 +1,18 @@
 <template>
   <div>
+    <nav class="navbar navbar-default">
+        <ul class="nav navbar-nav">
+          <!--v-link links routes to anchor tags-->
+          <li><router-link to="/">Home</router-link></li>
+          <li><router-link to="/">Sign In</router-link></li>
+          <li><router-link to="/">Sign Up</router-link></li>
+          <li><router-link to="/"><span>Sign Out</span></router-link></li>
+        </ul>
+    </nav>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <nuxt/>
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
   </div>
 </template>
 

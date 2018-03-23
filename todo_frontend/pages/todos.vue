@@ -1,8 +1,22 @@
 <template>
   <div>
     <h1>To Do List</h1>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Title</th>
+        </tr>
+      </thead>
+      <tbody v-for="(todo, key, index) in todos" :key="index">
+        <tr>
+          <td>{{ todo.id }}</td>
+          <td>{{ todo.title }}</td>
+        </tr>
+      </tbody>
+    </table>
 
-    <form novalidate class="md-layout" @submit.prevent="validateUser">
+    <!-- <form novalidate class="md-layout" @submit.prevent="validateUser">
       <md-card class="md-layout-item md-size-80 md-small-size-100">
         <md-card-content>
           <md-field>
@@ -33,8 +47,8 @@
         <md-table-cell>{{ todo.id }}</md-table-cell>
         <md-table-cell>{{ todo.title }}</md-table-cell>
       </md-table-row>
-    </md-table>
-    <md-button class="md-raised">実行</md-button>
+    </md-table> -->
+    <!-- <md-button class="md-raised">実行</md-button> -->
   </div>
 </template>
 
