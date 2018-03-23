@@ -5,7 +5,7 @@
           <!--v-link links routes to anchor tags-->
           <li><router-link to="/">Home</router-link></li>
           <li><router-link to="/">Sign In</router-link></li>
-          <li><router-link to="/">Sign Up</router-link></li>
+          <li><router-link to="signup">Sign Up</router-link></li>
           <li><router-link to="/"><span>Sign Out</span></router-link></li>
         </ul>
     </nav>
