@@ -2,9 +2,9 @@ import axios from 'axios';
 import * as types from '../mutation-types'
 
 const BASE_URL = 'http://localhost:8080/'
-const SIGNIN_URL = BASE_URL + 'api/auth/sign_in/'
-const SIGNUP_URL = BASE_URL + 'api/auth/'
-const SIGNOUT_URL = BASE_URL + 'api/auth/sign_out/'
+const SIGNIN_URL = BASE_URL + 'api/v1/auth/sign_in/'
+const SIGNUP_URL = BASE_URL + 'api/v1/auth/'
+const SIGNOUT_URL = BASE_URL + 'api/v1/auth/sign_out/'
 
 const state = () => ({
   accessToken: null,

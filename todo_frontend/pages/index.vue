@@ -3,7 +3,7 @@
     <div>
       <app-logo/>
       <h1 class="title">
-        Nuxt Todo
+        Nuxt Todo {{ authed }}
       </h1>
       <h2 class="subtitle">
       </h2>
@@ -25,7 +25,24 @@ import AppLogo from '~/components/AppLogo.vue'
 export default {
   components: {
     AppLogo
+  },
+
+  data() {
+    return {
+      authed: ''
+    }
+  },
+
+  mounted () {
+    this.load()
+  },
+
+  methods: {
+    load() {
+      this.authed = window.localStorage.getItem('token')
+    }
   }
+
 }
 </script>
 
