@@ -33,6 +33,8 @@ module NuxtTodo
       allow do
         origins 'localhost:3000'
         resource '*',
+        :headers => :any,
+        :expose => ['access-token', 'expiry', 'token-type', 'uid', 'client'],
         :methods => [:get, :post, :put, :delete, :options]
       end
     end
