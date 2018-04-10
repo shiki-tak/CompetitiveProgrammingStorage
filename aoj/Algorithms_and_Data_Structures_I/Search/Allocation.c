@@ -39,7 +39,7 @@ int main() {
     scanf("%d", &w[i]);
   }
 
-  printf("%d", allocation(n, k, w));
-  
+  printf("%d\n", allocation(n, k, w));
+
   return 0;
 }
