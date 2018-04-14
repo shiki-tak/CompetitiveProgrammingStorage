@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 // プロセスを表す構造体
-typedef struct pp {
+typedef struct {
   char name[100];
   int t;
 } P;
