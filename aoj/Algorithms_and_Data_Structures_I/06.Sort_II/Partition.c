@@ -1,19 +1,21 @@
 #include <stdio.h>
 
+void swap(int *x, int *y) {
+  int tmp = *x;
+  *x = *y;
+  *y = tmp;
+}
+
 void partition(int a[], int p, int r) {
   int i = p - 1;
   for (int j = p; j <= r - 1; j++) {
     if (a[j] <= a[r]) {
       i++;
-      int tmp = a[i];
-      a[i] = a[j];
-      a[j] = tmp;
+      swap(&a[i], &a[j]);
     }
   }
-  int tmp = a[i+1];
-  a[i+1] = a[r];
-  a[r] = tmp;
-  
+  swap(&a[i+1], &a[r]);
+
   for (int k = 0; k <= r; k++) {
     if (k == i + 1) {
       printf("[%d]", a[k]);
