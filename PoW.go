@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-// Block
+// Block Struct
 type Block struct {
 	PreviousHash string
 	BlockHash    string
@@ -19,6 +19,18 @@ type Block struct {
 }
 
 var blockChain []Block
+
+func createGenesisBlock(merkleRoot string) {
+	blockHashAsByte := sha256.Sum256([]byte("genesis block"))
+
+	createBlock(
+		"0x0000000000000000000000000000000000000000000000000000000000000000",
+		hex.EncodeToString(blockHashAsByte[:]),
+		merkleRoot,
+		42,
+		time.Now().Unix(),
+	)
+}
 
 func createBlock(previousHash string, blockHash string, merkleRoot string, nonce int, timeStamp int64) {
 
@@ -90,19 +102,15 @@ func main() {
 	// TODO:
 	// calculate merkle root
 
+	// TODO:
+	// add miner
+
 	// i: block number
 	for i := 0; i < 10; i++ {
 		if i == 0 {
 			// Create genesis block
-			blockHashAsByte := sha256.Sum256([]byte("genesis block"))
+			createGenesisBlock(merkleRoot)
 
-			createBlock(
-				"0x0000000000000000000000000000000000000000000000000000000000000000",
-				hex.EncodeToString(blockHashAsByte[:]),
-				merkleRoot,
-				42,
-				time.Now().Unix(),
-			)
 		} else {
 			pow(merkleRoot, time.Now().Unix())
 		}
