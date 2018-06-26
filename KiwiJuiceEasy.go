@@ -29,9 +29,10 @@ func Pour(fromIdBottles, toIdBottles, fromIdCapacities, toIdCapacities int) (int
 }
 
 func main() {
-	// ボトルの本数
-	var n int
-	fmt.Scan(&n)
+	// n: ボトルの本数
+	// pourNumber: 移動回数
+	var n, pourNumber int
+	fmt.Scan(&n, &pourNumber)
 
 	// ボトルの容量
 	capacities := make([]int, n)
@@ -44,10 +45,6 @@ func main() {
 	for i := range bottles {
 		fmt.Scan(&bottles[i])
 	}
-
-	// 移動回数
-	var pourNumber int
-	fmt.Scan(&pourNumber)
 
 	// 移動元のId
 	fromId := make([]int, pourNumber)
