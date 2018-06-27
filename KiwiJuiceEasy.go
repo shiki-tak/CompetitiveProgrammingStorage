@@ -4,6 +4,9 @@ import (
 	"fmt"
 )
 
+// ボトルの本数
+var n, pourNumber int
+
 func Min(x, y int) int {
 	if x > y {
 		return y
@@ -13,8 +16,6 @@ func Min(x, y int) int {
 
 func main() {
 
-	// ボトルの本数
-	var n, pourNumber int
 	fmt.Scan(&n, &pourNumber)
 
 	// ボトルの容量
