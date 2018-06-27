@@ -11,41 +11,8 @@ func Min(x, y int) int {
 	return x
 }
 
-/*
-ジュースを移動元から移動先へ注ぐ
-fromIdBottles: 移動元のボトルのジュースの量
-toIdBottles: 移動先のボトルのジュースの量
-fromIdCapacities: 移動元のボトルの容量
-toIdCapacities: 移動先のボトルの容量
-*/
-func Pour(fromIdBottle, toIdBottle, fromIdCapacitie, toIdCapacitie int) (int, int) {
-
-	// // 注ぐ量を移動先の容量 - 移動先の現在の量 で計算する
-	// pourAmount := toIdCapacities - toIdBottles
-	//
-	// // もし、pourAmountが移動元のボトルの量よりも少なければ、pourAmountを移動する
-	// if pourAmount < fromIdBottles {
-	// 	toIdBottles += pourAmount
-	// 	fromIdBottles -= pourAmount
-	//
-	// 	// そうでなければ、移動元のジュースを全て移動する
-	// } else {
-	// 	toIdBottles += fromIdBottles
-	// 	fromIdBottles = 0
-	// }
-
-	// toIdBottlesとfromIdBottlesの合計を計算
-	sum := toIdBottle + fromIdBottle
-
-	// 少ない方を取得
-	toIdBottle = Min(sum, toIdCapacitie)
-
-	fromIdBottle = sum - toIdBottle
-
-	return fromIdBottle, toIdBottle
-}
-
 func main() {
+
 	// ボトルの本数
 	var n, pourNumber int
 	fmt.Scan(&n, &pourNumber)
@@ -81,10 +48,13 @@ func main() {
 	// ジュースを移動したあとの実際に入っている量を計算する
 	for i := 0; i < pourNumber; i++ {
 		// 移動元と移動先のジュースの量を計算する
-		newFromIdBottle, newToIdBottle := Pour(bottles[fromId[i]], bottles[toId[i]], capacity[fromId[i]], capacity[toId[i]])
+		// toIdBottlesとfromIdBottlesの合計を計算
+		sum := bottles[toId[i]] + bottles[fromId[i]]
 
-		bottles[fromId[i]] = newFromIdBottle
-		bottles[toId[i]] = newToIdBottle
+		// 少ない方を取得
+		bottles[toId[i]] = Min(sum, capacity[toId[i]])
+
+		bottles[fromId[i]] = sum - bottles[toId[i]]
 	}
 
 	// 出力
