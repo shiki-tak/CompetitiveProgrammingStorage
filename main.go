@@ -2,6 +2,9 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
+
 	"github.com/GoBlockchain/consensus"
 	"github.com/GoBlockchain/core"
 )
@@ -39,5 +42,14 @@ func main() {
 				timeStamp,
 			))
 		}
+	}
+
+	// 作成したブロックを出力
+	for i := 0; i < 10; i++ {
+		blockAsJSON, err := json.Marshal(blockChain.Blocks[i])
+		if err != nil {
+			fmt.Printf("error at creating genesis block: %v", err)
+		}
+		fmt.Printf("%s\n", blockAsJSON)
 	}
 }

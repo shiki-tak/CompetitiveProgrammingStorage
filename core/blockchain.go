@@ -3,8 +3,6 @@ package core
 import (
 	"crypto/sha256"
 	"encoding/hex"
-	"encoding/json"
-	"fmt"
 	"time"
 )
 
@@ -41,11 +39,6 @@ func (b *Blockchain) CreateBlock(previousHash string, blockHash string, merkleRo
 
 	latestBlockIndex++
 
-	blockAsJSON, err := json.Marshal(block)
-	if err != nil {
-		fmt.Printf("error at creating genesis block: %v", err)
-	}
-	fmt.Printf("%s\n", blockAsJSON)
 	return block
 }
 

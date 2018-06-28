@@ -3,7 +3,6 @@ package consensus
 import (
 	"crypto/sha256"
 	"encoding/hex"
-	"fmt"
 	"strconv"
 	"time"
 )
@@ -21,7 +20,7 @@ func calcHash(previousHash string, merkleRoot string, nonce string, timeStamp in
 
 // Execute Proof Of Work
 func Pow(previousHash string, merkleRoot string) (string, int, int64) {
-	target := "00000"
+	target := "0000"
 	var blockHash string
 	var timeStamp int64
 	nonce := 0
@@ -33,7 +32,6 @@ func Pow(previousHash string, merkleRoot string) (string, int, int64) {
 
 		// 計算したハッシュ値とtargetが一致するかチェックする。一致すれば、trueを返す
 		matchTargetCondition := func(target string, calcResult string) bool {
-			fmt.Println(len(target))
 			if target == calcResult[:len(target)] {
 				return true
 			}
