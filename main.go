@@ -48,7 +48,7 @@ func main() {
 	for i := 0; i < 10; i++ {
 		blockAsJSON, err := json.Marshal(blockChain.Blocks[i])
 		if err != nil {
-			fmt.Printf("error at creating genesis block: %v", err)
+			fmt.Printf("Error when setting block to json: %v", err)
 		}
 		fmt.Printf("%s\n", blockAsJSON)
 	}
