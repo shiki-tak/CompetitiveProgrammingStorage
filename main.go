@@ -2,8 +2,6 @@
 package main
 
 import (
-	"time"
-
 	"github.com/GoBlockchain/consensus"
 	"github.com/GoBlockchain/core"
 )
@@ -30,7 +28,7 @@ func main() {
 
 		} else {
 			// Proof Of Workを行い、ブロックを生成する
-			blockHash, nonce, timeStamp := consensus.Pow(blockChain.Blocks[latestBlockIndex-1].PreviousHash, merkleRoot, time.Now().Unix())
+			blockHash, nonce, timeStamp := consensus.Pow(blockChain.Blocks[latestBlockIndex-1].PreviousHash, merkleRoot)
 
 			// ナンス値が見つかったらブロックチェーンにブロックを追加する
 			blockChain.Blocks = append(blockChain.Blocks, blockChain.CreateBlock(
