@@ -8,7 +8,8 @@ int main() {
   int n, sum;
   cin >> n;
 
-  for (int i = 1; i <= n; i++) sum = sum + i;
+  sum = n * (n + 1) / 2;
+
   cout << sum << endl;
 
   return 0;
