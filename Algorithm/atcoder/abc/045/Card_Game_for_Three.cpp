@@ -20,13 +20,7 @@ int game(int participant) {
     if (!s[participant][ap]) {
       return participant;
     } else {
-      if (s[participant][ap] == 'a') {
-        return game(0);
-      } else if (s[participant][ap] == 'b') {
-        return game(1);
-      } else {
-        return game(2);
-      }
+      return game(s[participant][ap] - 97);
     }
   } else if (participant == 1) {
     bp++;
@@ -34,13 +28,7 @@ int game(int participant) {
     if (!s[participant][bp]) {
       return participant;
     } else {
-      if (s[participant][bp] == 'a') {
-        return game(0);
-      } else if (s[participant][bp] == 'b') {
-        return game(1);
-      } else {
-        return game(2);
-      }
+      return game(s[participant][bp] - 97);
     }
   } else {
     cp++;
@@ -48,13 +36,7 @@ int game(int participant) {
     if (!s[participant][cp]) {
       return participant;
     } else {
-      if (s[participant][cp] == 'a') {
-        return game(0);
-      } else if (s[participant][cp] == 'b') {
-        return game(1);
-      } else {
-        return game(2);
-      }
+      return game(s[participant][cp] - 97);
     }
   }
 }
@@ -80,18 +62,9 @@ int main() {
   */
   ap++; // ゲーム開始
   win = game(0);
+  char winner = win + 65;
 
-  // 出力
-  switch (win) {
-    case  0:
-      cout << "A" << endl;
-      break;
-    case  1:
-      cout << "B" << endl;
-      break;
-    case  2:
-      cout << "C" << endl;
-      break;
-  }
+  cout << winner << endl;
+
   return 0;
 }
