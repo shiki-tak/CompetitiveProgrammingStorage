@@ -18,26 +18,19 @@ int game(int participant) {
   if (participant == 0) {
     ap++;
     // 勝利条件
-    if (!s[participant][ap]) {
-      return participant;
-    } else {
-      return game(s[participant][ap] - 97);
+    if (!s[participant][ap]) return participant;
+    else                     return game(s[participant][ap] - 97);
     }
   } else if (participant == 1) {
     bp++;
     // 勝利条件
-    if (!s[participant][bp]) {
-      return participant;
-    } else {
-      return game(s[participant][bp] - 97);
-    }
+    if (!s[participant][bp]) return participant;
+    else                     return game(s[participant][bp] - 97);
   } else {
     cp++;
     // 勝利条件
-    if (!s[participant][cp]) {
-      return participant;
-    } else {
-      return game(s[participant][cp] - 97);
+    if (!s[participant][cp]) return participant;
+    else                     return game(s[participant][cp] - 97);
     }
   }
 }
