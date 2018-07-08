@@ -1,8 +1,6 @@
 #include <iostream>
 #include <string>
 
-using namespace std;
-
 using std::cin;
 using std::cout;
 using std::endl;
@@ -11,7 +9,10 @@ using std::endl;
 string s[3];
 
 // A, B, Cのカードの配列の位置
-int ap, bp, cp;
+// カードのイテレータの初期値
+int ap = -1;
+int bp = -1;
+int cp = -1;
 
 int game(int participant) {
   if (participant == 0) {
@@ -44,15 +45,9 @@ int game(int participant) {
 int main() {
   // 勝った人を表す
   int win;
-  // カードのイテレータの初期値
-  ap = -1;
-  bp = -1;
-  cp = -1;
 
   // 手札の入力
-  for (int i = 0; i < 3; i++) {
-    cin >> s[i];
-  }
+  for (int i = 0; i < 3; i++) cin >> s[i];
 
   /* 勝者を判定する
   　　参加者は0, 1, 2で表す
