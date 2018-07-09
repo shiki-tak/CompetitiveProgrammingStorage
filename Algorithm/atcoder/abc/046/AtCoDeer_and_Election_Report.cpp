@@ -4,57 +4,26 @@
 using std::cin;
 using std::cout;
 using std::endl;
-using std::min;
+using std::max;
 
-int sum;
-int takahashiVotes[1001];
-int aokiVotes[1001];
+int main() {
+    int n;
+    cin >> n;
 
-void numberOfVotes(int i, int t, int a)
-{
-  if (takahashiVotes[i - 1] <= t && aokiVotes[i - 1] <= a) {
-    takahashiVotes[i] = t;
-    aokiVotes[i] = a;
-    sum = t + a;
-  } else {
-    if (takahashiVotes[i - 1] <= aokiVotes[i - 1]){
-      for (int j = 2; ;j++) {
-        if (takahashiVotes[i - 1] <= t * j && aokiVotes[i - 1] <= a * j) {
-          takahashiVotes[i] = t * j;
-          aokiVotes[i] = a * j;
-          sum = j * (t + a);
-          break;
-        }
-      }
-    } else {
-      for (int j = 2; ;j++) {
-        if (takahashiVotes[i - 1] <= t * j && aokiVotes[i - 1] <= a * j) {
-          takahashiVotes[i] = t * j;
-          aokiVotes[i] = a * j;
-          sum = j * (t + a);
-          break;
-        }
-      }
+    long long T = 1, A = 1;
+    for (int i = 0; i < n; ++i) {
+        long long t, a;
+        cin >> t;
+        cin >> a;
+        // 投票数がt:aとなる最小の自然数kを探す
+        // 投票数T, Aは T:A = k * t : k * a
+        // 　　　　　　　→ k = max(T/t, A/a)
+
+        long long k = max((t + T - 1) / t, (a + A - 1) / a);
+        T = k * t;
+        A = k * a;
     }
-  }
-}
 
-int main()
-{
-  int n, t, a;
-  cin >> n;
-
-  for (int i = 0; i < n; i++) {
-    cin >> t >> a;
-    if (i == 0) {
-      takahashiVotes[i] = t;
-      aokiVotes[i] = a;
-      sum = t + a;
-    } else {
-      numberOfVotes(i, t, a);
-    }
-  }
-  cout << sum << endl;
-
-  return 0;
+    cout << T + A << endl;
+    return 0;
 }
