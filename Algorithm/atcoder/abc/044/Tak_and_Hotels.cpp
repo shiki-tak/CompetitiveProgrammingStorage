@@ -8,14 +8,8 @@ int main ()
 {
   int n, k, x, y;
 
-  cin >> n;
-  cin >> k;
-  cin >> x;
-  cin >> y;
+  cin >> n >> k >> x >> y;
 
-  if (n - k > 0) {
-    cout << k * x + (n - k) * y << endl;
-  } else {
-    cout << n * x << endl;
-  }
+  if (n - k > 0) cout << k * x + (n - k) * y << endl;
+  else           cout << n * x << endl;
 }

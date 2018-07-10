@@ -12,8 +12,8 @@ int main() {
 
   cin >> s;
   for (char x : s) {
-    if (x == '0') res.push_back('0');
-    else if (x == '1') res.push_back('1');
+    if (x == '0')                   res.push_back('0');
+    else if (x == '1')              res.push_back('1');
     else if (x == 'B' && res != "") res.pop_back();
   }
   cout << res << endl;
