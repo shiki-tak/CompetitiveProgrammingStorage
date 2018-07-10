@@ -1,0 +1,40 @@
+{
+  "name": "contracts",
+  "version": "0.1.0",
+  "description": "Token contracts of RULi",
+  "main": "index.js",
+  "repository": "git@github.com:shiki-tak/ico-contracts.git",
+  "author": "shiki-tak",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-eslint": "^8.0.2",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "chai-bignumber": "^2.0.2",
+    "eslint": "^4.12.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "ethereumjs-testrpc": "4.0.1",
+    "fs": "0.0.1-security",
+    "mocha-junit-reporter": "^1.15.0",
+    "moment": "^2.19.3",
+    "solgraph": "^0.2.6",
+    "solium": "^1.0.8",
+    "truffle": "^4.0.1"
+  },
+  "scripts": {
+    "test": "scripts/test.sh",
+    "debug": "scripts/debug.sh",
+    "lint:sol": "yarn run solium -- --dir ./contracts",
+    "lint": "yarn run eslint . -- --fix && yarn lint:sol",
+    "compile": "rm -rf ./build/* && truffle compile",
+    "clean": "rm -rf ./build/* && yarn truffle networks -- clean",
+    "rpc": "yarn run testrpc -a 3 -i 10 -u 0 -u 1 -u 2",
+    "deploy": "yarn run clean && yarn truffle compile && truffle deploy --network development"
+  }
+}
