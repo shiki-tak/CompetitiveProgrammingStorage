@@ -1,4 +1,0 @@
-**/*.sol.js
-truffle.js
-test/helpers/advanceToBlock.js
-test/helpers/increaseTime.js
