@@ -1,16 +1,25 @@
 #include <iostream>
+#include <vector>
+#include <cmath>
 
 using std::cin;
 using std::cout;
 using std::endl;
+using std::vector;
+using std::sort;
 
 int main() {
-  int a, b, c;
+  vector<int> s;
 
-  cin >> a >> b >> c;
+  for (int i = 0; i < 3; i++) {
+    int x;
+    cin >> x;
+    s.push_back(x);
+  }
+  sort(s.begin(), s.end());
 
-  if (a + b == c || a + c == b || b + c == a) cout << "Yes" << endl;
-  else                                        cout << "No" << endl;
+  if (s[0] + s[1] == s[2]) cout << "Yes" << endl;
+  else                     cout << "No" << endl;
 
   return 0;
 }
