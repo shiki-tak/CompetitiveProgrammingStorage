@@ -4,16 +4,21 @@ using std::cin;
 using std::cout;
 using std::endl;
 
+long long x;
+
+long long count(long long n) {
+  long long sum = 0;
+  if (n != -1) sum = n / x + 1;
+  else sum = 0;
+  return sum;
+}
+
 int main() {
-  long long a, b, x, ans;
+  long long a, b;
 
   cin >> a >> b >> x;
 
-  ans = (b - a + 1) / x;
-
-  if (b % x == 0) ans++;
-
-  cout << ans << endl;
+  cout << (count(b) - count(a - 1)) << endl;
 
   return 0;
 }
