@@ -5,13 +5,21 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"log"
 )
 
+var fib [1000]int
+
 func fibonacci(x int) int {
-	if x > 1 {
-		return fibonacci(x-1) + fibonacci(x-2)
-	} else {
+	if x <= 1 {
 		return x
+	} else {
+		if fib[x] != 0 {
+			return fib[x]
+		} else {
+			fib[x] = fibonacci(x - 1) + fibonacci(x - 2)
+		}
+		return fib[x]
 	}
 }
 
@@ -28,6 +36,7 @@ func nextInt() int {
 
 func main() {
 	n := nextInt()
-
-	fmt.Printf("%d", fibonacci(n))
+	log.Println("calc start")
+	fmt.Printf("%d\n", fibonacci(n))
+	log.Println("calc end")
 }
