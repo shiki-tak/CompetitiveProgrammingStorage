@@ -4,12 +4,11 @@ using std::cin;
 using std::cout;
 using std::endl;
 
-int t[101];
+int t[101], ans[101];
 
 int main()
 {
-  int n, m;
-  int sumInit;
+  int n, m, sumInit, x, p;
 
   cin >> n;
   for (int i = 1; i <= n; i++) {
@@ -19,15 +18,10 @@ int main()
   }
 
   cin >> m;
-  int ans[m];
-
   for (int i = 1; i <= m; i++) {
-    int x, p, sum;
     cin >> x >> p;
-    sum = sumInit + p - t[x];
-    ans[i] = sum;
+    ans[i] = sumInit + p - t[x];
   }
-
   for (int i = 1; i <= m; i++) cout << ans[i] << endl;
 
   return 0;
