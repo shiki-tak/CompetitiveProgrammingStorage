@@ -1,36 +1,44 @@
 #include <iostream>
+#include <cmath>
 
 using std::cin;
 using std::cout;
 using std::endl;
+using std::max;
 
-int x[51];
-int n, a;
-
-int search(int i, int sum, int z)
-{
-  int res;
-  if (i == n) {
-    if (z != 0) {
-      if (z * a == sum) return 1;
-      else return 0;
-    } else {
-      return 0;
-    }
-  }
-  
-  res = search(i + 1, sum, z) + search(i + 1, sum + x[i], z + 1);
-
-  return res;
-}
+// dp[j][k][ka] が求めたいパターンの総和
+int dp[101][101][2501];
 
 int main()
 {
-  int cnt;
+  int n, a, maxX;
+  long long sum;
   cin >> n >> a;
-  for (int i = 0; i < n; i++) {
+  int x[n];
+
+  for (int i = 1; i <= n; i++) {
     cin >> x[i];
   }
-  cnt = search(0, 0, 0);
-  cout << cnt << endl;
+
+  // maxX = max(for (int i = 1; i <= n; i++) x[i], a)
+  for (int i = 1; i <= n; i++) {
+    if (maxX < x[i]) maxX = x[i];
+  }
+
+  for (int j = 0; j <= n; j++) {
+    for (int k = 0; k <= n; k++) {
+      for (int s = 0; s <= n * maxX; s++) {
+        if (1 <= j && x[j] > s) dp[j][k][s] = dp[j - 1][k][s];
+        else if (1 <= j && 1 <= k && x[j] <= s) dp[j][k][s] = dp[j - 1][k][s] + dp[j - 1][k - 1][s - x[j]];
+        else if (j == 0 && k == 0 && s == 0) dp[j][k][s] = 1;
+        else dp[j][k][s] = 0;
+      }
+    }
+  }
+
+  for (int i = 1; i <= n; i++) {
+    sum += dp[n][i][i * a];
+  }
+
+  cout << sum << endl;
 }
