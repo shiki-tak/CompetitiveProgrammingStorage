@@ -1,7 +1,27 @@
 #include <iostream>
 #include <string>
+#include <cmath>
+#include <map>
 
 using namespace std;
+
+// input:
+// 4
+// fishing gardening swimming fishing
+// hunting fishing fishing biting
+// return: 4
+//
+// input:
+// 4
+// variety diversity loquacity courtesy
+// talking speaking discussion meeting
+// return: 1
+//
+// input:
+// 4
+// snakes programming cobra monty
+// python python anaconda python
+// return: 3
 
 int main()
 {
@@ -9,26 +29,26 @@ int main()
   string first[n];
   string second[n];
 
-  for (int i = 0; i < n; i++) cin >> first[i];
-  for (int i = 0; i < n; i++) cin >> second[i];
-
-  // 誰も呼ばなければ1
-  int friends = 1;
+  map<string, int> interestingMap;
 
   for (int i = 0; i < n; i++) {
-    int x = 1;
-    int y = 1;
-    for (int j = 0; j < n; j++) {
-      if (i != j) {
-        if (first[i] == first[j] || first[i] == second[j]) x++;
-        if (second[i] == first[j] || second[i] == second[j]) y++;
-      }
-    }
-    if (x > friends) friends = x;
-    else if (y > friends) friends = y;
+    cin >> first[i];
+    interestingMap[first[i]] = 0;
+  }
+  for (int i = 0; i < n; i++) {
+    cin >> second[i];
+    interestingMap[second[i]] = 0;
   }
 
-  cout << friends << endl;
+  // それぞれの興味について加算していく
+  for (string x : first) interestingMap[x]++;
+  for (string x : second) interestingMap[x]++;
+
+  // mapの中で最大値を見つけてansにする
+  int ans;
+  for (auto &x : interestingMap) ans = max(ans, x.second);
+
+  cout << ans << endl;
 
   return 0;
 }
