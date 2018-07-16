@@ -1,9 +1,12 @@
 #include <iostream>
 #include <cmath>
+#include <climits>
+#include <vector>
 
 using namespace std;
 
 typedef long long ll;
+
 // input: 1 2 3
 // return: 12
 //
@@ -13,26 +16,29 @@ typedef long long ll;
 // input: 1000 999 998 997 996 995
 // return: 986074810223904000
 
+// numbersをvectorで保存して、sort
+// minimum numberを+1して積を計算する
 int main()
 {
   int n; cin >> n;
-  int numbers[n];
-
-  for (int i = 0; i < n; i++) cin >> numbers[i];
-
-  ll max_product = 1;
+  vector<int> numbers;
 
   for (int i = 0; i < n; i++) {
-    ll product = 1;
-    // 積を計算
-    for (int j = 0; j < n; j++) {
-      if (i == j) product *= (numbers[j] + 1);
-      else        product *= numbers[j];
-    }
-    max_product = max(max_product, product);
+    int x; cin >> x;
+    numbers.push_back(x);
   }
 
-  cout << max_product << endl;
+  // 昇順にsort
+  sort(numbers.begin(), numbers.end());
+
+  ll product = 1;
+
+  for (int i = 0; i < n; i++) {
+    if (i == 0) product *= (numbers[i] + 1);
+    else        product *= numbers[i];
+  }
+
+  cout << product << endl;
 
   return 0;
 }
