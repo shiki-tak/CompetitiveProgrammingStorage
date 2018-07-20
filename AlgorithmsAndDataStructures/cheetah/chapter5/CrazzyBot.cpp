@@ -19,7 +19,7 @@ long double dfs(int x, int y, int n) {
     // ロボットが移動した点の値を1にして、すでに通過したことがあるこにする
     board[x][y] = 1;
 
-　  // search
+    // search
     for (int i = 0; i < 4; i++) ret += dfs(x + vx[i], y + vy[i], n - 1) * probability[i];
 
     // 探索が完了したらボードを初期設定に戻す
