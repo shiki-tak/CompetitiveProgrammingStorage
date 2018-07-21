@@ -17,9 +17,9 @@ int main()
         }
         // rotation
         char x = s[s.length() - 1];
-        for (int i = s.length() - 1; i >= 0; i--) {
-            if (i == 0) s[i] = x;
-            else        s[i] = s[i - 1];
+        for (int j = s.length() - 1; j >= 0; j--) {
+            if (j == 0) s[j] = x;
+            else        s[j] = s[j - 1];
         }
     }
 
