@@ -1,10 +1,8 @@
 #include <iostream>
-#include <vector>
 #include <queue>
 
 using namespace std;
 
-typedef vector< vector<char> > field_t;
 typedef pair<int, int> point_t;
 
 char maze[51][51];
