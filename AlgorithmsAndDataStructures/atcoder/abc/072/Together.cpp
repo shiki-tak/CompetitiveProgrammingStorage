@@ -12,7 +12,7 @@ int main()
     for (int i = 1; i <= n; i++) {
         int a; cin >> a;
         countNum[a]++;
-        if (a > 0) countNum[a - 1]++;
+        if (a > 0)      countNum[a - 1]++;
         if (a < 100000) countNum[a + 1]++;
      }
  
