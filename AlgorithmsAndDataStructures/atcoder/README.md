@@ -5,7 +5,6 @@
 
 ##### 精選10問の類題
 - [ABC 074 C - Sugar Water](https://beta.atcoder.jp/contests/abc074/tasks/arc083_a)
-- [ABC 073 C - Write and Erase](https://beta.atcoder.jp/contests/abc073/tasks/abc073_c)
 
 ##### 「ここまで解いたら」以降の問題
 - [ABC 096 C - Grid Repainting 2](https://beta.atcoder.jp/contests/abc096/tasks/abc096_c)
