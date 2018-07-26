@@ -18,34 +18,42 @@ int main()
 
     for (int i = 0; ;i++) {
         for (int j = 0;;j++) {
-            x = 100 * a * i + 200 * b * j;
-            y = c * i + d * j;
 
             cout << "i: " << i << endl;
             cout << "j: " << j << endl;
 
-            if (x + y > f) {
-                // continue;
-                full = true;
-                break;
+            x = 100 * a * i + 200 * b * j;
+            y = c * i + d * j;
 
-            } else {
-                if (i != 0 || j != 0 ) {
-                    cout << "x: " << x << endl;
-                    cout << "y: " << y << endl;
-                    if (ret < (100 * y) / (x + y)) {
-                        ret = (100 * y) / (x + y);
-                        maxX = x;
-                        maxY = y;
-                    }
-                }
+            if (x + y >= f) {
+                cout << "いっぱい" << endl;
+                cout << "x: " << x << endl;
+                cout << "y: " << y << endl;
+
+                x = 100 * a * i + 200 * b * (j - 1);
+                y = c * i + d * (j - 1);
+                break;
             }
         }
-        if (full && ret == 0) continue;
-        else                  break;
+        // x, yのどちらも0だった場合、濃度が計算できない
+        if ((x != 0 || y != 0) && 100 * y <= e * x) {
+
+            cout << "x: " << x << endl;
+            cout << "y: " << y << endl;
+
+            if (ret < (100 * y) / (x + y)) {
+                ret = (100 * y) / (x + y);
+                cout << "ret: " << ret << endl;
+                maxX = x;
+                maxY = y;
+                continue;
+            } else {
+                break;
+            }
+        }
     }
 
-    cout << (x + y) << " " << y << endl;
+    cout << (maxX + maxY) << " " << maxY << endl;
 
     return 0;
 }
