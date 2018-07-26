@@ -4,8 +4,6 @@
 
 using namespace std;
 
-typedef pair<int, int> WESet;
-
 int main()
 {
     int n; cin >> n;
