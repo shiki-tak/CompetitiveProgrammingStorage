@@ -1,10 +1,9 @@
-### けんちょん 過去問精選 10 問で未解決の問題（2018/7/28）
+### けんちょん 過去問精選 10 問で未解決の問題（2018/7/27）
 
 [Reference]  
 [AtCoder に登録したら次にやること ～ これだけ解けば十分闘える！過去問精選 10 問 ～](https://qiita.com/drken/items/fd4e5e3630d0f5859067#%E7%AC%AC-7-%E5%95%8F--abc-085-b---kagami-mochi-200-%E7%82%B9)
 
 ##### 精選10問の類題
-- [ABC 074 C - Sugar Water](https://beta.atcoder.jp/contests/abc074/tasks/arc083_a)
 
 ##### 「ここまで解いたら」以降の問題
 - [ABC 096 C - Grid Repainting 2](https://beta.atcoder.jp/contests/abc096/tasks/abc096_c)

@@ -7,48 +7,31 @@ int main()
 {
     int a, b, c, d, e, f; cin >> a >> b >> c >> d >> e >> f;
 
-    int i = 0, j = 0;
-    float ret = 0;
-    int maxX = 0;
-    int maxY = 0;
-    bool full = false;
+    float ret = -1;
+    int maxX = 0, maxY = 0;
+    float x = 0, y = 0;
 
-    float x = 0;
-    float y = 0;
-
-    for (int i = 0; ;i++) {
-        for (int j = 0;;j++) {
-
-            cout << "i: " << i << endl;
-            cout << "j: " << j << endl;
+    for (int i = 0; i < 30; i++) {
+        for (int j = 0; j < 30; j++) {
 
             x = 100 * a * i + 200 * b * j;
-            y = c * i + d * j;
+            if (x > f) break;
 
-            if (x + y >= f) {
-                cout << "いっぱい" << endl;
-                cout << "x: " << x << endl;
-                cout << "y: " << y << endl;
+            for (int k = 0; ; k++) {
+                if (x + c * k > f) break;
 
-                x = 100 * a * i + 200 * b * (j - 1);
-                y = c * i + d * (j - 1);
-                break;
-            }
-        }
-        // x, yのどちらも0だった場合、濃度が計算できない
-        if ((x != 0 || y != 0) && 100 * y <= e * x) {
+                for (int l = 0; ; l++) {
+                    y  = c * k + d * l;
+                    if (x + y > f) break;
 
-            cout << "x: " << x << endl;
-            cout << "y: " << y << endl;
-
-            if (ret < (100 * y) / (x + y)) {
-                ret = (100 * y) / (x + y);
-                cout << "ret: " << ret << endl;
-                maxX = x;
-                maxY = y;
-                continue;
-            } else {
-                break;
+                    if (x != 0 && (100 * y) / x <= e) {
+                        if (ret < (100 * y) / (x + y)) {
+                            ret = (100 * y) / (x + y);
+                            maxX = x;
+                            maxY = y;
+                        }
+                    }                   
+                }
             }
         }
     }
