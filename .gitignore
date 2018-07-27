@@ -2,3 +2,6 @@
 .vscode/
 *.o
 *.class
+/bin/
+.classpath
+.project
