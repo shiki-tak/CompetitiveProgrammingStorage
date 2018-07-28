@@ -34,8 +34,7 @@ int main()
         }
     }
 
-    if (ansFlag) cout << "Yes" << endl;
-    else         cout << "No" << endl;
+    cout << (ansFlag ? "Yes" : "No") << endl;
 
     return 0;
 }
