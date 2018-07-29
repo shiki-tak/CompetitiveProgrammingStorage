@@ -8,4 +8,3 @@
 ##### 「ここまで解いたら」以降の問題
 - [ABC 096 C - Grid Repainting 2](https://beta.atcoder.jp/contests/abc096/tasks/abc096_c)
 - [ABC 098 C - Attention](https://beta.atcoder.jp/contests/abc098/tasks/arc098_a)
-- [ABC 079 C - Train Ticket](https://beta.atcoder.jp/contests/abc079/tasks/abc079_c)
