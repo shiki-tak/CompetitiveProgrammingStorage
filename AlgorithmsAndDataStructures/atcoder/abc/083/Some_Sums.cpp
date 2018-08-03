@@ -1,24 +1,20 @@
 #include <iostream>
-#include <string>
 
 using namespace std;
 
 int main()
 {
-  int n, a, b, sum;
+  int n, a, b; cin >> n >> a >> b;
+  int sum = 0;
 
-  cin >> n >> a >> b;
-
-  // 判定する
-  for (int i = 0; i <= n; i++) {
-    int num = 0;
-    string strN = to_string(i);
-
-    for (int j = 0; j < strN.length(); j++) {
-      char cN = strN[j];
-      num += int(cN) - 48;
+  for (int i = a; i <= n; i++) {
+    int x = 0;
+    int target = i;
+    while(target) {
+      x += target % 10;
+      target /= 10;
     }
-    if (num >= a && num <= b) sum += i;
+    if (x >= a && x <= b) sum += i;
   }
 
   cout << sum << endl;
