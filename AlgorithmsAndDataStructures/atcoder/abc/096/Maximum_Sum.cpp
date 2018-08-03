@@ -16,13 +16,9 @@ int main()
     sort(v.begin(), v.end(), greater<char>());
 
     for (int i = 0; i < m; i++) {
-        if (i == 0) {
-            sum += pow(2, k) * v[i];
-        } else {
-            sum += v[i];
-        }
+        if (i == 0) sum += pow(2, k) * v[i];
+        else        sum += v[i];
     }
-
     
     cout << sum << endl;        
     return 0;
