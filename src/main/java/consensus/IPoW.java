@@ -2,5 +2,5 @@ package consensus;
 
 public interface IPoW {
 
-	PoW CalcHash(String PreviousHash, String MerkleRoot, String Nonce, long TimeStamp);
+	PoW ExecPoW(String PreviousHash, String MerkleRoot, String Nonce);
 }
