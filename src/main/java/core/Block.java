@@ -1,10 +1,11 @@
 package core;
 
-public interface Block {
-	int height = 0;
-	String previousHash = "0x0";
-	String blockHash = "0x0";
-	String merkleRoot = "0x0";
-	int nonce = 0;
-	int timeStamp = 0;
+public class Block implements IBlock {
+	int Height = 0;
+	String PreviousHash = "0x0";
+	String BlockHash = "0x0";
+	String MerkleRoot = "0x0";
+	int Nonce = 0;
+	long TimeStamp = 0;
+
 }
