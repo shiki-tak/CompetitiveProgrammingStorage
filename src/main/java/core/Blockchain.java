@@ -1,26 +1,27 @@
 package core;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bouncycastle.jcajce.provider.digest.SHA3;
+import org.bouncycastle.util.encoders.Hex;
 
 public class Blockchain implements IBlockchain {
 
 	private int LatestBlockIndex = 0;
 
+	public List<Block> Blocks = new ArrayList<>();
+
 	@Override
 	public Block CreateGenesisBlock(String MerkleRoot) {
-		String text = "genesis block";
+		String input = "genesis block";
 		String BlockHash = "0x0";
-		try {
-			MessageDigest digest = MessageDigest.getInstance("SHA-256");
-			byte[] BlockHashAsBytes = digest.digest(text.getBytes());
 
-			BlockHash = String.format("%040x", new BigInteger(1, BlockHashAsBytes));
+		SHA3.DigestSHA3 digestSHA3 = new SHA3.Digest512();
+		byte[] digest = digestSHA3.digest(input.getBytes());
 
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
+		BlockHash = "0x" + Hex.toHexString(digest);
+
 		return CreateBlock(
 				"0x0000000000000000000000000000000000000000000000000000000000000000",
 				BlockHash,
@@ -35,12 +36,12 @@ public class Blockchain implements IBlockchain {
 
 		Block block = new Block();
 
-		block.Height = LatestBlockIndex;
-		block.PreviousHash = PreviousHash;
-		block.BlockHash = BlockHash;
-		block.MerkleRoot = MerkleRoot;
-		block.Nonce = Nonce;
-		block.TimeStamp = TimeStamp;
+		block.setHeight(LatestBlockIndex);
+		block.setPreviousHash(PreviousHash);
+		block.setBlockHash(BlockHash);
+		block.setMerkleRoot(MerkleRoot);
+		block.setNonce(Nonce);
+		block.setTimeStamp(TimeStamp);
 
 		LatestBlockIndex++;
 

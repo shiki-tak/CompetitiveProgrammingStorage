@@ -1,10 +1,6 @@
 package core;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public interface IBlockchain {
-	List<IBlock> blocks = new ArrayList<>();
 
 	Block CreateGenesisBlock(String MerkleRoot);
 
