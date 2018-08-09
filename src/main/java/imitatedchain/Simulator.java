@@ -25,13 +25,15 @@ public class Simulator {
 								MerkleRoot,
 								PoWResult.Nonce,
 								PoWResult.TimeStamp));
+
+				// 作成したブロックを出力
+				System.out.printf("*** Block %d *** %n", BlockChain.Blocks.get(i).getHeight());
+				System.out.printf("TimeStamp: %d%n", BlockChain.Blocks.get(i).getTimeStamp());
+				System.out.printf("Hash: %s%n", BlockChain.Blocks.get(i).getBlockHash());
+				System.out.printf("Previous Hash: %s%n", BlockChain.Blocks.get(i).getPreviousHash());
+				System.out.printf("Previous Nonce: %d%n", BlockChain.Blocks.get(i).getNonce());
+				System.out.println();
 			}
 		}
-
-		// 作成したブロックを出力
-		for (int i = 0; i < 10; i++) {
-			System.out.println(BlockChain.Blocks.get(i).getBlockHash());
-		}
-
 	}
 }
