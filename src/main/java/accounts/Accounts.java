@@ -9,45 +9,39 @@ import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 import java.security.spec.ECGenParameterSpec;
 
-import javax.xml.bind.DatatypeConverter;
-
 import org.bouncycastle.jcajce.provider.digest.SHA3;
 import org.bouncycastle.util.encoders.Hex;
 
 public class Accounts {
 
 	public static void main(String[] args) {
-		Accounts account = new Accounts();
+		System.out.println(createNewAccount());
+	}
 
+	public static String createNewAccount() {
 		try {
-				KeyPair keyPair = account.getKeyPair();
+			KeyPair keyPair = getKeyPair();
+			Key[] keys = new Key[] {keyPair.getPrivate(), keyPair.getPublic()};
+			String PublicKey = getStringPublicKey(keys[1]);
+			String Address = createAddress(PublicKey);
+			return Address;
 
-				Key[] keys = new Key[] {keyPair.getPrivate(), keyPair.getPublic()};
-				String privateKey = DatatypeConverter.printHexBinary(keys[0].getEncoded()).substring(64, 128);
-				String publicKey = DatatypeConverter.printHexBinary(keys[1].getEncoded()).substring(46, 176);
-
-				System.out.print("private key: ");
-				System.out.println(privateKey);
-				System.out.print("public key: ");
-				System.out.println(keys[1]);
-				System.out.println(publicKey);
-
-				String EthAddress = createNewAccount(publicKey);
-				System.out.println("EthAddress: ");
-				System.out.println(EthAddress);
-
-		} catch (NoSuchAlgorithmException e) {
+		} catch (NoSuchAlgorithmException | NoSuchProviderException | InvalidAlgorithmParameterException e) {
 			e.printStackTrace();
-		} catch (NoSuchProviderException e) {
-			e.printStackTrace();
-		} catch (InvalidAlgorithmParameterException e) {
-			e.printStackTrace();
+			return e.getMessage();
 		}
 	}
 
-	private static String createNewAccount(String publicKey) {
+	private static String getStringPublicKey(Key PublicKey) {
+
+		String StringPublicKey = Hex.toHexString(PublicKey.getEncoded()).substring(46, 176);
+
+		return StringPublicKey;
+	}
+
+	private static String createAddress(String PublicKey) {
 		// 先頭の04を取り除く
-		String s = publicKey.substring(2, 128);
+		String s = PublicKey.substring(2, 128);
 		// 全部小文字にする
 		s.toLowerCase();
 		SHA3.DigestSHA3 digestSHA3 = new SHA3.Digest256();
@@ -60,7 +54,7 @@ public class Accounts {
 		return EthAddress;
 	}
 
-	public KeyPair getKeyPair() throws NoSuchAlgorithmException, NoSuchProviderException, InvalidAlgorithmParameterException {
+	public static KeyPair getKeyPair() throws NoSuchAlgorithmException, NoSuchProviderException, InvalidAlgorithmParameterException {
 		KeyPairGenerator keyGen = KeyPairGenerator.getInstance("EC");
 		ECGenParameterSpec ecSpec = new ECGenParameterSpec("secp256k1");
 		keyGen.initialize(ecSpec, new SecureRandom());
