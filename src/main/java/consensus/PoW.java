@@ -6,7 +6,7 @@ import org.bouncycastle.util.encoders.Hex;
 public class PoW implements IPoW {
 
 	// TODO: Targetの計算
-	public String Target = "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc";
+	public String Target = "0001000000111111111111111111111111111111111111111111111111111111";
 	public String BlockHash = "0x0";
 	public long TimeStamp = 0;
 	public int Nonce = 0;
@@ -27,6 +27,7 @@ public class PoW implements IPoW {
 	public PoW ExecPoW(String PreviousHash, String MerkleRoot) {
 
 		PoW PoWResult = new PoW();
+		int Nonce = 0;
 
 		while(true) {
 			long TimeStamp = System.currentTimeMillis() / 1000L;
@@ -35,9 +36,11 @@ public class PoW implements IPoW {
 
 			if (PoWResult.Target.compareTo(CalcResult) > 0) {
 				PoWResult.BlockHash = "0x" + CalcResult;
+				PoWResult.TimeStamp = TimeStamp;
+				PoWResult.Nonce = Nonce;
 				break;
 			}
-			PoWResult.Nonce++;
+			Nonce++;
 		}
 		return PoWResult;
 	}
