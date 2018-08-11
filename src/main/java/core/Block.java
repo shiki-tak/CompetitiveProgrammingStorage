@@ -1,59 +1,45 @@
 package core;
 
 public class Block implements IBlock {
+
 	private int Height = 0;
-	private String PreviousHash = "0x0";
-	private String BlockHash = "0x0";
-	private String MerkleRoot = "0x0";
-	private int Nonce = 0;
-	private long TimeStamp = 0;
+
+	private Transaction[] transactions;
+	BlockHeader blockHeader = new BlockHeader();
+
+	Block(String previousHash, String blockHash, String merkleRoot, int nonce, long timeStamp) {
+
+		this.blockHeader.setPreviousHash(previousHash);
+		this.blockHeader.setBlockHash(blockHash);
+		this.blockHeader.setMerkleRoot(merkleRoot);
+		this.blockHeader.setNonce(nonce);
+		this.blockHeader.setTimeStamp(timeStamp);
+	}
 
 	public int getHeight() {
-		return Height;
+	return Height;
 	}
 
 	public void setHeight(int height) {
 		Height = height;
 	}
 
-	public String getPreviousHash() {
-		return PreviousHash;
+
+	public BlockHeader getBlockHeader() {
+		return blockHeader;
 	}
 
-	public void setPreviousHash(String previousHash) {
-		PreviousHash = previousHash;
+	public void setBlockHeader(BlockHeader blockHeader) {
+		this.blockHeader = blockHeader;
 	}
 
-	public String getBlockHash() {
-		return BlockHash;
+	public Transaction[] getTransactions() {
+		return transactions;
 	}
 
-	public void setBlockHash(String blockHash) {
-		BlockHash = blockHash;
+	public void setTransactions(Transaction[] transactions) {
+		this.transactions = transactions;
 	}
 
-	public String getMerkleRoot() {
-		return MerkleRoot;
-	}
-
-	public void setMerkleRoot(String merkleRoot) {
-		MerkleRoot = merkleRoot;
-	}
-
-	public int getNonce() {
-		return Nonce;
-	}
-
-	public void setNonce(int nonce) {
-		Nonce = nonce;
-	}
-
-	public long getTimeStamp() {
-		return TimeStamp;
-	}
-
-	public void setTimeStamp(long timeStamp) {
-		TimeStamp = timeStamp;
-	}
 
 }

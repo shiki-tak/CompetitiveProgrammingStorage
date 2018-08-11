@@ -8,50 +8,42 @@ import org.bouncycastle.util.encoders.Hex;
 
 public class Blockchain implements IBlockchain {
 
-	private int LatestBlockIndex = 0;
+	private int latestBlockIndex = 0;
 
-	public List<Block> Blocks = new ArrayList<>();
+	public List<Block> blocks = new ArrayList<>();
 
 	@Override
-	public Block CreateGenesisBlock(String MerkleRoot) {
+	public Block CreateGenesisBlock(String merkleRoot) {
 		String input = "genesis block";
-		String BlockHash = "0x0";
 
 		SHA3.DigestSHA3 digestSHA3 = new SHA3.Digest512();
 		byte[] digest = digestSHA3.digest(input.getBytes());
 
-		BlockHash = "0x" + Hex.toHexString(digest);
+		String blockHash = "0x" + Hex.toHexString(digest);
 
 		return CreateBlock(
 				"0x0000000000000000000000000000000000000000000000000000000000000000",
-				BlockHash,
-				MerkleRoot,
+				blockHash,
+				merkleRoot,
 				42,
 				System.currentTimeMillis() / 1000L
 				);
 	}
 
 	@Override
-	public Block CreateBlock(String PreviousHash, String BlockHash, String MerkleRoot, int Nonce, long TimeStamp) {
+	public Block CreateBlock(String previousHash, String blockHash, String merkleRoot, int nonce, long timeStamp) {
 
-		Block block = new Block();
+		Block block = new Block(previousHash, blockHash, merkleRoot, nonce, timeStamp);
+		// TODO: blockのインスタンスを作った後にblockのheightをセットするのはイマイチ...
+		block.setHeight(latestBlockIndex);
 
-		block.setHeight(LatestBlockIndex);
-		block.setPreviousHash(PreviousHash);
-		block.setBlockHash(BlockHash);
-		block.setMerkleRoot(MerkleRoot);
-		block.setNonce(Nonce);
-		block.setTimeStamp(TimeStamp);
-
-		LatestBlockIndex++;
+		latestBlockIndex++;
 
 		return block;
 	}
 
 	@Override
 	public int GetLatestBlockIndex() {
-		return this.LatestBlockIndex;
+		return this.latestBlockIndex;
 	}
-
-
 }
