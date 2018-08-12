@@ -2,8 +2,9 @@
 
 - Consensus(PoW)
 - Account
-- Patricia Tree
+- Merkle Patricia Tree
 - Transfer
+- Capitals-based checksum
 
 ## Goal
 
