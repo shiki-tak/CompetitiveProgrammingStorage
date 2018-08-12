@@ -1,6 +1,6 @@
 package core;
 
-public class Block implements IBlock {
+public class Block {
 	private int height;
 	private Transaction[] transactions;
 	private BlockHeader blockHeader;
