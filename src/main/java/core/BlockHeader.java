@@ -2,58 +2,27 @@ package core;
 
 public class BlockHeader {
 
-	private String PreviousHash = "0x0";
-	private String BlockHash = "0x0";
-	private String MerkleRoot = "0x0";
-	private String StateRoot = "0x0";
-	private int Nonce = 0;
-	private long TimeStamp = 0;
+	private String previousHash;
+	private String blockHash;
+	private String merkleRoot;
+	private String stateRoot;
 
-	public String getPreviousHash() {
-		return PreviousHash;
-	}
+	private int nonce;
+	private long timeStamp;
 
-	public void setPreviousHash(String previousHash) {
-		PreviousHash = previousHash;
-	}
+	// getter
+	public String getPreviousHash() { return previousHash; }
+	public String getBlockHash() { return blockHash; }
+	public String getMerkleRoot() { return merkleRoot; }
+	public String getStateRoot() { return stateRoot; }
+	public int getNonce() { return nonce; }
+	public long getTimeStamp() { return timeStamp; }
 
-	public String getBlockHash() {
-		return BlockHash;
-	}
-
-	public void setBlockHash(String blockHash) {
-		BlockHash = blockHash;
-	}
-
-	public String getMerkleRoot() {
-		return MerkleRoot;
-	}
-
-	public void setMerkleRoot(String merkleRoot) {
-		MerkleRoot = merkleRoot;
-	}
-
-	public int getNonce() {
-		return Nonce;
-	}
-
-	public void setNonce(int nonce) {
-		Nonce = nonce;
-	}
-
-	public long getTimeStamp() {
-		return TimeStamp;
-	}
-
-	public void setTimeStamp(long timeStamp) {
-		TimeStamp = timeStamp;
-	}
-
-	public String getStateRoot() {
-		return StateRoot;
-	}
-
-	public void setStateRoot(String stateRoot) {
-		StateRoot = stateRoot;
-	}
+	// setter
+	public void setPreviousHash(String previousHash) { this.previousHash = previousHash; }
+	public void setBlockHash(String blockHash) { this.blockHash = blockHash; }
+	public void setMerkleRoot(String merkleRoot) { this.merkleRoot = merkleRoot; }
+	public void setStateRoot(String stateRoot) { this.stateRoot = stateRoot; }
+	public void setNonce(int nonce) { this.nonce = nonce; }
+	public void setTimeStamp(long timeStamp) { this.timeStamp = timeStamp; }
 }
