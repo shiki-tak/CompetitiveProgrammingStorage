@@ -3,45 +3,43 @@ package consensus;
 import org.bouncycastle.jcajce.provider.digest.SHA3;
 import org.bouncycastle.util.encoders.Hex;
 
-public class PoW implements IPoW {
+import core.Blockchain;
 
-	// TODO: Targetの計算
-	public String Target = "0001000000111111111111111111111111111111111111111111111111111111";
-	public String BlockHash = "0x0";
-	public long TimeStamp = 0;
-	public int Nonce = 0;
+public final class PoW {
+	// TODO: targetの計算
+	private final String target = "0001000000111111111111111111111111111111111111111111111111111111";
+	private Blockchain blockChain;
+	private String merkleRoot;
 
-	// TODO: ユーティリティとしてまとめる
-	public String CalcHash(String PreviousHash, String MerkleRoot, String Nonce, String TimeStamp) {
-		// sha3でハッシュ計算を行う
-		String input = PreviousHash + MerkleRoot + Nonce + TimeStamp;
-		SHA3.DigestSHA3 digestSHA3 = new SHA3.Digest512();
-		byte[] digest = digestSHA3.digest(input.getBytes());
-
-//		return String.format("%040x", new BigInteger(1, digest));
-		return Hex.toHexString(digest);
+	public PoW(Blockchain blockChain, String merkleRoot) {
+		this.blockChain = blockChain;
+		this.merkleRoot = merkleRoot;
 	}
 
+	// TODO: MerkleRootをトランザクション型として受け取る
+	public PoWResult exec() {
+		String hash = "";
+		int nonce = 0;
+		long timeStamp = System.currentTimeMillis() / 1000L;
 
-	@Override
-	public PoW ExecPoW(String PreviousHash, String MerkleRoot) {
-
-		PoW PoWResult = new PoW();
-		int Nonce = 0;
-
-		while(true) {
-			long TimeStamp = System.currentTimeMillis() / 1000L;
-			// ハッシュ値計算を行う
-			String CalcResult = CalcHash(PreviousHash, MerkleRoot, String.valueOf(Nonce), String.valueOf(TimeStamp));
-
-			if (PoWResult.Target.compareTo(CalcResult) > 0) {
-				PoWResult.BlockHash = "0x" + CalcResult;
-				PoWResult.TimeStamp = TimeStamp;
-				PoWResult.Nonce = Nonce;
-				break;
-			}
-			Nonce++;
+		for (; target.compareTo(hash) <= 0; nonce++, timeStamp = System.currentTimeMillis() / 1000L) {
+			hash = CalcHash(nonce, timeStamp);
 		}
-		return PoWResult;
+
+		PoWResult result = new PoWResult("0x" + hash, nonce, timeStamp);
+		return result;
+	}
+
+	// TODO: ユーティリティとしてまとめる
+	private String CalcHash(int nonce, long timeStamp) {
+		// sha3でハッシュ計算を行う
+		String rawData = blockChain.getLatestBlock().getBlockHeader().getPreviousHash() +
+				merkleRoot +
+				nonce +
+				timeStamp;
+		SHA3.DigestSHA3 digestSHA3 = new SHA3.Digest512();
+		byte[] digest = digestSHA3.digest(rawData.getBytes());
+
+		return Hex.toHexString(digest);
 	}
 }

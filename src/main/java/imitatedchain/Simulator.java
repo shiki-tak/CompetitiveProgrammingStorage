@@ -1,6 +1,7 @@
 package imitatedchain;
 
 import consensus.PoW;
+import consensus.PoWResult;
 import core.Block;
 import core.Blockchain;
 
@@ -9,20 +10,20 @@ public class Simulator {
 	public static void main(String[] args) {
 		String merkleRoot = "0x0";
 		Blockchain blockChain = new Blockchain();
-		PoW Pow = new PoW();
 
 		for (int i = 0; i < 10; i++) {
 			if (i == 0) {
 				// Genesis blockの作成
 				blockChain.createGenesisBlock(merkleRoot);
 			} else {
-				PoW PoWResult = Pow.ExecPoW(blockChain.getLatestBlock().getBlockHeader().getBlockHash(), merkleRoot);
+				PoW pow = new PoW(blockChain, merkleRoot);
+				PoWResult powResult = pow.exec();
 				Block block = new Block(
 						blockChain.getLatestBlock().getBlockHeader().getBlockHash(),
-						PoWResult.BlockHash,
+						powResult.blockHash,
 						merkleRoot,
-						PoWResult.Nonce,
-						PoWResult.TimeStamp
+						powResult.nonce,
+						powResult.timeStamp
 						);
 
 				blockChain.append(block);
