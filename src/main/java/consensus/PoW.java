@@ -7,7 +7,7 @@ import core.Blockchain;
 
 public final class PoW {
 	// TODO: targetの計算
-	private final String target = "0001000000111111111111111111111111111111111111111111111111111111";
+	private final String target = "00001000111111111111111111111111111111111111111111111111111111";
 	private Blockchain blockChain;
 	private String merkleRoot;
 
@@ -22,9 +22,11 @@ public final class PoW {
 		int nonce = 0;
 		long timeStamp = System.currentTimeMillis() / 1000L;
 
-		for (; target.compareTo(hash) <= 0; nonce++, timeStamp = System.currentTimeMillis() / 1000L) {
+		do {
+			nonce++;
+			timeStamp = System.currentTimeMillis() / 1000L;
 			hash = CalcHash(nonce, timeStamp);
-		}
+		} while(target.compareTo(hash) <= 0);
 
 		PoWResult result = new PoWResult("0x" + hash, nonce, timeStamp);
 		return result;
