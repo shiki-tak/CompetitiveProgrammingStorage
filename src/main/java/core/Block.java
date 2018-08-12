@@ -5,9 +5,9 @@ public class Block implements IBlock {
 	private int Height = 0;
 
 	private Transaction[] transactions;
-	BlockHeader blockHeader = new BlockHeader();
+	private BlockHeader blockHeader = new BlockHeader();
 
-	Block(String previousHash, String blockHash, String merkleRoot, int nonce, long timeStamp) {
+	public Block(String previousHash, String blockHash, String merkleRoot, int nonce, long timeStamp) {
 
 		this.blockHeader.setPreviousHash(previousHash);
 		this.blockHeader.setBlockHash(blockHash);

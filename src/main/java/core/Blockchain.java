@@ -6,44 +6,31 @@ import java.util.List;
 import org.bouncycastle.jcajce.provider.digest.SHA3;
 import org.bouncycastle.util.encoders.Hex;
 
-public class Blockchain implements IBlockchain {
+public final class Blockchain {
+	private int latestBlockIndex;
+	private List<Block> blocks = new ArrayList<>();
 
-	private int latestBlockIndex = 0;
+	// getter
+	public int getLatestBlockIndex() { return this.latestBlockIndex; }
+	public Block getLatestBlock() { return this.blocks.get(latestBlockIndex - 1); }
 
-	public List<Block> blocks = new ArrayList<>();
-
-	@Override
-	public Block CreateGenesisBlock(String merkleRoot) {
-		String input = "genesis block";
-
+	public void createGenesisBlock(String merkleRoot) {
 		SHA3.DigestSHA3 digestSHA3 = new SHA3.Digest512();
-		byte[] digest = digestSHA3.digest(input.getBytes());
-
+		byte[] digest = digestSHA3.digest("genesis block".getBytes());
 		String blockHash = "0x" + Hex.toHexString(digest);
-
-		return CreateBlock(
+		Block block = new Block(
 				"0x0000000000000000000000000000000000000000000000000000000000000000",
 				blockHash,
 				merkleRoot,
 				42,
 				System.currentTimeMillis() / 1000L
 				);
+		append(block);
 	}
 
-	@Override
-	public Block CreateBlock(String previousHash, String blockHash, String merkleRoot, int nonce, long timeStamp) {
-
-		Block block = new Block(previousHash, blockHash, merkleRoot, nonce, timeStamp);
-		// TODO: blockのインスタンスを作った後にblockのheightをセットするのはイマイチ...
-		block.setHeight(latestBlockIndex);
-
+	public void append(Block block) {
+		blocks.add(block);
 		latestBlockIndex++;
-
-		return block;
 	}
 
-	@Override
-	public int GetLatestBlockIndex() {
-		return this.latestBlockIndex;
-	}
 }
