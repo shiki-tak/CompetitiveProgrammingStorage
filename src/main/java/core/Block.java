@@ -1,45 +1,28 @@
 package core;
 
 public class Block implements IBlock {
-
-	private int Height = 0;
-
+	private int height;
 	private Transaction[] transactions;
-	private BlockHeader blockHeader = new BlockHeader();
+	private BlockHeader blockHeader;
 
 	public Block(String previousHash, String blockHash, String merkleRoot, int nonce, long timeStamp) {
-
-		this.blockHeader.setPreviousHash(previousHash);
-		this.blockHeader.setBlockHash(blockHash);
-		this.blockHeader.setMerkleRoot(merkleRoot);
-		this.blockHeader.setNonce(nonce);
-		this.blockHeader.setTimeStamp(timeStamp);
-	}
-
-	public int getHeight() {
-	return Height;
-	}
-
-	public void setHeight(int height) {
-		Height = height;
-	}
-
-
-	public BlockHeader getBlockHeader() {
-		return blockHeader;
-	}
-
-	public void setBlockHeader(BlockHeader blockHeader) {
+		BlockHeader blockHeader = new BlockHeader(
+				previousHash,
+				blockHash,
+				merkleRoot,
+				nonce,
+				timeStamp
+				);
 		this.blockHeader = blockHeader;
 	}
 
-	public Transaction[] getTransactions() {
-		return transactions;
-	}
+	// getter
+	public int getHeight() { return height; }
+	public BlockHeader getBlockHeader() { return blockHeader; }
+	public Transaction[] getTransactions() { return transactions; }
 
-	public void setTransactions(Transaction[] transactions) {
-		this.transactions = transactions;
-	}
-
-
+	// setter
+	public void setHeight(int height) { this.height = height; }
+	public void setBlockHeader(BlockHeader blockHeader) { this.blockHeader = blockHeader; }
+	public void setTransactions(Transaction[] transactions) { this.transactions = transactions; }
 }

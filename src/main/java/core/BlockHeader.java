@@ -10,6 +10,13 @@ public class BlockHeader {
 	private int nonce;
 	private long timeStamp;
 
+	public BlockHeader(String previousHash, String blockHash, String merkleRoot, int nonce, long timeStamp) {
+		this.previousHash = previousHash;
+		this.blockHash = blockHash;
+		this.merkleRoot = merkleRoot;
+		this.nonce = nonce;
+		this.timeStamp = timeStamp;
+	}
 	// getter
 	public String getPreviousHash() { return previousHash; }
 	public String getBlockHash() { return blockHash; }
