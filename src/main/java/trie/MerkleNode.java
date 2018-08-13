@@ -1,14 +1,22 @@
 package trie;
 
-import javax.validation.constraints.NotNull;
+public class MerkleNode {
+	private MerkleHash merkleHash;
+	private MerkleNode left;
+	private MerkleNode right;
 
-public class Node extends MerkleTree {
-	private MerkleTree left;
-	private MerkleTree right;
-
-	public Node(@NotNull MerkleHash merkleHash, @NotNull MerkleTree left, @NotNull MerkleTree right) {
-		super(merkleHash);
+	public MerkleNode(MerkleHash merkleHash, MerkleNode left, MerkleNode right) {
+		this.merkleHash = merkleHash;
 		this.left = left;
 		this.right = right;
 	}
+
+	public MerkleNode(MerkleHash merkleHash) {
+		this.merkleHash = merkleHash;
+		left = null;
+		right = null;
+	}
+
+	// MerkleHashを取得
+	public MerkleHash getMerkleHash() { return merkleHash; }
 }
