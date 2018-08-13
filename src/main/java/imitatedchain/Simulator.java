@@ -33,7 +33,7 @@ public class Simulator {
 			System.out.printf("*** Block %d *** %n", blockChain.getLatestBlockIndex());
 			System.out.printf("TimeStamp: %d%n", blockChain.getLatestBlock().getBlockHeader().getTimeStamp());
 			System.out.printf("Hash: %s%n", blockChain.getLatestBlock().getBlockHeader().getBlockHash());
-			System.out.printf("Previous Hash: %s%n", blockChain.getLatestBlock().getBlockHeader().getPreviousHash());
+			System.out.printf("Previous Hash: %s%n", blockChain.getLatestBlock().getBlockHeader().getParentHash());
 			System.out.printf("Nonce: %d%n", blockChain.getLatestBlock().getBlockHeader().getNonce());
 			System.out.println();
 		}

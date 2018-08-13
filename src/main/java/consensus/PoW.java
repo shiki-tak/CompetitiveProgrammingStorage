@@ -35,7 +35,7 @@ public final class PoW {
 	// TODO: ユーティリティとしてまとめる
 	private String CalcHash(int nonce, long timeStamp) {
 		// sha3でハッシュ計算を行う
-		String rawData = blockChain.getLatestBlock().getBlockHeader().getPreviousHash() +
+		String rawData = blockChain.getLatestBlock().getBlockHeader().getParentHash() +
 				merkleRoot +
 				nonce +
 				timeStamp;

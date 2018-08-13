@@ -5,9 +5,9 @@ public class Block {
 	private Transaction[] transactions;
 	private BlockHeader blockHeader;
 
-	public Block(String previousHash, String blockHash, String merkleRoot, int nonce, long timeStamp) {
+	public Block(String parentHash, String blockHash, String merkleRoot, int nonce, long timeStamp) {
 		BlockHeader blockHeader = new BlockHeader(
-				previousHash,
+				parentHash,
 				blockHash,
 				merkleRoot,
 				nonce,
