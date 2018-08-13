@@ -17,7 +17,7 @@ public class MerkleTree {
 	// getter
 	public MerkleNode getMerkleRoot() { return merkleRoot; }
 
-	public static MerkleTree getMerkleTree(@NotNull List<MerkleHash> allLeavesHashes) {
+	public static MerkleTree createMerkleTree(@NotNull List<MerkleHash> allLeavesHashes) {
 		if (allLeavesHashes.isEmpty()) {
 			throw new IllegalArgumentException("Cannot calculate Merkle root on empty hash list.");
 		}
