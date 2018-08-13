@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 public class MerkleTree {
 	private MerkleNode merkleRoot;
 
-	public MerkleTree(MerkleNode merkleRoot) {
+	MerkleTree(MerkleNode merkleRoot) {
 		this.merkleRoot = merkleRoot;
 	}
 
