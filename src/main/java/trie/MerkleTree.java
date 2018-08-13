@@ -52,7 +52,7 @@ public class MerkleTree {
 
 			int i = 0;
 			// 新しいハッシュとノード作成
-			while(n - 2 > i) {
+			while(n - 2 >= i) {
 				MerkleTree left = lastNodesList.get(i);
 				MerkleTree right = lastNodesList.get(i + 1);
 				// 結合
