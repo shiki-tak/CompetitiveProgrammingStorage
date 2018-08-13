@@ -23,10 +23,8 @@ public class MerkleTree {
 		}
 		// 2のべき乗かどうか確認する
 		// 2のべき乗でなければ、trueになるまで、allLeavesHashesに要素を追加する
-		int size = allLeavesHashes.size();
-		while(!isPow2(size)) {
-			allLeavesHashes.add(allLeavesHashes.get(size - 1));
-			size++;
+		while(!isPow2(allLeavesHashes.size())) {
+			allLeavesHashes.add(allLeavesHashes.get(allLeavesHashes.size() - 1));
 		}
 
 		List<MerkleNode> result = allLeavesHashes.stream().map(new Function<MerkleHash, MerkleNode>() {
@@ -38,32 +36,29 @@ public class MerkleTree {
 		return buildMerkleTree(result);
 	}
 
-
-	private static boolean isPow2(int num) {
-		// ビット演算で2のべき乗か確認
-		return (num & (num - 1)) == 0;
-	}
-
-	public static MerkleTree buildMerkleTree(List<MerkleNode> lastNodesList) {
+	private static MerkleTree buildMerkleTree(List<MerkleNode> nodesList) {
 		// 最後のハッシュ
-		if (lastNodesList.size() == 1) {
-			MerkleTree merkleTree = new MerkleTree(lastNodesList.get(0));
+		if (nodesList.size() == 1) {
+			MerkleTree merkleTree = new MerkleTree(nodesList.get(0));
 			return merkleTree;
 		} else {
-			int n = lastNodesList.size();
-			List<MerkleNode> newLevelHashes = new ArrayList<>();
+			int nodeCount = nodesList.size();
+			List<MerkleNode> newNodeList = new ArrayList<>();
 
-			int i = 0;
+			int nodeIndex = 0;
 			// 新しいハッシュとノード作成
-			while(n - 2 >= i) {
-				MerkleNode left = lastNodesList.get(i);
-				MerkleNode right = lastNodesList.get(i + 1);
+			while(nodeCount - 2 >= nodeIndex) {
+				MerkleNode left = nodesList.get(nodeIndex);
+				MerkleNode right = nodesList.get(nodeIndex + 1);
 				// 結合
 				MerkleHash newHash = left.getMerkleHash().concatHash(right.getMerkleHash());
-				newLevelHashes.add(new MerkleNode(newHash, left, right));
-				i += 2;
+				newNodeList.add(new MerkleNode(newHash, left, right));
+				nodeIndex += 2;
 			}
-			return buildMerkleTree(newLevelHashes);
+			return buildMerkleTree(newNodeList);
 		}
 	}
+
+	// ビット演算で2のべき乗か確認
+	private static boolean isPow2(int num) { return (num & (num - 1)) == 0; }
 }
