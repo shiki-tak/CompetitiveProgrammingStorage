@@ -2,6 +2,7 @@
 
 - Consensus(PoW)
 - Account
+- Merkle Tree
 - Merkle Patricia Tree
 - Transfer
 - Capitals-based checksum
