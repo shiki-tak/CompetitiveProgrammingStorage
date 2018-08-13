@@ -29,6 +29,7 @@ public final class Blockchain {
 	}
 
 	public void append(Block block) {
+		block.setHeight(latestBlockIndex);
 		blocks.add(block);
 		latestBlockIndex++;
 	}
