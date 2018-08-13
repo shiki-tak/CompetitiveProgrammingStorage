@@ -22,9 +22,13 @@ public class MerkleTree {
 			throw new IllegalArgumentException("Cannot calculate Merkle root on empty hash list.");
 		}
 		// 2のべき乗かどうか確認する
-		if (!isPow2(allLeavesHashes.size())) {
-			throw new IllegalArgumentException("allLeavesHashes must be Pow of 2.");
+		// 2のべき乗でなければ、trueになるまで、allLeavesHashesに要素を追加する
+		int size = allLeavesHashes.size();
+		while(!isPow2(size)) {
+			allLeavesHashes.add(allLeavesHashes.get(size - 1));
+			size++;
 		}
+
 		List<MerkleNode> result = allLeavesHashes.stream().map(new Function<MerkleHash, MerkleNode>() {
 			@Override
 			public MerkleNode apply(MerkleHash merkleHash) {

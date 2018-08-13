@@ -10,6 +10,7 @@ public class Main {
 		merkleHashList.add(new MerkleHash("L2"));
 		merkleHashList.add(new MerkleHash("L3"));
 		merkleHashList.add(new MerkleHash("L4"));
+		merkleHashList.add(new MerkleHash("L5"));
 
 		MerkleTree merkleTree = MerkleTree.createMerkleTree(merkleHashList);
 
