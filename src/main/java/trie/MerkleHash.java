@@ -27,7 +27,7 @@ public class MerkleHash {
 	}
 
 	// ハッシュの結合
-	public MerkleHash hashConcat(MerkleHash right) {
+	public MerkleHash concatHash(MerkleHash right) {
 		ByteBuffer byteBuf = ByteBuffer.allocate(bytes.length + right.bytes.length);
 		byteBuf.put(bytes);
 		byteBuf.put(right.bytes);

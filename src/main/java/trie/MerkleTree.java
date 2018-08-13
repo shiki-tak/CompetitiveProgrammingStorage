@@ -55,7 +55,7 @@ public class MerkleTree {
 				MerkleNode left = lastNodesList.get(i);
 				MerkleNode right = lastNodesList.get(i + 1);
 				// 結合
-				MerkleHash newHash = left.getMerkleHash().hashConcat(right.getMerkleHash());
+				MerkleHash newHash = left.getMerkleHash().concatHash(right.getMerkleHash());
 				newLevelHashes.add(new MerkleNode(newHash, left, right));
 				i += 2;
 			}
