@@ -17,6 +17,19 @@ public class BlockHeader {
 		this.nonce = nonce;
 		this.timeStamp = timeStamp;
 	}
+
+	public BlockHeader(String parentHash, String merkleRoot) {
+		this.parentHash = parentHash;
+		this.blockHash = null;
+		this.merkleRoot = merkleRoot;
+		this.nonce = 0;
+		this.timeStamp = 0;
+	}
+	public BlockHeader(String blockHash, int nonce, long timeStamp) {
+		this.blockHash = blockHash;
+		this.nonce = nonce;
+		this.timeStamp = timeStamp;
+	}
 	// getter
 	public String getParentHash() { return parentHash; }
 	public String getBlockHash() { return blockHash; }

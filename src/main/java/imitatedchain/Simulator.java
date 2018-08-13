@@ -16,15 +16,15 @@ public class Simulator {
 				// Genesis blockの作成
 				blockChain.createGenesisBlock(merkleRoot);
 			} else {
-				PoW pow = new PoW(blockChain, merkleRoot);
-				PoWResult powResult = pow.exec();
+				// blockHashがnullのblockを生成する
 				Block block = new Block(
 						blockChain.getLatestBlock().getBlockHeader().getBlockHash(),
-						powResult.blockHash,
-						merkleRoot,
-						powResult.nonce,
-						powResult.timeStamp
+						merkleRoot
 						);
+				PoW pow = new PoW(block, merkleRoot);
+				PoWResult powResult = pow.exec();
+				// PoWに成功したらBlockHeaderをセットする
+				block.setBlockHeader(powResult.blockHash, powResult.nonce,powResult.timeStamp);
 
 				blockChain.append(block);
 			}

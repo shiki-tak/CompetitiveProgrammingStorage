@@ -16,6 +16,15 @@ public class Block {
 		this.blockHeader = blockHeader;
 	}
 
+	// generate pending block
+	public Block(String parentHash, String merkleRoot) {
+		BlockHeader blockHeader = new BlockHeader(
+				parentHash,
+				merkleRoot
+				);
+		this.blockHeader = blockHeader;
+	}
+
 	// getter
 	public int getHeight() { return height; }
 	public BlockHeader getBlockHeader() { return blockHeader; }
@@ -23,6 +32,10 @@ public class Block {
 
 	// setter
 	public void setHeight(int height) { this.height = height; }
-	public void setBlockHeader(BlockHeader blockHeader) { this.blockHeader = blockHeader; }
+	public void setBlockHeader(String blockHash, int nonce, long timeStamp) {
+		this.blockHeader.setBlockHash(blockHash);
+		this.blockHeader.setNonce(nonce);
+		this.blockHeader.setTimeStamp(timeStamp);
+	}
 	public void setTransactions(Transaction[] transactions) { this.transactions = transactions; }
 }

@@ -3,16 +3,16 @@ package consensus;
 import org.bouncycastle.jcajce.provider.digest.SHA3;
 import org.bouncycastle.util.encoders.Hex;
 
-import core.Blockchain;
+import core.Block;
 
 public final class PoW {
 	// TODO: targetの計算
 	private final String target = "00001000111111111111111111111111111111111111111111111111111111";
-	private Blockchain blockChain;
+	private Block block;
 	private String merkleRoot;
 
-	public PoW(Blockchain blockChain, String merkleRoot) {
-		this.blockChain = blockChain;
+	public PoW(Block block, String merkleRoot) {
+		this.block = block;
 		this.merkleRoot = merkleRoot;
 	}
 
@@ -35,7 +35,7 @@ public final class PoW {
 	// TODO: ユーティリティとしてまとめる
 	private String CalcHash(int nonce, long timeStamp) {
 		// sha3でハッシュ計算を行う
-		String rawData = blockChain.getLatestBlock().getBlockHeader().getParentHash() +
+		String rawData = block.getBlockHeader().getParentHash() +
 				merkleRoot +
 				nonce +
 				timeStamp;
