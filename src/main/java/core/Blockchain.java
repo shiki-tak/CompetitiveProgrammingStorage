@@ -16,10 +16,9 @@ public final class Blockchain {
 	public int getLatestBlockIndex() { return this.latestBlockIndex; }
 	public Block getLatestBlock() { return this.blocks.get(latestBlockIndex - 1); }
 
-	public void createGenesisBlock(String merkleRoot) {
+	public void createGenesisBlock(String merkleRoot, BloomFilter logsBloom) {
 		Keccak.DigestKeccak kecc = new Keccak.Digest256();
 		byte[] digest = kecc.digest("genesis block".getBytes());
-		BloomFilter logsBloom = new BloomFilter();
 		String blockHash = "0x" + Hex.toHexString(digest);
 		Block block = new Block(
 				"0x0000000000000000000000000000000000000000000000000000000000000000",

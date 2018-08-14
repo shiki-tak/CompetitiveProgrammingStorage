@@ -13,10 +13,7 @@ public class BloomFilter {
 
 	// Bloom Filter　Test
 	public static void main(String[] args) {
-		BloomFilter bloomFilter = new BloomFilter(100, 1 << 10,3);
-		bloomFilter.add("L1");
-		bloomFilter.add("L2");
-		bloomFilter.add("L3");
+		BloomFilter bloomFilter = new BloomFilter();
 
 		System.out.println("L1 is " + bloomFilter.contain("L1"));
 		System.out.println("L2 is " + bloomFilter.contain("L2"));
@@ -25,16 +22,19 @@ public class BloomFilter {
 	}
 
 	// コンストラクタ
-	public BloomFilter(double c, int n, int k) {
+	public BloomFilter() {
+		long c = 100;
+		int n = 1 << 10;
+		int k = 3;
+
 		countOfHashNumCreatePerOneElement = k;
 		this.bitFilterSize = (int)Math.ceil(c * n); // 要素数 * 要素あたり利用ビット数でFilterのビットサイズを決定する
 		this.bitFilter = new BitSet(bitFilterSize);
 
 		numberOfAddedElements = 0;
 	}
-
 	// ブルームフィルタにデータを追加
-	private void add(String data) {
+	public void add(String data) {
 		int[] hashes = createHashes(data, countOfHashNumCreatePerOneElement);
 		for (int hash : hashes) {
 			bitFilter.set(Math.abs(hash % bitFilterSize), true);
@@ -51,12 +51,10 @@ public class BloomFilter {
 	public static int[] createHashes(String data, int hashCount) {
 		int [] result = new int[hashCount];
 
-		int k = 0;
-		while (k < hashCount) {
+		for (int k = 0; k < hashCount; k++) {
 			// ハッシュ化
 			Keccak.DigestKeccak kecc = new Keccak.Digest256();
 			byte[] digest = kecc.digest(data.getBytes());
-
 			// 4Byte区切りでint化して配列に詰める
 			for (int i = 0; i < digest.length / 4 && k < hashCount; i++) {
 				int h = 0;
@@ -65,7 +63,6 @@ public class BloomFilter {
 					h |= ((int) digest[j]) & 0xFF;
 				}
 				result[k] = h;
-				k++;
 			}
 		}
 		return result;
