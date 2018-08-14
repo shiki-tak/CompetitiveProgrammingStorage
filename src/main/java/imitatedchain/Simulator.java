@@ -87,7 +87,7 @@ public class Simulator {
 			System.out.println();
 
 		}
-		// トランザクション、L-1-1を検索する
+		// トランザクションを検索する
 		System.out.println("*** Search Transaction ***");
 		System.out.println(searchTransaction(blockChain, "Tx-1-1"));
 		System.out.println(searchTransaction(blockChain, "Tx-11-0"));
