@@ -13,36 +13,44 @@ import trie.MerkleTree;
 
 public class Simulator {
 
+	// TODO: Transactionクラスの実装
+	public static List<String> generateTransaction(int n) {
+		List<String> txs = new ArrayList<>();
+
+		for (int i = 0; i <= n; i++) {
+			txs.add("Tx" + "-" + String.valueOf(n) + "-" + String.valueOf(i));
+		}
+		return txs;
+
+	}
+
 	public static void main(String[] args) {
 		String merkleRoot = "0x0";
 		Blockchain blockChain = new Blockchain();
 
 		for (int i = 0; i < 10; i++) {
+			List<String> txs = generateTransaction(i);
+			BloomFilter logsBloom = new BloomFilter();
+			List<MerkleHash> merkleHashList = new ArrayList<>();
+
+			for (int l = 0; l < txs.size(); l++) {
+				logsBloom.add(txs.get(l));
+				merkleHashList.add(new MerkleHash(txs.get(l)));
+			}
+
+			// Create Merkle Tree
+			MerkleTree merkleTree = MerkleTree.createMerkleTree(merkleHashList);
+			merkleRoot =  merkleTree.getMerkleRoot().getMerkleHash().sha256HexBinary();
+
 			if (i == 0) {
-				BloomFilter logsBloom = new BloomFilter();
-
-				logsBloom.add("L1");
-				logsBloom.add("L2");
-				logsBloom.add("L3");
-				logsBloom.add("L4");
-
-				List<MerkleHash> merkleHashList = new ArrayList<>();
-				merkleHashList.add(new MerkleHash("L1"));
-				merkleHashList.add(new MerkleHash("L2"));
-				merkleHashList.add(new MerkleHash("L3"));
-				merkleHashList.add(new MerkleHash("L4"));
-
-				MerkleTree merkleTree = MerkleTree.createMerkleTree(merkleHashList);
-				merkleRoot =  merkleTree.getMerkleRoot().getMerkleHash().sha256HexBinary();
-
 				// Genesis blockの作成
 				blockChain.createGenesisBlock(merkleRoot, logsBloom);
 			} else {
-				merkleRoot = String.valueOf(i);
 				// blockHashがnullのblockを生成する
 				Block block = new Block(
 						blockChain.getLatestBlock().getBlockHeader().getBlockHash(),
-						merkleRoot
+						merkleRoot,
+						logsBloom
 						);
 				PoW pow = new PoW(block, merkleRoot);
 				PoWResult powResult = pow.exec();

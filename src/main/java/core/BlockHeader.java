@@ -22,10 +22,11 @@ public class BlockHeader {
 		this.timeStamp = timeStamp;
 	}
 
-	public BlockHeader(String parentHash, String merkleRoot) {
+	public BlockHeader(String parentHash, String merkleRoot, BloomFilter logsBloom) {
 		this.parentHash = parentHash;
 		this.blockHash = null;
 		this.merkleRoot = merkleRoot;
+		this.logsBloom = logsBloom;
 		this.nonce = 0;
 		this.timeStamp = 0;
 	}

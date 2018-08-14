@@ -20,10 +20,11 @@ public class Block {
 	}
 
 	// generate pending block
-	public Block(String parentHash, String merkleRoot) {
+	public Block(String parentHash, String merkleRoot, BloomFilter logsBloom) {
 		BlockHeader blockHeader = new BlockHeader(
 				parentHash,
-				merkleRoot
+				merkleRoot,
+				logsBloom
 				);
 		this.blockHeader = blockHeader;
 	}
