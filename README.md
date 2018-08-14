@@ -4,6 +4,7 @@
 - Account
 - Merkle Tree
 - Merkle Patricia Tree
+- Bloom Filter
 - Transfer
 - Capitals-based checksum
 
