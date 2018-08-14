@@ -16,6 +16,8 @@ public final class Blockchain {
 	public int getLatestBlockIndex() { return this.latestBlockIndex; }
 	public Block getLatestBlock() { return this.blocks.get(latestBlockIndex - 1); }
 
+	public Block getBlock(int blockHeight) { return this.blocks.get(blockHeight); }
+
 	public void createGenesisBlock(String merkleRoot, BloomFilter logsBloom) {
 		Keccak.DigestKeccak kecc = new Keccak.Digest256();
 		byte[] digest = kecc.digest("genesis block".getBytes());
@@ -36,5 +38,4 @@ public final class Blockchain {
 		blocks.add(block);
 		latestBlockIndex++;
 	}
-
 }
