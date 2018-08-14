@@ -7,45 +7,19 @@ import consensus.PoW;
 import consensus.PoWResult;
 import core.Block;
 import core.Blockchain;
+import core.Transaction;
 import trie.BloomFilter;
 import trie.MerkleHash;
 import trie.MerkleTree;
 
 public class Simulator {
 
-	// TODO: Transactionクラスの実装
-	public static List<String> generateTransaction(int n) {
-		List<String> txs = new ArrayList<>();
-
-		for (int i = 0; i <= n; i++) {
-			txs.add("Tx" + "-" + String.valueOf(n) + "-" + String.valueOf(i));
-		}
-		return txs;
-	}
-
-	public static String searchTransaction(Blockchain blockChain, String tx) {
-		String resMessage;
-
-		boolean isTx = false;
-		int blockHeight = 0;
-		for (; blockHeight < blockChain.getLatestBlockIndex(); blockHeight++) {
-			BloomFilter logsBloom = blockChain.getBlock(blockHeight).getBlockHeader().getLogsBloom();
-			if (logsBloom.contain(tx)) {
-				isTx = true;
-				break;
-			}
-		}
-		resMessage = (isTx ? "Block " + String.valueOf(blockHeight) + " contain " : "not contain ") + tx;
-
-		return resMessage;
-	}
-
 	public static void main(String[] args) {
 		String merkleRoot = "0x0";
 		Blockchain blockChain = new Blockchain();
 
 		for (int i = 0; i < 10; i++) {
-			List<String> txs = generateTransaction(i);
+			List<String> txs = Transaction.generateTransaction(i);
 			BloomFilter logsBloom = new BloomFilter();
 			List<MerkleHash> merkleHashList = new ArrayList<>();
 
@@ -89,9 +63,9 @@ public class Simulator {
 		}
 		// トランザクションを検索する
 		System.out.println("*** Search Transaction ***");
-		System.out.println(searchTransaction(blockChain, "Tx-1-1"));
-		System.out.println(searchTransaction(blockChain, "Tx-11-0"));
-		System.out.println(searchTransaction(blockChain, "Tx-2-1"));
-		System.out.println(searchTransaction(blockChain, "Tx-5-2"));
+		System.out.println(Transaction.searchTransaction(blockChain, "Tx-1-1"));
+		System.out.println(Transaction.searchTransaction(blockChain, "Tx-11-0"));
+		System.out.println(Transaction.searchTransaction(blockChain, "Tx-2-1"));
+		System.out.println(Transaction.searchTransaction(blockChain, "Tx-5-2"));
 	}
 }
