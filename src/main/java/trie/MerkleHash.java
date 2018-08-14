@@ -2,7 +2,7 @@ package trie;
 
 import java.nio.ByteBuffer;
 
-import org.bouncycastle.jcajce.provider.digest.SHA3;
+import org.bouncycastle.jcajce.provider.digest.Keccak;
 import org.bouncycastle.util.encoders.Hex;
 
 public class MerkleHash {
@@ -20,8 +20,8 @@ public class MerkleHash {
 
 	// バイト配列をSHA-256でハッシュ化して16進数文字列にして返す
 	public String sha256HexBinary() {
-		SHA3.DigestSHA3 digestSHA3 = new SHA3.Digest256();
-		byte[] bytes = digestSHA3.digest(this.bytes);
+		Keccak.DigestKeccak kecc = new Keccak.Digest256();
+		byte[] bytes = kecc.digest(this.bytes);
 		// 16進数文字列に変換して返す
 		return Hex.toHexString(bytes);
 	}

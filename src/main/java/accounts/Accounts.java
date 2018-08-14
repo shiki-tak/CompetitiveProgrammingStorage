@@ -9,7 +9,7 @@ import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 import java.security.spec.ECGenParameterSpec;
 
-import org.bouncycastle.jcajce.provider.digest.SHA3;
+import org.bouncycastle.jcajce.provider.digest.Keccak;
 import org.bouncycastle.util.encoders.Hex;
 
 public class Accounts {
@@ -44,9 +44,9 @@ public class Accounts {
 		String s = PublicKey.substring(2, 128);
 		// 全部小文字にする
 		s.toLowerCase();
-		SHA3.DigestSHA3 digestSHA3 = new SHA3.Digest256();
+		Keccak.DigestKeccak kecc = new Keccak.Digest256();
 		// SHA256 (Keccak) でハッシュを得る
-		byte[] digest = digestSHA3.digest(s.getBytes());
+		byte[] digest = kecc.digest(s.getBytes());
 
 		// 後ろの40文字を取り出して、先頭に0xをつけてアドレスにする
 		String EthAddress = "0x" + Hex.toHexString(digest).substring(24, 64);
