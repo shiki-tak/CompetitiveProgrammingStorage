@@ -7,6 +7,8 @@ public class Block {
 	private Transaction[] transactions;
 	private BlockHeader blockHeader;
 
+	public Block() {}
+
 	public Block(String parentHash, String blockHash, String merkleRoot, BloomFilter logsBloom, int nonce, long timeStamp) {
 		BlockHeader blockHeader = new BlockHeader(
 				parentHash,
