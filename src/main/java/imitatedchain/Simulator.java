@@ -21,7 +21,23 @@ public class Simulator {
 			txs.add("Tx" + "-" + String.valueOf(n) + "-" + String.valueOf(i));
 		}
 		return txs;
+	}
 
+	public static String searchTransaction(Blockchain blockChain, String tx) {
+		String resMessage;
+
+		boolean isTx = false;
+		int blockHeight = 0;
+		for (; blockHeight < blockChain.getLatestBlockIndex(); blockHeight++) {
+			BloomFilter logsBloom = blockChain.getBlock(blockHeight).getBlockHeader().getLogsBloom();
+			if (logsBloom.contain(tx)) {
+				isTx = true;
+				break;
+			}
+		}
+		resMessage = (isTx ? "Block " + String.valueOf(blockHeight) + " contain " : "not contain ") + tx;
+
+		return resMessage;
 	}
 
 	public static void main(String[] args) {
@@ -69,6 +85,13 @@ public class Simulator {
 			System.out.printf("Logs Bloom: %s%n", blockChain.getLatestBlock().getBlockHeader().getLogsBloom());
 			System.out.printf("Nonce: %d%n", blockChain.getLatestBlock().getBlockHeader().getNonce());
 			System.out.println();
+
 		}
+		// トランザクション、L-1-1を検索する
+		System.out.println("*** Search Transaction ***");
+		System.out.println(searchTransaction(blockChain, "Tx-1-1"));
+		System.out.println(searchTransaction(blockChain, "Tx-11-0"));
+		System.out.println(searchTransaction(blockChain, "Tx-2-1"));
+		System.out.println(searchTransaction(blockChain, "Tx-5-2"));
 	}
 }
