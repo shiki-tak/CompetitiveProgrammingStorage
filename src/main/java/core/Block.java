@@ -1,15 +1,18 @@
 package core;
 
+import trie.BloomFilter;
+
 public class Block {
 	private int height;
 	private Transaction[] transactions;
 	private BlockHeader blockHeader;
 
-	public Block(String parentHash, String blockHash, String merkleRoot, int nonce, long timeStamp) {
+	public Block(String parentHash, String blockHash, String merkleRoot, BloomFilter logsBloom, int nonce, long timeStamp) {
 		BlockHeader blockHeader = new BlockHeader(
 				parentHash,
 				blockHash,
 				merkleRoot,
+				logsBloom,
 				nonce,
 				timeStamp
 				);
