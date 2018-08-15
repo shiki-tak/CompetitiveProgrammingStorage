@@ -9,13 +9,13 @@ import trie.BloomFilter;
 public class Transaction {
 
 	// Transactionの構造
-	private Address to;		// 受信者
-	private Address from;	// 送信者
-	private int value;		// 送信者から受領人へ送られるETHの量
-	private String data;	// オプショナルフィールド
-	private int gasLimit;	// トランザクションの実行にかかる計算のステップ数の最大値
-	private int gasPrice;	// 送信者が支払う、１計算ステップあたりの手数料
-	private int nonce;		// fromが今までに実行したトランザクションの回数
+	private Address to;     // 受信者
+	private Address from;   // 送信者
+	private int value;      // 送信者から受領人へ送られるETHの量
+	private String data;    // オプショナルフィールド
+	private int gasLimit;   // トランザクションの実行にかかる計算のステップ数の最大値
+	private int gasPrice;   // 送信者が支払う、１計算ステップあたりの手数料
+	private int nonce;      // fromが今までに実行したトランザクションの回数
 
 	// getter
 	public Address getTo() { return to; }
