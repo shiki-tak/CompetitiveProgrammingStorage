@@ -14,21 +14,6 @@ import rlp.RlpList;
 import rlp.RlpString;
 import trie.BloomFilter;
 
-// TransactionHash型を定義
-class TransactionHash {
-	private String txHashAsString;
-
-	TransactionHash(String txHashAsString) {
-		this.txHashAsString = txHashAsString;
-	}
-
-	// getter
-	public String getTxHashAsString() { return this.txHashAsString; }
-
-	// setter
-	public void setTxHashAsString(String txHashAsString) { this.txHashAsString = txHashAsString; }
-}
-
 public class Transaction {
 
 	static List<Transaction> transactions = new ArrayList<>();
