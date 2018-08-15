@@ -18,7 +18,7 @@ public class AccountManager {
 		try {
 			KeyPair keyPair = getKeyPair();
 			Key[] keys = new Key[] {keyPair.getPrivate(), keyPair.getPublic()};
-			String PublicKey = getStringPublicKey(keys[1]);
+			String PublicKey = publicKeyToString(keys[1]);
 			String Address = createAddress(PublicKey);
 			return Address;
 
@@ -28,7 +28,7 @@ public class AccountManager {
 		}
 	}
 
-	private static String getStringPublicKey(Key PublicKey) {
+	private static String publicKeyToString(Key PublicKey) {
 
 		String StringPublicKey = Hex.toHexString(PublicKey.getEncoded()).substring(46, 176);
 
@@ -37,20 +37,21 @@ public class AccountManager {
 
 	private static String createAddress(String PublicKey) {
 		// 先頭の04を取り除く
-		String s = PublicKey.substring(2, 128);
+		String s = PublicKey.substring(PublicKey.length() - 126, PublicKey.length());
 		// 全部小文字にする
 		s.toLowerCase();
 		Keccak.DigestKeccak kecc = new Keccak.Digest256();
 		// SHA256 (Keccak) でハッシュを得る
 		byte[] digest = kecc.digest(s.getBytes());
+		String digestToString = Hex.toHexString(digest);
 
 		// 後ろの40文字を取り出して、先頭に0xをつけてアドレスにする
-		String EthAddress = "0x" + Hex.toHexString(digest).substring(24, 64);
+		String EthAddress = "0x" + digestToString.substring(digestToString.length() - 40, digestToString.length());
 
 		return EthAddress;
 	}
 
-	public static KeyPair getKeyPair() throws NoSuchAlgorithmException, NoSuchProviderException, InvalidAlgorithmParameterException {
+	private static KeyPair getKeyPair() throws NoSuchAlgorithmException, NoSuchProviderException, InvalidAlgorithmParameterException {
 		KeyPairGenerator keyGen = KeyPairGenerator.getInstance("EC");
 		ECGenParameterSpec ecSpec = new ECGenParameterSpec("secp256k1");
 		keyGen.initialize(ecSpec, new SecureRandom());
