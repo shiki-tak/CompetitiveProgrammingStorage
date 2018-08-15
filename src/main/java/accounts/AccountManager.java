@@ -8,11 +8,15 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 import java.security.spec.ECGenParameterSpec;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.bouncycastle.jcajce.provider.digest.Keccak;
 import org.bouncycastle.util.encoders.Hex;
 
 public class AccountManager {
+
+	private List<Account> accounts = new ArrayList<>();
 
 	public static String createNewAccount() {
 		try {
