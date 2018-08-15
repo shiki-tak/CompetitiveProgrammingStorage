@@ -11,7 +11,7 @@ public class RlpString implements RlpType {
 
     private final byte[] value;
 
-    RlpString(byte[] value) {
+    public RlpString(byte[] value) {
         this.value = value;
     }
 

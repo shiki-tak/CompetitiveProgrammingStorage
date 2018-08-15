@@ -16,16 +16,28 @@ import org.bouncycastle.util.encoders.Hex;
 
 public class AccountManager {
 
-	private List<Account> accounts = new ArrayList<>();
+	static List<Account> accounts = new ArrayList<>();
+
+	// getter
+	public static Account getAccount(Address address) {
+		for (int i = 0; i < accounts.size(); i++) {
+			if (accounts.get(i).getAddress() == address) {
+				return accounts.get(i);
+			}
+		}
+		// TODO: ターゲットとしたaddressが存在しない場合の処理
+		return null;
+	}
 
 	public static Account createNewAccount() {
-
 		try {
 			KeyPair keyPair = getKeyPair();
 			Key[] keys = new Key[] {keyPair.getPrivate(), keyPair.getPublic()};
 			String publicKey = publicKeyToString(keys[1]);
 			Address address = generateAddress(publicKey);
 			Account account = new Account(address);
+			accounts.add(account);
+
 			return account;
 
 		} catch (NoSuchAlgorithmException | NoSuchProviderException | InvalidAlgorithmParameterException e) {
@@ -36,13 +48,14 @@ public class AccountManager {
 
 	// テスト用メソッド（初期残高ありでアカウントを作る）
 	public static Account createNewAccount(int initBalance) {
-
 		try {
 			KeyPair keyPair = getKeyPair();
 			Key[] keys = new Key[] {keyPair.getPrivate(), keyPair.getPublic()};
 			String publicKey = publicKeyToString(keys[1]);
 			Address address = generateAddress(publicKey);
 			Account account = new Account(address, initBalance);
+			accounts.add(account);
+
 			return account;
 
 		} catch (NoSuchAlgorithmException | NoSuchProviderException | InvalidAlgorithmParameterException e) {
@@ -52,9 +65,7 @@ public class AccountManager {
 	}
 
 	private static String publicKeyToString(Key PublicKey) {
-
 		String StringPublicKey = Hex.toHexString(PublicKey.getEncoded()).substring(46, 176);
-
 		return StringPublicKey;
 	}
 
