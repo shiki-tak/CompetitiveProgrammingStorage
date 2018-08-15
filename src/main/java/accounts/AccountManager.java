@@ -18,17 +18,19 @@ public class AccountManager {
 
 	private List<Account> accounts = new ArrayList<>();
 
-	public static String createNewAccount() {
+	public static Account createNewAccount() {
+
 		try {
 			KeyPair keyPair = getKeyPair();
 			Key[] keys = new Key[] {keyPair.getPrivate(), keyPair.getPublic()};
-			String PublicKey = publicKeyToString(keys[1]);
-			String Address = createAddress(PublicKey);
-			return Address;
+			String publicKey = publicKeyToString(keys[1]);
+			Address address = generateAddress(publicKey);
+			Account account = new Account(address);
+			return account;
 
 		} catch (NoSuchAlgorithmException | NoSuchProviderException | InvalidAlgorithmParameterException e) {
 			e.printStackTrace();
-			return e.getMessage();
+			return null;
 		}
 	}
 
@@ -39,7 +41,7 @@ public class AccountManager {
 		return StringPublicKey;
 	}
 
-	private static String createAddress(String PublicKey) {
+	private static Address generateAddress(String PublicKey) {
 		// 先頭の04を取り除く
 		String s = PublicKey.substring(PublicKey.length() - 126, PublicKey.length());
 		// 全部小文字にする
@@ -50,9 +52,9 @@ public class AccountManager {
 		String digestToString = Hex.toHexString(digest);
 
 		// 後ろの40文字を取り出して、先頭に0xをつけてアドレスにする
-		String EthAddress = "0x" + digestToString.substring(digestToString.length() - 40, digestToString.length());
+		Address ethAddress = new Address("0x" + digestToString.substring(digestToString.length() - 40, digestToString.length()));
 
-		return EthAddress;
+		return ethAddress;
 	}
 
 	private static KeyPair getKeyPair() throws NoSuchAlgorithmException, NoSuchProviderException, InvalidAlgorithmParameterException {
