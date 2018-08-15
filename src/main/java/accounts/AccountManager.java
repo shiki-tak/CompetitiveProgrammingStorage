@@ -12,11 +12,7 @@ import java.security.spec.ECGenParameterSpec;
 import org.bouncycastle.jcajce.provider.digest.Keccak;
 import org.bouncycastle.util.encoders.Hex;
 
-public class AccountsManager {
-
-	public static void main(String[] args) {
-		System.out.println(createNewAccount());
-	}
+public class AccountManager {
 
 	public static String createNewAccount() {
 		try {
