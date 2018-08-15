@@ -7,4 +7,8 @@ public class Address {
 	public Address(String addressAsString) {
 		this.addressAsString = addressAsString;
 	}
+
+	public String addressToString() {
+		return this.addressAsString;
+	}
 }
