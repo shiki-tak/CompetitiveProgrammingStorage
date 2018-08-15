@@ -5,7 +5,6 @@ public class Main {
     public static void main(String[] args) {
         RlpString rlpStringCat = new RlpString("cat".getBytes());
         RlpString rlpStringDog = new RlpString("dog".getBytes());
-
         RlpList rlpList = new RlpList(rlpStringCat, rlpStringDog);
 
         // 文字列のRLPエンコーディング
