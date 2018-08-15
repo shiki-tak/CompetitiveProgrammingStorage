@@ -61,12 +61,20 @@ public class Transaction {
      * @param from                  送信者のアドレス
      * @param value                 送信者から受信者へ送られるETHの量
      * @param data(optional field)  メッセージ
-     * @param gassLimit             トランザクションの実行にかかる計算のステップ数の最大値
+     * @param gasLimit             トランザクションの実行にかかる計算のステップ数の最大値
      * @param gasPrice              送信者が支払う、１計算ステップあたりの手数料
      * @return txHash
+     *
+     * 1 ether = 10^18 wei
      */
-	public static TransactionHash sendTransaction() {
+	public static TransactionHash sendTransaction(String to, String from, int value, int gasLimit, int gasPrice) {
+
 		String txAsString = "";
+
+		int txFee = gasLimit * gasPrice;
+
+		// TODO: EIP-155
+
 
 		TransactionHash txHash = new TransactionHash(txAsString);
 		return txHash;
