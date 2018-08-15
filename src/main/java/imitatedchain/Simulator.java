@@ -15,7 +15,6 @@ import trie.MerkleTree;
 public class Simulator {
 
 	public static void main(String[] args) {
-		String merkleRoot = "0x0";
 		Blockchain blockChain = new Blockchain();
 
 		for (int i = 0; i < 10; i++) {
@@ -30,7 +29,7 @@ public class Simulator {
 
 			// Create Merkle Tree
 			MerkleTree merkleTree = MerkleTree.createMerkleTree(merkleHashList);
-			merkleRoot =  merkleTree.getMerkleRoot().getMerkleHash().sha256HexBinary();
+			String merkleRoot =  merkleTree.getMerkleRoot().getMerkleHash().sha256HexBinary();
 
 			if (i == 0) {
 				// Genesis blockの作成
@@ -49,17 +48,20 @@ public class Simulator {
 
 				blockChain.append(block);
 			}
+		}
 
-			// 作成したブロックを出力
-			System.out.printf("*** Block %d *** %n", blockChain.getLatestBlock().getHeight());
-			System.out.printf("TimeStamp: %d%n", blockChain.getLatestBlock().getBlockHeader().getTimeStamp());
-			System.out.printf("Hash: %s%n", blockChain.getLatestBlock().getBlockHeader().getBlockHash());
-			System.out.printf("Previous Hash: %s%n", blockChain.getLatestBlock().getBlockHeader().getParentHash());
-			System.out.printf("Merkle Root: %s%n", blockChain.getLatestBlock().getBlockHeader().getMerkleRoot());
-			System.out.printf("Logs Bloom: %s%n", blockChain.getLatestBlock().getBlockHeader().getLogsBloom());
-			System.out.printf("Nonce: %d%n", blockChain.getLatestBlock().getBlockHeader().getNonce());
+		// 作成したブロックを出力
+		for (int i = 0; i < 10; i++) {
+			Block block = blockChain.getBlock(i);
+
+			System.out.printf("*** Block %d *** %n", block.getHeight());
+			System.out.printf("TimeStamp: %d%n", block.getBlockHeader().getTimeStamp());
+			System.out.printf("Hash: %s%n", block.getBlockHeader().getBlockHash());
+			System.out.printf("Previous Hash: %s%n", block.getBlockHeader().getParentHash());
+			System.out.printf("Merkle Root: %s%n", block.getBlockHeader().getMerkleRoot());
+			System.out.printf("Logs Bloom: %s%n", block.getBlockHeader().getLogsBloom());
+			System.out.printf("Nonce: %d%n", block.getBlockHeader().getNonce());
 			System.out.println();
-
 		}
 		// トランザクションを検索する
 		System.out.println("*** Search Transaction ***");
