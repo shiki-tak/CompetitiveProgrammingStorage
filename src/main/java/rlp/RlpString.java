@@ -26,10 +26,6 @@ public class RlpString implements RlpType {
         return new BigInteger(1, value);
     }
 
-    public String asString() {
-        return Numeric.toHexString(value);
-    }
-
     public static RlpString create(byte[] value) {
         return new RlpString(value);
     }
@@ -77,23 +73,5 @@ public class RlpString implements RlpType {
     @Override
     public int hashCode() {
         return Arrays.hashCode(value);
-    }
-}
-
-class Numeric {
-    public static String toHexString(byte[] input, int offset, int length, boolean withPrefix) {
-        StringBuilder stringBuilder = new StringBuilder();
-        if (withPrefix) {
-            stringBuilder.append("0x");
-        }
-        for (int i = offset; i < offset + length; i++) {
-            stringBuilder.append(String.format("%02x", input[i] & 0xFF));
-        }
-
-        return stringBuilder.toString();
-    }
-
-    public static String toHexString(byte[] input) {
-        return toHexString(input, 0, input.length, true);
     }
 }
