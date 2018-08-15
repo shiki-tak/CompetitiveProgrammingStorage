@@ -34,6 +34,23 @@ public class AccountManager {
 		}
 	}
 
+	// テスト用メソッド（初期残高ありでアカウントを作る）
+	public static Account createNewAccount(int initBalance) {
+
+		try {
+			KeyPair keyPair = getKeyPair();
+			Key[] keys = new Key[] {keyPair.getPrivate(), keyPair.getPublic()};
+			String publicKey = publicKeyToString(keys[1]);
+			Address address = generateAddress(publicKey);
+			Account account = new Account(address, initBalance);
+			return account;
+
+		} catch (NoSuchAlgorithmException | NoSuchProviderException | InvalidAlgorithmParameterException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	private static String publicKeyToString(Key PublicKey) {
 
 		String StringPublicKey = Hex.toHexString(PublicKey.getEncoded()).substring(46, 176);
