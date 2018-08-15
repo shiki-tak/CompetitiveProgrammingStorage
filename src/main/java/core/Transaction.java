@@ -61,7 +61,7 @@ public class Transaction {
      * @param from                  送信者のアドレス
      * @param value                 送信者から受信者へ送られるETHの量
      * @param data(optional field)  メッセージ
-     * @param gasLimit             トランザクションの実行にかかる計算のステップ数の最大値
+     * @param gasLimit              トランザクションの実行にかかる計算のステップ数の最大値
      * @param gasPrice              送信者が支払う、１計算ステップあたりの手数料
      * @return txHash
      *
