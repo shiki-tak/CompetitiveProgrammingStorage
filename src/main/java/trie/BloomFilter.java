@@ -11,16 +11,6 @@ public class BloomFilter {
 	private int numberOfAddedElements;
 	private int bitFilterSize;
 
-	// Bloom Filter　Test
-	public static void main(String[] args) {
-		BloomFilter bloomFilter = new BloomFilter();
-
-		System.out.println("L1 is " + bloomFilter.contain("L1"));
-		System.out.println("L2 is " + bloomFilter.contain("L2"));
-		System.out.println("L3 is " + bloomFilter.contain("L3"));
-		System.out.println("L5 is " + bloomFilter.contain("L5"));
-	}
-
 	// コンストラクタ
 	public BloomFilter() {
 		long c = 100;
