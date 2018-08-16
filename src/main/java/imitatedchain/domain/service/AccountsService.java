@@ -13,8 +13,10 @@ public class AccountsService {
 	@Autowired
 	AccountsRepository accountsRepository;
 
-	public Accounts save(Accounts account) {
-		return accountsRepository.save(account);
+	public Accounts save(String address, double balance, int nonce) {
+		// DBに登録するためのインスタンスを生成
+		Accounts newAccount = new Accounts(address, balance, nonce);
+		return accountsRepository.save(newAccount);
 	}
 
 }

@@ -14,6 +14,14 @@ public class Accounts {
 
 	private int nonce;
 
+	Accounts() {}
+
+	public Accounts(String address, double balance, int nonce) {
+		this.address = address;
+		this.balance = balance;
+		this.nonce = nonce;
+	}
+
 	// getter
 	public String getAddress() { return address; }
 	public double getBalance() { return balance; }

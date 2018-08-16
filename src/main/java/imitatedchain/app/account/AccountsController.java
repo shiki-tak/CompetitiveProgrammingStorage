@@ -21,17 +21,6 @@ public class AccountsController {
 	public Accounts createNewAccount() {
 		Account account = AccountManager.createNewAccount();
 
-		Accounts registeredAccount = new Accounts();
-		registeredAccount.setAddress(account.getAddress().addressToString());
-		registeredAccount.setBalance(account.getBalance());
-		registeredAccount.setNonce(account.getNonce());
-
-		return accountsService.save(registeredAccount);
+		return accountsService.save(account.getAddress().addressToString(), account.getBalance(), account.getNonce());
 	}
-
-	@RequestMapping(method = RequestMethod.GET)
-	public String hello() {
-		return "hello";
-	}
-
 }
