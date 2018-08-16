@@ -12,7 +12,6 @@ import accounts.Address;
 import rlp.RlpEncoder;
 import rlp.RlpList;
 import rlp.RlpString;
-import trie.BloomFilter;
 
 public class Transaction {
 
@@ -54,7 +53,11 @@ public class Transaction {
 	public double getGasPrice() { return gasPrice; }
 	public int getNonce() { return nonce; }
 
-	// トランザクションのハッシュ値からトランザクションを検索
+    /**
+     * トランザクションのハッシュ値からトランザクションを検索
+     * @param txHash 検索するトランザクションのハッシュ
+     * @return transaction
+     */
 	public static Transaction getTransaction(TransactionHash txHash) {
 		for (int i = 0; i < transactions.size(); i++) {
 			if (transactions.get(i).getTxHash() == txHash) {
@@ -63,7 +66,6 @@ public class Transaction {
 		}
 		// TODO: ターゲットとしたtransactionが存在しない場合の処理
 		return null;
-
 	}
 
 	// setter
@@ -90,6 +92,32 @@ public class Transaction {
      * 1 ether = 10^18 wei
      */
 	public static TransactionHash sendTransaction(Address to, Address from, double value, double gasLimit, double gasPrice) {
+		// トランザクションのハッシュ値を計算
+		TransactionHash txHash = calcTxHash(to, from, value, gasLimit, gasPrice);
+
+		// トランザクション手数料の計算
+		double txFee = (gasLimit * gasPrice) * Math.pow(10, -18);
+		// 送金処理
+		Account toAccount = AccountManager.getAccount(to);
+		Account fromAccount = AccountManager.getAccount(from);
+
+		// TODO: fromAccountの残高が足りない場合のエラー処理はAPI側で実装する
+		double toBlanceAfterTransaction = toAccount.getBalance() + value;
+		double fromBalanceAfterTransaction = fromAccount.getBalance() - (value + txFee);
+		toAccount.setBalance(toBlanceAfterTransaction);
+		fromAccount.setBalance(fromBalanceAfterTransaction);
+		// fromのnonceを+1する
+		fromAccount.setNonce(fromAccount.getNonce() + 1);
+
+		// TODO: EIP-155
+
+		Transaction tx = new Transaction(txHash, from, to, value, gasLimit, gasPrice);
+		transactions.add(tx);
+
+		return txHash;
+	}
+
+	private static TransactionHash calcTxHash(Address to, Address from, double value, double gasLimit, double gasPrice) {
 		RlpString rlpTo = new RlpString(to.addressToString().getBytes());
 		RlpString rlpFrom = new RlpString(from.addressToString().getBytes());
 		RlpString rlpValue = new RlpString(String.valueOf(value).getBytes());
@@ -106,62 +134,8 @@ public class Transaction {
         // 求めたv, r, sと上記のパラメータを使って、RLPエンコーディングしたものから求めたハッシュ値がトランザクションハッシュとなる
 		Keccak.DigestKeccak kecc = new Keccak.Digest256();
 		byte[] txAsBytes = kecc.digest(resRlpListEncoding);
-
-		// トランザクション手数料の計算
-		double txFee = (gasLimit * gasPrice) * Math.pow(10, -18);
-
-		// 送金処理
-		Account toAccount = AccountManager.getAccount(to);
-		Account fromAccount = AccountManager.getAccount(from);
-
-		// TODO: fromAccountの残高が足りない場合のエラー処理はAPI側で実装する
-		double toBlanceAfterTransaction = toAccount.getBalance() + value;
-		double fromBalanceAfterTransaction = fromAccount.getBalance() - (value + txFee);
-		toAccount.setBalance(toBlanceAfterTransaction);
-		fromAccount.setBalance(fromBalanceAfterTransaction);
-
-		// fromのnonceを+1する
-		fromAccount.setNonce(fromAccount.getNonce() + 1);
-
-		// TODO: EIP-155
-
 		TransactionHash txHash = new TransactionHash(Hex.toHexString(txAsBytes));
 
-		Transaction tx = new Transaction(txHash, from, to, value, gasLimit, gasPrice);
-		transactions.add(tx);
-
 		return txHash;
-	}
-
-	public static List<String> generateTransaction(int n) {
-		List<String> txs = new ArrayList<>();
-
-		for (int i = 0; i <= n; i++) {
-			txs.add("Tx" + "-" + String.valueOf(n) + "-" + String.valueOf(i));
-		}
-		return txs;
-	}
-
-    /**
-     * トランザクションの検索
-     * @param blockChain ブロックチェーン
-     * @param txHash 検索するトランザクションのハッシュ
-     * @return
-     */
-	public static String searchTransaction(Blockchain blockChain, String txHash) {
-		String resMessage;
-
-		boolean isTx = false;
-		int blockHeight = 0;
-		for (; blockHeight < blockChain.getLatestBlockIndex(); blockHeight++) {
-			BloomFilter logsBloom = blockChain.getBlock(blockHeight).getBlockHeader().getLogsBloom();
-			if (logsBloom.contain(txHash)) {
-				isTx = true;
-				break;
-			}
-		}
-		resMessage = txHash + (isTx ? " is included in Block " + String.valueOf(blockHeight) : " is not included anywhere");
-
-		return resMessage;
 	}
 }

@@ -7,7 +7,6 @@ import consensus.PoW;
 import consensus.PoWResult;
 import core.Block;
 import core.Blockchain;
-import core.Transaction;
 import trie.BloomFilter;
 import trie.MerkleHash;
 import trie.MerkleTree;
@@ -18,14 +17,14 @@ public class Simulator {
 		Blockchain blockChain = new Blockchain();
 
 		for (int i = 0; i < 10; i++) {
-			List<String> txs = Transaction.generateTransaction(i);
+//			List<String> txs = Transaction.generateTransaction(i);
 			BloomFilter logsBloom = new BloomFilter();
 			List<MerkleHash> merkleHashList = new ArrayList<>();
 
-			for (int l = 0; l < txs.size(); l++) {
-				logsBloom.add(txs.get(l));
-				merkleHashList.add(new MerkleHash(txs.get(l)));
-			}
+//			for (int l = 0; l < txs.size(); l++) {
+//				logsBloom.add(txs.get(l));
+//				merkleHashList.add(new MerkleHash(txs.get(l)));
+//			}
 
 			// Create Merkle Tree
 			MerkleTree merkleTree = MerkleTree.createMerkleTree(merkleHashList);
@@ -63,11 +62,11 @@ public class Simulator {
 			System.out.printf("Nonce: %d%n", block.getBlockHeader().getNonce());
 			System.out.println();
 		}
-		// トランザクションを検索する
-		System.out.println("*** Search Transaction ***");
-		System.out.println(Transaction.searchTransaction(blockChain, "Tx-1-1"));
-		System.out.println(Transaction.searchTransaction(blockChain, "Tx-11-0"));
-		System.out.println(Transaction.searchTransaction(blockChain, "Tx-2-1"));
-		System.out.println(Transaction.searchTransaction(blockChain, "Tx-5-2"));
+//		// トランザクションを検索する
+//		System.out.println("*** Search Transaction ***");
+//		System.out.println(Transaction.searchTransaction(blockChain, "Tx-1-1"));
+//		System.out.println(Transaction.searchTransaction(blockChain, "Tx-11-0"));
+//		System.out.println(Transaction.searchTransaction(blockChain, "Tx-2-1"));
+//		System.out.println(Transaction.searchTransaction(blockChain, "Tx-5-2"));
 	}
 }
