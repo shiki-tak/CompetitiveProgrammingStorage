@@ -114,10 +114,11 @@ public class Transaction {
 		Account toAccount = AccountManager.getAccount(to);
 		Account fromAccount = AccountManager.getAccount(from);
 
-		double toAfterBalance = toAccount.getBalance() + value;
-		double fromAfterBalance = fromAccount.getBalance() - (value + txFee);
-		toAccount.setBalance(toAfterBalance);
-		fromAccount.setBalance(fromAfterBalance);
+		// TODO: fromAccountの残高が足りない場合のエラー処理はAPI側で実装する
+		double toBlanceAfterTransaction = toAccount.getBalance() + value;
+		double fromBalanceAfterTransaction = fromAccount.getBalance() - (value + txFee);
+		toAccount.setBalance(toBlanceAfterTransaction);
+		fromAccount.setBalance(fromBalanceAfterTransaction);
 
 		// fromのnonceを+1する
 		fromAccount.setNonce(fromAccount.getNonce() + 1);
