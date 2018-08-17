@@ -7,5 +7,5 @@ import imitatedchain.domain.model.Accounts;
 
 @Repository
 public interface AccountsRepository extends JpaRepository<Accounts, String>{
-	public Accounts findByAddress(String address);
+	public Accounts findByAddress(String address) throws NullPointerException;
 }

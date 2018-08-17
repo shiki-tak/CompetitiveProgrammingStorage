@@ -26,7 +26,7 @@ public class AccountsController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public Accounts createNewAccount() {
-		Account account = AccountManager.createNewAccount();
+		Account account = AccountManager.createNewAccount(1000);
 
 		return accountsService.save(account.getAddress().addressToString(), account.getBalance(), account.getNonce());
 	}
@@ -36,6 +36,7 @@ public class AccountsController {
 	public String getAccountInfo(@PathVariable String address) throws JsonProcessingException {
 		Accounts account = accountsService.findOne(address);
 		String accountAsJSON = objectMapper.writeValueAsString(account);
+		System.out.println(accountAsJSON);
 		return accountAsJSON;
 	}
 }

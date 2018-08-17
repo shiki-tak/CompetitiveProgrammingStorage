@@ -6,8 +6,6 @@ import java.util.List;
 import org.bouncycastle.jcajce.provider.digest.Keccak;
 import org.bouncycastle.util.encoders.Hex;
 
-import accounts.Account;
-import accounts.AccountManager;
 import accounts.Address;
 import rlp.RlpEncoder;
 import rlp.RlpList;
@@ -78,7 +76,6 @@ public class Transaction {
 	public void setGasPrice(double gasPrice) { this.gasPrice = gasPrice; }
 	public void setNonce(int nonce) { this.nonce = nonce; }
 
-	// TODO: Transactionクラスの実装
     /**
      * トランザクションの送信
      * @param to                    受信者のアドレス
@@ -95,29 +92,29 @@ public class Transaction {
 		// トランザクションのハッシュ値を計算
 		TransactionHash txHash = calcTxHash(to, from, value, gasLimit, gasPrice);
 
-		// トランザクション手数料の計算
-		double txFee = (gasLimit * gasPrice) * Math.pow(10, -18);
-		// 送金処理
-		Account toAccount = AccountManager.getAccount(to);
-		Account fromAccount = AccountManager.getAccount(from);
-
-		// TODO: fromAccountの残高が足りない場合のエラー処理はAPI側で実装する
-		double toBlanceAfterTransaction = toAccount.getBalance() + value;
-		double fromBalanceAfterTransaction = fromAccount.getBalance() - (value + txFee);
-		toAccount.setBalance(toBlanceAfterTransaction);
-		fromAccount.setBalance(fromBalanceAfterTransaction);
-		// fromのnonceを+1する
-		fromAccount.setNonce(fromAccount.getNonce() + 1);
-
-		// TODO: EIP-155
-
-		Transaction tx = new Transaction(txHash, from, to, value, gasLimit, gasPrice);
-		transactions.add(tx);
+//		// トランザクション手数料の計算
+//		double txFee = (gasLimit * gasPrice) * Math.pow(10, -18);
+//		// 送金処理
+//		Account toAccount = AccountManager.getAccount(to);
+//		Account fromAccount = AccountManager.getAccount(from);
+//
+//		// TODO: fromAccountの残高が足りない場合のエラー処理はAPI側で実装する
+//		double toBlanceAfterTransaction = toAccount.getBalance() + value;
+//		double fromBalanceAfterTransaction = fromAccount.getBalance() - (value + txFee);
+//		toAccount.setBalance(toBlanceAfterTransaction);
+//		fromAccount.setBalance(fromBalanceAfterTransaction);
+//		// fromのnonceを+1する
+//		fromAccount.setNonce(fromAccount.getNonce() + 1);
+//
+//		// TODO: EIP-155
+//
+//		Transaction tx = new Transaction(txHash, from, to, value, gasLimit, gasPrice);
+//		transactions.add(tx);
 
 		return txHash;
 	}
 
-	private static TransactionHash calcTxHash(Address to, Address from, double value, double gasLimit, double gasPrice) {
+	public static TransactionHash calcTxHash(Address to, Address from, double value, double gasLimit, double gasPrice) {
 		RlpString rlpTo = new RlpString(to.addressToString().getBytes());
 		RlpString rlpFrom = new RlpString(from.addressToString().getBytes());
 		RlpString rlpValue = new RlpString(String.valueOf(value).getBytes());
