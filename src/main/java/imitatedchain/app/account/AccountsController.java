@@ -35,6 +35,10 @@ public class AccountsController {
 	@ResponseBody
 	public String getAccountInfo(@PathVariable String address) throws JsonProcessingException {
 		Accounts account = accountsService.findOne(address);
+		if (account == null) {
+			return "{\"status\": \"failure\", \"message\": \"" + address + " does not exist\"}";
+		}
+
 		String accountAsJSON = objectMapper.writeValueAsString(account);
 		System.out.println(accountAsJSON);
 		return accountAsJSON;

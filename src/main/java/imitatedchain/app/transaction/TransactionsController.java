@@ -42,24 +42,19 @@ public class TransactionsController {
 	public String sendTransaction(@RequestBody Transactions sendTransactionParams) {
 
 		// 別サービスを直接呼び出すのってspringの設計的にあり...？
-		// TODO: accountが存在していない場合の例外処理が上手くいかない...
 		Accounts toAccount;
 		Accounts fromAccount;
-		try {
-			toAccount = accountsService.findOne(sendTransactionParams.getToAddress());
-		} catch (NullPointerException e) {
-			System.out.println("no such address to");
-//			String errorMessage = "{\"status\": \"success\", \"message\": \"" + sendTransactionParams.getToAddress() + " does not exist\"}";
-			return e.getMessage();
+		toAccount = accountsService.findOne(sendTransactionParams.getToAddress());
+
+		if (toAccount == null) {
+			return "{\"status\": \"failure\", \"message\": \"" + sendTransactionParams.getToAddress() + " does not exist\"}";
 		}
 
-		try {
-			fromAccount = accountsService.findOne(sendTransactionParams.getFromAddress());
-		} catch (NullPointerException e) {
-			System.out.println("no such address from");
-//			String errorMessage = "{\"status\": \"success\", \"message\": \"" + sendTransactionParams.getFromAddress() + " does not exist\"}";
-			return e.getMessage();
+		fromAccount = accountsService.findOne(sendTransactionParams.getFromAddress());
+		if (fromAccount == null) {
+			return "{\"status\": \"failure\", \"message\": \"" + sendTransactionParams.getFromAddress() + " does not exist\"}";
 		}
+
 
 		double value = sendTransactionParams.getValue();
 
@@ -78,7 +73,6 @@ public class TransactionsController {
 	public String getTransactionInfo(@PathVariable String txHash) throws JsonProcessingException {
 		Transactions transaction = transactionsService.findOne(txHash);
 		String transactionAsJSON = objectMapper.writeValueAsString(transaction);
-		System.out.println(transactionAsJSON);
 		return transactionAsJSON;
 	}
 }
