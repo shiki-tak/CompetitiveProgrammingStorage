@@ -2,10 +2,14 @@ package imitatedchain.app.transaction;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import imitatedchain.domain.model.Accounts;
 import imitatedchain.domain.model.Transactions;
@@ -20,6 +24,8 @@ public class TransactionsController {
 	AccountsService accountsService;
 	@Autowired
 	TransactionsService transactionsService;
+
+	private static ObjectMapper objectMapper = new ObjectMapper();
 
     /**
      * トランザクションの送信
@@ -65,5 +71,14 @@ public class TransactionsController {
 
 		// TODO: メッセージを切り出す
 		return transactionsService.execTransaction(toAccount, fromAccount, value, gasLimit, gasPrice, toAccountNonce, fromAccountNonce);
+	}
+
+	@RequestMapping(value = "/{txHash}", method = RequestMethod.GET)
+	@ResponseBody
+	public String getTransactionInfo(@PathVariable String txHash) throws JsonProcessingException {
+		Transactions transaction = transactionsService.findOne(txHash);
+		String transactionAsJSON = objectMapper.writeValueAsString(transaction);
+		System.out.println(transactionAsJSON);
+		return transactionAsJSON;
 	}
 }

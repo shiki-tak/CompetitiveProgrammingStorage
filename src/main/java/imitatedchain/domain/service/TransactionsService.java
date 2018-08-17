@@ -55,4 +55,8 @@ public class TransactionsService {
 
 		return "{\"status\": \"success\", \"message\": \"" + txHash + "\"}";
 	}
+
+	public Transactions findOne(String txHash) {
+		return transactionsRepository.findByTxHash(txHash);
+	}
 }
