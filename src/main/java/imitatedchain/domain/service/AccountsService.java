@@ -19,4 +19,8 @@ public class AccountsService {
 		return accountsRepository.save(newAccount);
 	}
 
+	public Accounts findOne(String address) {
+		return accountsRepository.findByAddress(address);
+	}
+
 }
