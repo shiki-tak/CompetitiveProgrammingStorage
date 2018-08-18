@@ -1,2 +1,0 @@
-CREATE TABLE accounts(address varchar(255), balance double precision, nonce int);
-CREATE TABLE transactions("tx_hash" varchar(255), "to_address" varchar(255), "from_address" varchar(255), "value" double precision, "data" varchar(255), "gas_limit" double precision, "gas_price" double precision, "nonce" int);
