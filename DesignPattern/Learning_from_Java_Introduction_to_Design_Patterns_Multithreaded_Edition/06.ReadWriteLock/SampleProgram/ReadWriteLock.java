@@ -5,7 +5,7 @@ public final class ReadWriteLock {
     private boolean preferWriter = true;    // 書くのを優先するならtrue
 
     public synchronized void readLock() throws InterruptedException {
-        while (writingWriters > 0 || (preferWriter && waitingWriters >0)) {
+        while (writingWriters > 0 || (preferWriter && waitingWriters > 0)) {
             wait();
         }
         readingReaders++;                       // 実際に読んでいるスレッドの数を1増やす
