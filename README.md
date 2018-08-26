@@ -7,6 +7,7 @@
 - Bloom Filter
 - Transfer
 - Capitals-based checksum
+- JSON RPC
 
 ## Goal
 
