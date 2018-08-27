@@ -12,7 +12,7 @@ import imitatedchain.domain.service.AccountsService;
 
 @Service
 @AutoJsonRpcServiceImpl
-public class AccountServerAPIImpl implements JsonRpcServerAPI {
+public class AccountServerAPIImpl implements AccountServerAPI {
 	@Autowired
 	AccountsService accountsService;
 

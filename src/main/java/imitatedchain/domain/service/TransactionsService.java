@@ -19,6 +19,7 @@ public class TransactionsService {
 	@Autowired
 	AccountsService accountsService;
 
+	// TODO: data parameterがある場合のexecTransaction
 	public String execTransaction(Accounts toAccount, Accounts fromAccount, double value, double gasLimit, double gasPrice, int toAccountNonce, int fromAccountNonce) {
 
 		double toBalance = toAccount.getBalance();
@@ -30,7 +31,7 @@ public class TransactionsService {
 		// 送金者の残高が足りていなければエラー
 		if (fromBalance < value + txFee) {
 			// TODO: メッセージを切り出す
-			String errorMessage = "{\"status\": \"failure\", \"message\": \"balance not enough\"}";
+			String errorMessage = "balance not enough";
 			return errorMessage;
 		}
 
@@ -53,7 +54,9 @@ public class TransactionsService {
 		// トランザクションを保存
 		transactionsRepository.save(newTransaction);
 
-		return "{\"status\": \"success\", \"message\": \"" + txHash + "\"}";
+		return txHash;
+		// API用のreturn
+		// return "{\"status\": \"success\", \"message\": \"" + txHash + "\"}";
 	}
 
 	public Transactions findOne(String txHash) {
