@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import com.googlecode.jsonrpc4j.spring.AutoJsonRpcServiceImpl;
 
+import accounts.Account;
+import accounts.AccountManager;
 import imitatedchain.domain.model.Accounts;
 import imitatedchain.domain.service.AccountsService;
 
@@ -22,5 +24,13 @@ public class AccountServerAPIImpl implements JsonRpcServerAPI {
 		}
 
 		return String.valueOf(account.getBalance());
+	}
+
+	@Override
+	public String newAccount() {
+		Account account = AccountManager.createNewAccount(1000);
+		accountsService.save(account.getAddress().addressToString(), account.getBalance(), account.getNonce());
+
+		return account.getAddress().addressToString();
 	}
 }
