@@ -1,4 +1,4 @@
-package sample;
+package sample.patriciatrie;
 
 public class PatriciaTrie {
 

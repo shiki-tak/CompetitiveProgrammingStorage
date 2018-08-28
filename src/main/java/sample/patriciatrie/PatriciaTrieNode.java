@@ -1,4 +1,4 @@
-package sample;
+package sample.patriciatrie;
 
 import java.util.ArrayList;
 import java.util.HashSet;
