@@ -17,7 +17,8 @@ public class ClientThread extends Thread {
         this.txPoolManager = txPoolManager;
     }
 
-    public void run() {
+    @Override
+	public void run() {
         try {
             // exec sendTransaction
             while(true) {
