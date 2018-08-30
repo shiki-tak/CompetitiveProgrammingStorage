@@ -1,24 +1,20 @@
-public class FutureData implements Data {
-    private RealData realdata = null;
-    private boolean ready = false;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 
-    public synchronized void setRealData(RealData realdata) {
-        if (ready) {
-            return;
-        }
-        this.realdata = realdata;
-        this.ready = true;
-        notifyAll();
-    }
-
-    public synchronized String getContent() {
-        while (!ready) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-
-            }
-        }
-        return realdata.getContent();
-    }
+public class FutureData extends FutureTask<RealData> implements Data {
+	public FutureData(Callable<RealData> callable) {
+		super(callable);
+	}
+	public String getContent() {
+		String string  = null;
+		try {
+			string = get().getContent();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
+		return string;
+	}
 }
