@@ -19,6 +19,7 @@ import org.apache.hadoop.hbase.types.Struct;
 import org.apache.hadoop.hbase.types.StructBuilder;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.hbase.util.Hash;
+import org.apache.hadoop.hbase.util.SimplePositionedByteRange;
 
 
 
@@ -64,7 +65,7 @@ public class MessagingServiceImpl implements MessagingService {
 		put.addColumn(Bytes.toBytes("m"), Bytes.toBytes("body"), Bytes.toBytes(body));             // メッセージ本文のColumnであるm:bodyを追加
 
 		try (HTable table = (HTable) connection.getTable(TableName.valueOf("ns:message"))) {
-			table.put(put);                                                                        // HTableクラスのputメソッドを用いて、m:messageId, m:userId, m:bodyの3つのColumnの追加を反映
+			table.put(put);                                                                    // HTableクラスのputメソッドを用いて、m:messageId, m:userId, m:bodyの3つのColumnの追加を反映
 		}
 	}
 
@@ -86,8 +87,19 @@ public class MessagingServiceImpl implements MessagingService {
 		return null;
 	}
 
+	/*
+	 * <ルームIDのハッシュ>-<ルームID>-<送信日時のリバースタイムスタンプ>-<メッセージID>の形式で
+	 * RowKeyを生成する
+	 */
 	private byte[] createMessageRow(long roomId, long postAt, String messageId) {
-		return null;
+		Object[] values = new Object[] { hash.hash(Bytes.toBytes(roomId)), roomId, Long.MAX_VALUE - postAt, messageId };
+
+		// messageRowSchemaのencodeメソッドを用いて、RowKeyを生成する
+		// RowKeyの構成要素としてvaluesを指定している
+		SimplePositionedByteRange positionedByteRange = new SimplePositionedByteRange (messageRowSchema.encodedLength(values));
+		messageRowSchema.encode(positionedByteRange, values);
+
+		return positionedByteRange.getBytes();
 	}
 
 }
