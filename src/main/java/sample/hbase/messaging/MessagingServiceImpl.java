@@ -1,6 +1,7 @@
 package sample.hbase.messaging;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,6 +13,13 @@ import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.ConnectionFactory;
 import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Put;
+import org.apache.hadoop.hbase.client.Result;
+import org.apache.hadoop.hbase.client.ResultScanner;
+import org.apache.hadoop.hbase.client.Scan;
+import org.apache.hadoop.hbase.filter.CompareFilter.CompareOp;
+import org.apache.hadoop.hbase.filter.FilterList;
+import org.apache.hadoop.hbase.filter.FilterList.Operator;
+import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
 import org.apache.hadoop.hbase.types.RawInteger;
 import org.apache.hadoop.hbase.types.RawLong;
 import org.apache.hadoop.hbase.types.RawString;
@@ -69,10 +77,46 @@ public class MessagingServiceImpl implements MessagingService {
 		}
 	}
 
+	/*
+	 * (getInitialMessages)
+	 * @see sample.hbase.messaging.MessagingService#getInitialMessages(long, java.util.List)
+	 * ルームに初めて訪れた時、他のユーザによってすでにルーム内で交換されているメッセージを取得するためのメソッド
+	 */
 	@Override
 	public List<Message> getInitialMessages(long roomId, List<Long> blockUsers) throws IOException {
+		// スキャンの開始RowKeyに<ルームDIのハッシュ>-<ルームID>、スキャンの停止RowKeyに<ルームDIのハッシュ>-<ルームID>+1を
+		// 指定することでパーシャルキースキャンを行う
+		byte[] startRow = createMessageScanRow(roomId);
+		byte[] stopRow = incrementBytes(createMessageScanRow(roomId));
+		Scan scan = new Scan(startRow, stopRow);
 
-		return null;
+		// FilterListクラスのインスタンス化
+		// FilterListクラスに追加したフィルタの条件を全て満たすもののみ、スキャン結果として取得することができる
+		FilterList filterList = new FilterList(Operator.MUST_PASS_ALL);
+
+		if (blockUsers != null) {
+			for (Long userId : blockUsers) {
+				// ブロックしているユーザをスキャンの対象外として、Rowをスキャン結果に含める
+				SingleColumnValueFilter userFilter = new SingleColumnValueFilter(Bytes.toBytes("m"), Bytes.toBytes("userId"), CompareOp.NOT_EQUAL, Bytes.toBytes(userId));
+				filterList.addFilter(userFilter);
+			}
+		}
+
+		scan.setFilter(filterList);
+
+		List<Message> messages = new ArrayList<>();
+		try (HTable table = (HTable) connection.getTable(TableName.valueOf("ns:message"));
+				ResultScanner scanner = table.getScanner(scan);) {
+			int count = 0;
+			for (Result result : scanner) {
+				messages.add(convertToMessage(result));
+				count++;
+				if (count >= 50) {
+					break;
+				}
+			}
+		}
+		return messages;
 	}
 
 	@Override
@@ -102,4 +146,15 @@ public class MessagingServiceImpl implements MessagingService {
 		return positionedByteRange.getBytes();
 	}
 
+	private byte[] createMessageScanRow(long roomId) {
+		return null;
+	}
+
+	private byte[] incrementBytes(byte[] createMessageScanRow) {
+		return null;
+	}
+
+	private Message convertToMessage(Result result) {
+		return null;
+	}
 }
