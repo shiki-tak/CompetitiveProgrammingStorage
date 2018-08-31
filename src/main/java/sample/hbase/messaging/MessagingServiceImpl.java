@@ -146,8 +146,16 @@ public class MessagingServiceImpl implements MessagingService {
 		return positionedByteRange.getBytes();
 	}
 
+	/*
+	 * 引数としてルームIDを受け取り、<ルームIDのハッシュ>-<ルームID>の形式でRowKeyを生成する
+	 */
 	private byte[] createMessageScanRow(long roomId) {
-		return null;
+		Object[] values = new Object[] { hash.hash(Bytes.toBytes(roomId)), roomId };
+
+		SimplePositionedByteRange positionedByteRange = new SimplePositionedByteRange (messageRowSchema.encodedLength(values));
+		messageRowSchema.encode(positionedByteRange, values);
+
+		return positionedByteRange.getBytes();
 	}
 
 	private byte[] incrementBytes(byte[] createMessageScanRow) {
