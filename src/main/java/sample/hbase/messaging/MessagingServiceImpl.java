@@ -29,6 +29,8 @@ import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.hbase.util.Hash;
 import org.apache.hadoop.hbase.util.SimplePositionedByteRange;
 
+import io.hgraphdb.HBaseGraphUtils;
+
 
 
 public class MessagingServiceImpl implements MessagingService {
@@ -87,7 +89,7 @@ public class MessagingServiceImpl implements MessagingService {
 		// スキャンの開始RowKeyに<ルームDIのハッシュ>-<ルームID>、スキャンの停止RowKeyに<ルームDIのハッシュ>-<ルームID>+1を
 		// 指定することでパーシャルキースキャンを行う
 		byte[] startRow = createMessageScanRow(roomId);
-		byte[] stopRow = incrementBytes(createMessageScanRow(roomId));
+		byte[] stopRow = HBaseGraphUtils.incrementBytes(createMessageScanRow(roomId));
 		Scan scan = new Scan(startRow, stopRow);
 
 		// FilterListクラスのインスタンス化
@@ -120,15 +122,74 @@ public class MessagingServiceImpl implements MessagingService {
 	}
 
 	@Override
-	public List<Message> getOldMessages(long roomId, Message oldestReceivedMessage, List<Long> blockUsers)
+	public List<Message> getOldMessages(long roomId, Message lastMessage, List<Long> blockUsers)
 			throws IOException {
-		return null;
+		byte[] startRow = HBaseGraphUtils.incrementBytes(createMessageRow(roomId, lastMessage.getPostAt(), lastMessage.getMessageId()));
+		byte[] stopRow = HBaseGraphUtils.incrementBytes(createMessageScanRow(roomId));
+
+		Scan scan = new Scan(startRow, stopRow);
+
+		FilterList filterList = new FilterList(Operator.MUST_PASS_ALL);
+
+		if (blockUsers != null) {
+			for (Long userId : blockUsers) {
+				SingleColumnValueFilter userFilter = new SingleColumnValueFilter(Bytes.toBytes("m"),
+						Bytes.toBytes("userId"), CompareOp.NOT_EQUAL, Bytes.toBytes(userId));
+				filterList.addFilter(userFilter);
+			}
+		}
+
+		scan.setFilter(filterList);
+
+		List<Message> messages = new ArrayList<>();
+
+		try (HTable table = (HTable) connection.getTable(TableName.valueOf("ns:message"));
+				ResultScanner scanner = table.getScanner(scan);) {
+			int count = 0;
+			for (Result result : scanner) {
+				messages.add(convertToMessage(result));
+				count++;
+				if (count >= 50) {
+					break;
+				}
+			}
+		}
+		return messages;
 	}
 
 	@Override
-	public List<Message> getNewMessages(long roomId, Message latestReceivedMessage, List<Long> blockUsers)
+	public List<Message> getNewMessages(long roomId, Message stopMessage, List<Long> blockUsers)
 			throws IOException {
-		return null;
+		byte[] startRow = createMessageScanRow(roomId);
+		byte[] stopRow = createMessageRow(roomId, stopMessage.getPostAt(), stopMessage.getMessageId());
+
+		Scan scan = new Scan(startRow, stopRow);
+
+		FilterList filterList = new FilterList(Operator.MUST_PASS_ALL);
+
+		if (blockUsers != null) {
+			for (Long userId : blockUsers) {
+				SingleColumnValueFilter userFilter = new SingleColumnValueFilter(Bytes.toBytes("m"),
+						Bytes.toBytes("userId"), CompareOp.NOT_EQUAL, Bytes.toBytes(userId));
+				filterList.addFilter(userFilter);
+			}
+		}
+
+		scan.setFilter(filterList);
+
+		List<Message> messages = new ArrayList<>();
+		try (HTable table = (HTable) connection.getTable(TableName.valueOf("ns:message"));
+				ResultScanner scanner = table.getScanner(scan);) {
+			int count = 0;
+			for (Result result : scanner) {
+				messages.add(convertToMessage(result));
+				count++;
+				if (count >= 50) {
+					break;
+				}
+			}
+		}
+		return messages;
 	}
 
 	/*
@@ -158,11 +219,15 @@ public class MessagingServiceImpl implements MessagingService {
 		return positionedByteRange.getBytes();
 	}
 
-	private byte[] incrementBytes(byte[] createMessageScanRow) {
-		return null;
-	}
-
 	private Message convertToMessage(Result result) {
-		return null;
+		Message message = new Message();
+		message.setUserId(Bytes.toLong(result.getValue(Bytes.toBytes("m"), Bytes.toBytes("userId"))));
+		message.setBody(Bytes.toString(result.getValue(Bytes.toBytes("m"), Bytes.toBytes("body"))));
+		message.setMessageId(Bytes.toString(result.getValue(Bytes.toBytes("m"), Bytes.toBytes("messageId"))));
+		// Messageクラスの送信日時を設定。RowKeyの送信日時のリバースタイムスタンプを取得し、long型の最大値から引くことで、元の送信日時に
+		// 変換して設定している。
+		message.setPostAt(Long.MAX_VALUE - (long) messageRowSchema.decode(new SimplePositionedByteRange(result.getRow()), 1));
+
+		return message;
 	}
 }
