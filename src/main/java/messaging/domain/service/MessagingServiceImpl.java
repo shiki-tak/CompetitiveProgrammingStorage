@@ -12,13 +12,7 @@ import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.ConnectionFactory;
 import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Put;
-import org.apache.hadoop.hbase.types.RawInteger;
-import org.apache.hadoop.hbase.types.RawLong;
-import org.apache.hadoop.hbase.types.RawString;
-import org.apache.hadoop.hbase.types.Struct;
-import org.apache.hadoop.hbase.types.StructBuilder;
 import org.apache.hadoop.hbase.util.Bytes;
-import org.apache.hadoop.hbase.util.Hash;
 import org.springframework.stereotype.Service;
 
 import com.googlecode.jsonrpc4j.spring.AutoJsonRpcServiceImpl;
@@ -30,8 +24,6 @@ import messaging.domain.model.Message;
 public class MessagingServiceImpl implements MessagingService {
 
 	static Configuration conf;
-	private final Hash hash;
-	private final Struct messageRowSchema;
 	private final Connection connection;
 	private final HTable hTable;
 
@@ -42,13 +34,8 @@ public class MessagingServiceImpl implements MessagingService {
 		conf.set(HConstants.ZOOKEEPER_QUORUM, "localhost");
 		// Connectionクラスの初期化
 		connection = ConnectionFactory.createConnection(conf);
-		// hashの初期化
-		hash = Hash.getInstance(Hash.MURMUR_HASH3);
 	   // instantiate HTable class
 	   hTable = (HTable) connection.getTable(TableName.valueOf("ns:message"));
-
-	   messageRowSchema = new StructBuilder().add(new RawInteger())
-			   .add(new RawLong()).add(new RawLong()).add(RawString.ASCENDING).toStruct();
 	}
 
 
