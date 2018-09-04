@@ -1,4 +1,4 @@
-package messaging;
+package messaging.domain.service;
 
 public class Message {
 
