@@ -19,8 +19,14 @@ import org.apache.hadoop.hbase.types.Struct;
 import org.apache.hadoop.hbase.types.StructBuilder;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.hbase.util.Hash;
-import org.apache.hadoop.hbase.util.SimplePositionedByteRange;
+import org.springframework.stereotype.Service;
 
+import com.googlecode.jsonrpc4j.spring.AutoJsonRpcServiceImpl;
+
+import messaging.domain.model.Message;
+
+@Service
+@AutoJsonRpcServiceImpl
 public class MessagingServiceImpl implements MessagingService {
 
 	static Configuration conf;
@@ -31,6 +37,7 @@ public class MessagingServiceImpl implements MessagingService {
 
 	public MessagingServiceImpl() throws IOException {
 		// instantiate Configuration class
+		conf = new Configuration();
 		conf = HBaseConfiguration.create(conf);
 		conf.set(HConstants.ZOOKEEPER_QUORUM, "localhost");
 		// Connectionクラスの初期化
@@ -46,26 +53,23 @@ public class MessagingServiceImpl implements MessagingService {
 
 
 	@Override
-	public void sendMessage(long roomId, String userId, String body) throws IOException {
+	public void sendMessage(String roomIdAsString, String userId, String body) throws IOException {
+		long roomId = Long.parseLong(roomIdAsString);
 		long postAt = System.currentTimeMillis();
 		String messageId = UUID.randomUUID().toString();
-		byte[] rowKey = createMessageRow(roomId, postAt, messageId);
+		String rowKey = String.valueOf(roomId) + "-" + String.valueOf(postAt) + "-" + messageId;
 
-		Put put = new Put(rowKey);
+		System.out.println("postAt: " + postAt);
+		System.out.println("messageId: " + messageId);
+		System.out.println("RowKey: " + rowKey);
+
+		Put put = new Put(Bytes.toBytes(rowKey));
 
 		put.addColumn(Bytes.toBytes("m"), Bytes.toBytes("messageId"), Bytes.toBytes(messageId));
 		put.addColumn(Bytes.toBytes("m"), Bytes.toBytes("userId"), Bytes.toBytes(userId));
 		put.addColumn(Bytes.toBytes("m"), Bytes.toBytes("body"), Bytes.toBytes(body));
 
 		hTable.put(put);
-	}
-
-	private byte[] createMessageRow(long roomId, long postAt, String messageId) {
-		Object[] values = new Object[] {hash.hash(Bytes.toBytes(roomId)), roomId, Long.MAX_VALUE - postAt, messageId };
-		SimplePositionedByteRange positionedByteRange = new SimplePositionedByteRange(messageRowSchema.encodedLength(values));
-		messageRowSchema.encode(positionedByteRange, values);
-
-		return positionedByteRange.getBytes();
 	}
 
 	@Override
