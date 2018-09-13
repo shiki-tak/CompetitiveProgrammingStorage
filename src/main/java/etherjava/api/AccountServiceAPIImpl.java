@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.googlecode.jsonrpc4j.spring.AutoJsonRpcServiceImpl;
 
-import etherjava.domain.model.Account;
+import etherjava.domain.model.account.Account;
 import etherjava.domain.service.account.AccountManager;
 import etherjava.domain.service.account.AccountService;
 
@@ -20,13 +20,12 @@ public class AccountServiceAPIImpl implements AccountServiceAPI {
 
 	@Override
 	public String getBalance(String address) {
-//		Account account = accountService.findOne(address);
-//		if (account == null) {
-//			return "{\"status\": \"failure\", \"message\": \"" + address + " does not exist\"}";
-//		}
-//
-//		return String.valueOf(account.getBalance());
-		return null;
+		Account account = accountService.findOne(address);
+		if (account == null) {
+			return "{\"status\": \"failure\", \"message\": \"" + address + " does not exist\"}";
+		}
+
+		return String.valueOf(account.getBalance());
 	}
 
 	@Override

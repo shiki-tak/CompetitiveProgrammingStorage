@@ -14,8 +14,8 @@ import java.util.List;
 import org.bouncycastle.jcajce.provider.digest.Keccak;
 import org.bouncycastle.util.encoders.Hex;
 
-import etherjava.domain.model.Account;
-import etherjava.domain.model.Address;
+import etherjava.domain.model.account.Account;
+import etherjava.domain.model.account.Address;
 
 public class AccountManager {
 	static List<Account> accounts = new ArrayList<>();

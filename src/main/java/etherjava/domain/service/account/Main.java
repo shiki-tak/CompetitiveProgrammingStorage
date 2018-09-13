@@ -1,6 +1,6 @@
 package etherjava.domain.service.account;
 
-import etherjava.domain.model.Account;
+import etherjava.domain.model.account.Account;
 
 public class Main {
 	public static void main(String[] args) {

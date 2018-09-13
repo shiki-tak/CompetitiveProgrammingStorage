@@ -1,4 +1,4 @@
-package etherjava.domain.model;
+package etherjava.domain.model.account;
 
 public class Account {
 	private Address address;    // アドレス
@@ -10,10 +10,16 @@ public class Account {
 	}
 
 	// 初期残高ありのテスト用コンストラクタ
-	public Account(Address address, int balance) {
+	public Account(Address address, double balance) {
 		this(address);
 		this.balance = balance;
 	}
+	public Account(Address address, double balance, int nonce) {
+		this(address);
+		this.balance = balance;
+		this.nonce = nonce;
+	}
+
 	// getter
 	public Address getAddress() { return address; }
 	public double getBalance() { return balance; }

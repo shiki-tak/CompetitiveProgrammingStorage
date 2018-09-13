@@ -1,4 +1,4 @@
-package etherjava.domain.model;
+package etherjava.domain.model.account;
 
 public class Address {
 	private String addressAsString;
