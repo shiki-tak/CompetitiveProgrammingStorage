@@ -7,7 +7,7 @@ import org.bouncycastle.jcajce.provider.digest.Keccak;
 import org.bouncycastle.util.encoders.Hex;
 
 import etherjava.domain.model.blockchain.Block;
-import etherjava.trie.BloomFilter;
+import etherjava.utils.trie.BloomFilter;
 
 
 public final class Blockchain {

@@ -6,9 +6,9 @@ import java.util.List;
 import etherjava.domain.model.blockchain.Block;
 import etherjava.domain.service.consensus.PoW;
 import etherjava.domain.service.consensus.PoWResult;
-import etherjava.trie.BloomFilter;
-import etherjava.trie.MerkleHash;
-import etherjava.trie.MerkleTree;
+import etherjava.utils.trie.BloomFilter;
+import etherjava.utils.trie.MerkleHash;
+import etherjava.utils.trie.MerkleTree;
 
 
 public class Simulator {

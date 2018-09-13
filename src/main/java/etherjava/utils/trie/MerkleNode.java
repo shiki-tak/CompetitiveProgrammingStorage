@@ -1,4 +1,4 @@
-package etherjava.trie;
+package etherjava.utils.trie;
 
 public class MerkleNode {
 	private MerkleHash merkleHash;

@@ -1,4 +1,4 @@
-package etherjava.rlp;
+package etherjava.utils.rlp;
 
 /**
  * Base RLP type.

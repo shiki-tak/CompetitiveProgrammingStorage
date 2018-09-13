@@ -4,9 +4,9 @@ import org.bouncycastle.jcajce.provider.digest.Keccak;
 import org.bouncycastle.util.encoders.Hex;
 
 import etherjava.domain.model.account.Address;
-import etherjava.rlp.RlpEncoder;
-import etherjava.rlp.RlpList;
-import etherjava.rlp.RlpString;
+import etherjava.utils.rlp.RlpEncoder;
+import etherjava.utils.rlp.RlpList;
+import etherjava.utils.rlp.RlpString;
 
 public class Transaction {
 

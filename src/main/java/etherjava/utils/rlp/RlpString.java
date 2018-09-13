@@ -1,4 +1,4 @@
-package etherjava.rlp;
+package etherjava.utils.rlp;
 
 import java.math.BigInteger;
 import java.util.Arrays;

@@ -1,6 +1,6 @@
 package etherjava.domain.model.blockchain;
 
-import etherjava.trie.BloomFilter;
+import etherjava.utils.trie.BloomFilter;
 
 public class BlockHeader {
 
