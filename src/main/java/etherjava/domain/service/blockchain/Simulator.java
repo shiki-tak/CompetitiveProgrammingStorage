@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import etherjava.domain.model.blockchain.Block;
+import etherjava.domain.model.transaction.Transaction;
 import etherjava.domain.service.consensus.PoW;
 import etherjava.domain.service.consensus.PoWResult;
 import etherjava.utils.trie.BloomFilter;
@@ -14,7 +15,7 @@ import etherjava.utils.trie.MerkleTree;
 public class Simulator {
 
 	public static void main(String[] args) {
-		Blockchain blockChain = new Blockchain();
+		BlockchainService blockChain = new BlockchainService();
 
 		for (int i = 0; i < 10; i++) {
 			List<String> txs = new ArrayList<>();
@@ -32,15 +33,18 @@ public class Simulator {
 			MerkleTree merkleTree = MerkleTree.createMerkleTree(merkleHashList);
 			String merkleRoot =  merkleTree.getMerkleRoot().getMerkleHash().sha256HexBinary();
 
+			Transaction[] transactions = new Transaction[i];
+
 			if (i == 0) {
 				// Genesis blockの作成
-				blockChain.createGenesisBlock(merkleRoot, logsBloom);
+				blockChain.createGenesisBlock(merkleRoot, logsBloom, transactions);
 			} else {
 				// blockHashがnullのblockを生成する
 				Block block = new Block(
 						blockChain.getLatestBlock().getBlockHeader().getBlockHash(),
 						merkleRoot,
-						logsBloom
+						logsBloom,
+						transactions
 						);
 				PoW pow = new PoW(block, merkleRoot);
 				PoWResult powResult = pow.exec();
@@ -56,6 +60,7 @@ public class Simulator {
 			Block block = blockChain.getBlock(i);
 
 			System.out.printf("*** Block %d *** %n", block.getHeight());
+			System.out.printf("BlockSize: %d%n", block.getBlockSize());
 			System.out.printf("TimeStamp: %d%n", block.getBlockHeader().getTimeStamp());
 			System.out.printf("Hash: %s%n", block.getBlockHeader().getBlockHash());
 			System.out.printf("Previous Hash: %s%n", block.getBlockHeader().getParentHash());

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import com.googlecode.jsonrpc4j.spring.AutoJsonRpcServiceImpl;
 
 import etherjava.domain.model.account.Account;
-import etherjava.domain.model.blockchain.Transaction;
+import etherjava.domain.model.transaction.Transaction;
 import etherjava.domain.service.account.AccountService;
 import etherjava.domain.service.transaction.TransactionService;
 

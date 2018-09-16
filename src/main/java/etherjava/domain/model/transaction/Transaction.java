@@ -1,4 +1,4 @@
-package etherjava.domain.model.blockchain;
+package etherjava.domain.model.transaction;
 
 import org.bouncycastle.jcajce.provider.digest.Keccak;
 import org.bouncycastle.util.encoders.Hex;

@@ -20,8 +20,8 @@ import org.springframework.stereotype.Service;
 
 import etherjava.domain.model.account.Account;
 import etherjava.domain.model.account.Address;
-import etherjava.domain.model.blockchain.Transaction;
-import etherjava.domain.model.blockchain.TransactionHash;
+import etherjava.domain.model.transaction.Transaction;
+import etherjava.domain.model.transaction.TransactionHash;
 import etherjava.domain.service.account.AccountService;
 
 @Service

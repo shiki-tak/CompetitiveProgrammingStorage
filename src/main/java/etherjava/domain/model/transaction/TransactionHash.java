@@ -1,4 +1,4 @@
-package etherjava.domain.model.blockchain;
+package etherjava.domain.model.transaction;
 
 //TransactionHash型を定義
 public class TransactionHash {

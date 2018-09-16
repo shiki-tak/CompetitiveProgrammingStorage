@@ -23,6 +23,14 @@ public class BloomFilter {
 
 		numberOfAddedElements = 0;
 	}
+
+	// getter
+	// TODO: bitFilterのサイズ取得
+	public String getBitFilterToString() {
+		String bitFilterToString = bitFilter.toString();
+		return bitFilterToString;
+	}
+
 	// ブルームフィルタにデータを追加
 	public void add(String data) {
 		int[] hashes = createHashes(data, countOfHashNumCreatePerOneElement);
@@ -33,12 +41,27 @@ public class BloomFilter {
 	}
 
     /**
+     * 判定
+     * @param bytes 要素のバイト配列
+     * @return
+     */
+	public boolean contain(String data) {
+		int[] hashes = createHashes(data, countOfHashNumCreatePerOneElement);
+		for (int hash : hashes) {
+			if (!bitFilter.get(Math.abs(hash % bitFilterSize))) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+    /**
      * ハッシュ化
      * @param data 入力データ
      * @param hashCount 回数
      * @return ハッシュ化して求められた数値（ビット立て位置）
      */
-	public static int[] createHashes(String data, int hashCount) {
+	private static int[] createHashes(String data, int hashCount) {
 		int [] result = new int[hashCount];
 
 		for (int k = 0; k < hashCount; k++) {
@@ -56,20 +79,5 @@ public class BloomFilter {
 			}
 		}
 		return result;
-	}
-
-    /**
-     * 判定
-     * @param bytes 要素のバイト配列
-     * @return
-     */
-	public boolean contain(String data) {
-		int[] hashes = createHashes(data, countOfHashNumCreatePerOneElement);
-		for (int hash : hashes) {
-			if (!bitFilter.get(Math.abs(hash % bitFilterSize))) {
-				return false;
-			}
-		}
-		return true;
 	}
 }
