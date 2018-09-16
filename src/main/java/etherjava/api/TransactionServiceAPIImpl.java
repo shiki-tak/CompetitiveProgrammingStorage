@@ -7,7 +7,7 @@ import com.googlecode.jsonrpc4j.spring.AutoJsonRpcServiceImpl;
 
 import etherjava.domain.model.account.Account;
 import etherjava.domain.model.transaction.Transaction;
-import etherjava.domain.service.account.AccountService;
+import etherjava.domain.repository.account.AccountRepository;
 import etherjava.domain.service.transaction.TransactionService;
 
 @Service
@@ -15,7 +15,7 @@ import etherjava.domain.service.transaction.TransactionService;
 public class TransactionServiceAPIImpl implements TransactionServiceAPI {
 
 	@Autowired
-	AccountService accountService;
+	AccountRepository accountRepository;
 	@Autowired
 	TransactionService transactionService;
 
@@ -25,13 +25,13 @@ public class TransactionServiceAPIImpl implements TransactionServiceAPI {
 		// 別サービスを直接呼び出すのってspringの設計的にあり...？
 		Account toAccount;
 		Account fromAccount;
-		toAccount = accountService.findOne(toAddress);
+		toAccount = accountRepository.findOne(toAddress);
 
 		if (toAccount == null) {
 			return toAddress + " does not exist";
 		}
 
-		fromAccount = accountService.findOne(fromAddress);
+		fromAccount = accountRepository.findOne(fromAddress);
 		if (fromAccount == null) {
 			return fromAddress + " does not exist";
 		}

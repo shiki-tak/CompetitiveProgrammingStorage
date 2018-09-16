@@ -1,7 +1,5 @@
 package etherjava.api;
 
-import java.io.IOException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,11 +29,7 @@ public class AccountServiceAPIImpl implements AccountServiceAPI {
 	@Override
 	public String newAccount() {
 		Account account = AccountManager.createNewAccount(1000);
-		try {
-			accountService.save(account.getAddress().addressToString(), account.getBalance(), account.getNonce());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		accountService.save(account.getAddress().addressToString(), account.getBalance(), account.getNonce());
 
 		return account.getAddress().addressToString();
 	}
