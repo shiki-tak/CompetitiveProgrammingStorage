@@ -30,13 +30,10 @@ int main()
         if (buckets[i].b.size() > 1) sort(buckets[i].b.begin(), buckets[i].b.end());
     }
 
-    for (int i = 0; i <=maxK; i++) {
+    for (int i = 0; i <= maxK; i++) {
         for (int j = 0; j < buckets[i].b.size(); j++) {
-            if (i == maxK && j == buckets[i].b.size() - 1) {
-                cout << buckets[i].b[j] << endl;
-            } else {
-                cout << buckets[i].b[j] << " ";
-            }
+            if (i == maxK && j == buckets[i].b.size() - 1) cout << buckets[i].b[j] << endl;
+            else                                           cout << buckets[i].b[j] << " ";
         }
     }
 
