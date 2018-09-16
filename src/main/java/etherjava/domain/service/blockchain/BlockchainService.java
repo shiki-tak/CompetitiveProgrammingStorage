@@ -3,19 +3,21 @@ package etherjava.domain.service.blockchain;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import etherjava.domain.model.blockchain.Block;
 import etherjava.domain.model.transaction.Transaction;
 import etherjava.utils.trie.BloomFilter;
 
-
+@Service
 public final class BlockchainService {
 	private int latestBlockIndex;
 	private List<Block> blocks = new ArrayList<>();
 
 	// getter
 	public int getLatestBlockIndex() { return this.latestBlockIndex; }
+	// TODO: HBaseから取得
 	public Block getLatestBlock() { return this.blocks.get(latestBlockIndex - 1); }
-
 	public Block getBlock(int blockHeight) { return this.blocks.get(blockHeight); }
 
 	public void createGenesisBlock(long blockSize, String previousHash, String merkleRoot, String blockHash, BloomFilter logsBloom, int nonce, long timeStamp, List<Transaction> transactions) {
@@ -36,6 +38,7 @@ public final class BlockchainService {
 
 	public void append(Block block) {
 		block.setHeight(latestBlockIndex);
+		// TODO: HBaseに保存
 		blocks.add(block);
 		latestBlockIndex++;
 	}
@@ -55,8 +58,7 @@ public final class BlockchainService {
 			String merkleRoot,
 			String logsBloomToString,
 			int nonce,
-			long timeStamp,
-			List<Transaction> transactions
+			long timeStamp
 			) {
 		String sizeFactor = previousHash + blockHash + merkleRoot + logsBloomToString + String.valueOf(nonce) + String.valueOf(timeStamp);
 		long blockSize = sizeFactor.length();
