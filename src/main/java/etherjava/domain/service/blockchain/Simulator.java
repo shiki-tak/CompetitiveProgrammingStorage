@@ -3,6 +3,9 @@ package etherjava.domain.service.blockchain;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bouncycastle.jcajce.provider.digest.Keccak;
+import org.bouncycastle.util.encoders.Hex;
+
 import etherjava.domain.model.blockchain.Block;
 import etherjava.domain.model.transaction.Transaction;
 import etherjava.domain.service.consensus.PoW;
@@ -33,11 +36,25 @@ public class Simulator {
 			MerkleTree merkleTree = MerkleTree.createMerkleTree(merkleHashList);
 			String merkleRoot =  merkleTree.getMerkleRoot().getMerkleHash().sha256HexBinary();
 
-			Transaction[] transactions = new Transaction[i];
+			List<Transaction> transactions = new ArrayList<>();
 
 			if (i == 0) {
+				Keccak.DigestKeccak kecc = new Keccak.Digest256();
+				byte[] digest = kecc.digest("genesis block".getBytes());
+
+				String previousHash = "0x0000000000000000000000000000000000000000000000000000000000000000";
+				String blockHash = "0x" + Hex.toHexString(digest);
+				int nonce = 42;
+				long timeStamp = System.currentTimeMillis() / 1000L;
+
+				String logsBloomToString = logsBloom.getBitFilterToString();
+
+				// ヘッダ情報とトランザクション情報を合わせたブロックサイズ（バイト単位）
+				// TODO: 真面目に計算
+				long blockSize = blockChain.calcBlockSize(previousHash, blockHash, merkleRoot, logsBloomToString, nonce, timeStamp, transactions);
+
 				// Genesis blockの作成
-				blockChain.createGenesisBlock(merkleRoot, logsBloom, transactions);
+				blockChain.createGenesisBlock(blockSize, previousHash, blockHash, merkleRoot, logsBloom, nonce, timeStamp, transactions);
 			} else {
 				// blockHashがnullのblockを生成する
 				Block block = new Block(
@@ -50,6 +67,17 @@ public class Simulator {
 				PoWResult powResult = pow.exec();
 				// PoWに成功したらBlockHeaderをセットする
 				block.setBlockHeader(powResult.blockHash, powResult.nonce,powResult.timeStamp);
+
+				long blockSize = blockChain.calcBlockSize(
+						block.getBlockHeader().getParentHash(),
+						block.getBlockHeader().getBlockHash(),
+						block.getBlockHeader().getMerkleRoot(),
+						block.getBlockHeader().getLogsBloom().getBitFilterToString(),
+						block.getBlockHeader().getNonce(),
+						block.getBlockHeader().getTimeStamp(),
+						block.getTransactions());
+
+				block.setBlockSize(blockSize);
 
 				blockChain.append(block);
 			}
@@ -67,13 +95,8 @@ public class Simulator {
 			System.out.printf("Merkle Root: %s%n", block.getBlockHeader().getMerkleRoot());
 			System.out.printf("Logs Bloom: %s%n", block.getBlockHeader().getLogsBloom());
 			System.out.printf("Nonce: %d%n", block.getBlockHeader().getNonce());
+			System.out.printf("Transactions: %s%n", block.getTransactions().toString());
 			System.out.println();
 		}
-//		// トランザクションを検索する
-//		System.out.println("*** Search Transaction ***");
-//		System.out.println(Transaction.searchTransaction(blockChain, "Tx-1-1"));
-//		System.out.println(Transaction.searchTransaction(blockChain, "Tx-11-0"));
-//		System.out.println(Transaction.searchTransaction(blockChain, "Tx-2-1"));
-//		System.out.println(Transaction.searchTransaction(blockChain, "Tx-5-2"));
 	}
 }
