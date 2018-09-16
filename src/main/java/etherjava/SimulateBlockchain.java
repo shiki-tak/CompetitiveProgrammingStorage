@@ -68,21 +68,10 @@ public class SimulateBlockchain {
 					block.getBlockHeader().getTimeStamp());
 
 			block.setBlockSize(blockSize);
-
 			blockChainService.append(block);
 
 			Block latestBlock = blockChainService.getBlock(i);
-
-			System.out.printf("*** Block %d *** %n", latestBlock.getHeight());
-			System.out.printf("BlockSize: %d%n", latestBlock.getBlockSize());
-			System.out.printf("TimeStamp: %d%n", latestBlock.getBlockHeader().getTimeStamp());
-			System.out.printf("Hash: %s%n", latestBlock.getBlockHeader().getBlockHash());
-			System.out.printf("Previous Hash: %s%n", latestBlock.getBlockHeader().getParentHash());
-			System.out.printf("Merkle Root: %s%n", latestBlock.getBlockHeader().getMerkleRoot());
-			System.out.printf("Logs Bloom: %s%n", latestBlock.getBlockHeader().getLogsBloom());
-			System.out.printf("Nonce: %d%n", latestBlock.getBlockHeader().getNonce());
-			System.out.printf("Transactions: %s%n", latestBlock.getTransactions().toString());
-			System.out.println();
+			display(latestBlock);
 			i++;
 		}
 	}
@@ -122,17 +111,22 @@ public class SimulateBlockchain {
 
 		blockChainService.createGenesisBlock(blockSize, previousHash, merkleRoot, blockHash, logsBloom, nonce, timeStamp, transactions);
 		Block latestBlock = blockChainService.getLatestBlock();
-
-		System.out.printf("*** Block %d *** %n", latestBlock.getHeight());
-		System.out.printf("BlockSize: %d%n", latestBlock.getBlockSize());
-		System.out.printf("TimeStamp: %d%n", latestBlock.getBlockHeader().getTimeStamp());
-		System.out.printf("Hash: %s%n", latestBlock.getBlockHeader().getBlockHash());
-		System.out.printf("Previous Hash: %s%n", latestBlock.getBlockHeader().getParentHash());
-		System.out.printf("Merkle Root: %s%n", latestBlock.getBlockHeader().getMerkleRoot());
-		System.out.printf("Logs Bloom: %s%n", latestBlock.getBlockHeader().getLogsBloom());
-		System.out.printf("Nonce: %d%n", latestBlock.getBlockHeader().getNonce());
-		System.out.printf("Transactions: %s%n", latestBlock.getTransactions().toString());
-		System.out.println();
+		display(latestBlock);
 		i++;
+	}
+
+	// TODO: BlockchainServiceAPIから呼び出す
+	private void display(Block block) {
+		System.out.printf("*** Block %d *** %n", block.getHeight());
+		System.out.printf("BlockSize: %d%n", block.getBlockSize());
+		System.out.printf("TimeStamp: %d%n", block.getBlockHeader().getTimeStamp());
+		System.out.printf("Hash: %s%n", block.getBlockHeader().getBlockHash());
+		System.out.printf("Previous Hash: %s%n", block.getBlockHeader().getParentHash());
+		System.out.printf("Merkle Root: %s%n", block.getBlockHeader().getMerkleRoot());
+		System.out.printf("Logs Bloom: %s%n", block.getBlockHeader().getLogsBloom());
+		System.out.printf("Nonce: %d%n", block.getBlockHeader().getNonce());
+		System.out.printf("Transactions: %s%n", block.getTransactions().toString());
+		System.out.println();
+
 	}
 }
