@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import com.googlecode.jsonrpc4j.spring.AutoJsonRpcServiceImpl;
 
 import etherjava.domain.model.account.Account;
-import etherjava.domain.service.account.AccountManager;
 import etherjava.domain.service.account.AccountService;
 
 @Service
@@ -27,9 +26,9 @@ public class AccountServiceAPIImpl implements AccountServiceAPI {
 	}
 
 	@Override
-	public String newAccount() {
-		Account account = AccountManager.createNewAccount(1000);
-		accountService.save(account.getAddress().addressToString(), account.getBalance(), account.getNonce());
+	public String newAccount(String balanceToString) {
+		double balance = Double.parseDouble(balanceToString);
+		Account account = accountService.createNewAccount(balance);
 
 		return account.getAddress().addressToString();
 	}
