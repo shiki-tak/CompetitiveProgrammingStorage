@@ -57,9 +57,8 @@ public class BlockchainServiceAPIImpl implements BlockchainServiceAPI {
 		long blockSize = blockChainService.calcBlockSize(previousHash, blockHash, merkleRoot, logsBloomToString, nonce, timeStamp);
 
 		blockChainService.createGenesisBlock(blockSize, previousHash, merkleRoot, blockHash, logsBloomToString, nonce, timeStamp, transactions);
-		System.out.println("BlockHash: " + blockHash);
 
-		return null;
+		return blockHash;
 	}
 
 	@Override
