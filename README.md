@@ -45,6 +45,27 @@ $ start-hbase.sh                          // HBaseの起動
 $ hbase shell                             // JRuby ベースの対話型シェルを起動
 ```
 
+## API
+#### Create Account
+```
+curl -X  POST -H "Content-Type:application/json" -d '{"id":"1","jsonrpc":"2.0","method":"newAccount","params":["initBalance"]}' http://localhost:8080/account
+```
+
+#### Get Balance
+```
+curl -X  POST -H "Content-Type:application/json" -d '{"id":"1","jsonrpc":"2.0","method":"getBalance","params":["address"]}' http://localhost:8080/account
+```
+
+#### Send Transaction
+```
+curl -X  POST -H "Content-Type:application/json" -d '{"id":"1","jsonrpc":"2.0","method":"sendTransaction","params":["to", "from", "value", "gasLimit", "gasPrice"]}' http://localhost:8080/transaction
+```
+
+#### Create Genesis Block
+```
+curl -X  POST -H "Content-Type:application/json" -d '{"id":"1","jsonrpc":"2.0","method":"createGenesisBlock","params":[]}' http://localhost:8080/blockchain
+```
+
 ## Reference
 #### Account
 - [Ruby で Ethereum のアドレスを生成する](http://diary.piyopiyo.jp/entry/ruby_ethereum_address_generator)
