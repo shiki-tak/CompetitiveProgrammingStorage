@@ -31,11 +31,11 @@ public class BlockchainRepository {
 		// Connectionクラスの初期化
 		connection = ConnectionFactory.createConnection(conf);
 	   // instantiate HTable class
-	   hTableBlockchain = (HTable) connection.getTable(TableName.valueOf("etherjava:blockchain"));
+	   hTableBlockchain = (HTable) connection.getTable(TableName.valueOf("etherjava:blockchainTest"));	// test用のテーブル
 	}
 
 	public void save(Block block) throws IOException {
-		Put put = new Put(Bytes.toBytes(block.getBlockHeader().getBlockHash()));
+		Put put = new Put(Bytes.toBytes(String.valueOf(block.getHeight())));
 
 		put.addColumn(Bytes.toBytes("fam"), Bytes.toBytes("height"), Bytes.toBytes(String.valueOf(block.getHeight())));
 		put.addColumn(Bytes.toBytes("fam"), Bytes.toBytes("blockSize"), Bytes.toBytes(String.valueOf(block.getBlockSize())));
@@ -51,7 +51,8 @@ public class BlockchainRepository {
 
 	public Block findOne(int index) throws IOException {
 		try {
-			Result getResult = hTableBlockchain.get(new Get(Bytes.toBytes(index)));
+			Result getResult = hTableBlockchain.get(new Get(Bytes.toBytes(String.valueOf(index))));
+
 			String height = Bytes.toString(getResult.getValue(Bytes.toBytes("fam"), Bytes.toBytes("height")));
 			String blockSize = Bytes.toString(getResult.getValue(Bytes.toBytes("fam"), Bytes.toBytes("blockSize")));
 			String parentHash = Bytes.toString(getResult.getValue(Bytes.toBytes("fam"), Bytes.toBytes("parentHash")));

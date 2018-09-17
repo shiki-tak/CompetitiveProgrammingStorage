@@ -17,14 +17,14 @@ public final class BlockchainService {
 	@Autowired
 	BlockchainRepository blockChainRepository;
 
-	private int latestBlockIndex;
+	private int blockIndex;
 	private List<Block> blocks = new ArrayList<>();
 
 	// getter
-	public int getLatestBlockIndex() { return this.latestBlockIndex; }
+	public int getblockIndex() { return this.blockIndex; }
 	// TODO: HBaseから取得
 	public Block getLatestBlock() throws IOException {
-		Block block = blockChainRepository.findOne(latestBlockIndex);
+		Block block = blockChainRepository.findOne(blockIndex - 1);
 		return block;
 	}
 	public Block getBlock(int blockHeight) { return this.blocks.get(blockHeight); }
@@ -33,7 +33,7 @@ public final class BlockchainService {
 
 		Block block = new Block(
 				blockSize,
-				latestBlockIndex,
+				blockIndex,
 				previousHash,
 				blockHash,
 				merkleRoot,
@@ -46,12 +46,12 @@ public final class BlockchainService {
 	}
 
 	public void append(Block block) {
-		block.setHeight(latestBlockIndex);
+		block.setHeight(blockIndex);
 		// TODO: HBaseに保存
 		// blocks.add(block);
 		try {
 			blockChainRepository.save(block);
-			latestBlockIndex++;
+			blockIndex++;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

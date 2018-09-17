@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bouncycastle.jcajce.provider.digest.Keccak;
-import org.bouncycastle.util.encoders.Hex;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -13,6 +11,8 @@ import org.springframework.stereotype.Service;
 import etherjava.domain.model.blockchain.Block;
 import etherjava.domain.model.transaction.Transaction;
 import etherjava.domain.service.blockchain.BlockchainService;
+import etherjava.domain.service.consensus.PoW;
+import etherjava.domain.service.consensus.PoWResult;
 import etherjava.utils.trie.BloomFilter;
 import etherjava.utils.trie.MerkleHash;
 import etherjava.utils.trie.MerkleTree;
@@ -23,7 +23,7 @@ public class SimulateBlockchain {
 	@Autowired
 	BlockchainService blockChainService;
 
-	/*
+	@Scheduled(initialDelay = 60000, fixedRate = 5000)
 	public void createBlock() throws IOException {
 		List<String> txs = new ArrayList<>();
 		BloomFilter logsBloom = new BloomFilter();
@@ -64,50 +64,8 @@ public class SimulateBlockchain {
 		block.setBlockSize(blockSize);
 		blockChainService.append(block);
 
-		Block latestBlock = blockChainService.getBlock(i);
+		Block latestBlock = blockChainService.getLatestBlock();
 		display(latestBlock);
-		i++;
-	}
-	*/
-
-	@Scheduled(initialDelay = 30000, fixedRate = 5000)
-	public void createGenesisBlock() throws IOException {
-
-		List<String> txs = new ArrayList<>();
-		BloomFilter logsBloom = new BloomFilter();
-		List<MerkleHash> merkleHashList = new ArrayList<>();
-
-		txs.add("transaction-" + String.valueOf(0));
-
-		for (int l = 0; l < txs.size(); l++) {
-			logsBloom.add(txs.get(l));
-			merkleHashList.add(new MerkleHash(txs.get(l)));
-		}
-
-		// Create Merkle Tree
-		MerkleTree merkleTree = MerkleTree.createMerkleTree(merkleHashList);
-		String merkleRoot =  merkleTree.getMerkleRoot().getMerkleHash().sha256HexBinary();
-
-		List<Transaction> transactions = new ArrayList<>();
-
-		Keccak.DigestKeccak kecc = new Keccak.Digest256();
-		byte[] digest = kecc.digest("genesis block".getBytes());
-
-		String previousHash = "0x0000000000000000000000000000000000000000000000000000000000000000";
-		String blockHash = "0x" + Hex.toHexString(digest);
-		int nonce = 42;
-		long timeStamp = System.currentTimeMillis() / 1000L;
-
-		String logsBloomToString = logsBloom.getBitFilterToString();
-
-		// ヘッダ情報とトランザクション情報を合わせたブロックサイズ（バイト単位）
-		// TODO: 真面目に計算（transactionsを含めていない）
-		long blockSize = blockChainService.calcBlockSize(previousHash, blockHash, merkleRoot, logsBloomToString, nonce, timeStamp);
-
-		blockChainService.createGenesisBlock(blockSize, previousHash, merkleRoot, blockHash, logsBloomToString, nonce, timeStamp, transactions);
-		System.out.println("BlockHash: " + blockHash);
-//		Block latestBlock = blockChainService.getLatestBlock();
-//		display(latestBlock);
 		i++;
 	}
 
@@ -122,6 +80,5 @@ public class SimulateBlockchain {
 		System.out.printf("Logs Bloom: %s%n", block.getBlockHeader().getLogsBloom());
 		System.out.printf("Nonce: %d%n", block.getBlockHeader().getNonce());
 		System.out.println();
-
 	}
 }
