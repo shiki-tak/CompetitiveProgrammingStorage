@@ -1,7 +1,6 @@
 package etherjava.domain.service.blockchain;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,6 @@ public final class BlockchainService {
 	BlockchainRepository blockChainRepository;
 
 	private int blockIndex;
-	private List<Block> blocks = new ArrayList<>();
 
 	// getter
 	public int getblockIndex() { return this.blockIndex; }
@@ -27,7 +25,27 @@ public final class BlockchainService {
 		Block block = blockChainRepository.findOne(blockIndex - 1);
 		return block;
 	}
-	public Block getBlock(int blockHeight) { return this.blocks.get(blockHeight); }
+
+	public Block getBlockByHeight(int height) throws IOException {
+		 return blockChainRepository.findOne(height);
+	}
+	public Block getBlockByHash(String blockHash) throws IOException {
+		int index = 0;
+		// 一致するblockHashが見つかるまでループ
+		while (index < blockIndex) {
+			Block block = blockChainRepository.findOne(index);
+			System.out.println("search blockHash: " + blockHash);
+			System.out.println("search result: " + block.getBlockHeader().getBlockHash());
+			String searchResult = block.getBlockHeader().getBlockHash();
+			if (searchResult == blockHash) {
+				System.out.println("match!");
+				return block;
+			} else {
+				index++;
+			}
+		}
+		return null;
+	}
 
 	public void createGenesisBlock(long blockSize, String previousHash, String merkleRoot, String blockHash, String logsBloom, int nonce, long timeStamp, List<Transaction> transactions) {
 
