@@ -1,36 +1,45 @@
 package etherjava.domain.service.blockchain;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import etherjava.domain.model.blockchain.Block;
 import etherjava.domain.model.transaction.Transaction;
-import etherjava.utils.trie.BloomFilter;
+import etherjava.domain.repository.blockchain.BlockchainRepository;
 
 @Service
 public final class BlockchainService {
+
+	@Autowired
+	BlockchainRepository blockChainRepository;
+
 	private int latestBlockIndex;
 	private List<Block> blocks = new ArrayList<>();
 
 	// getter
 	public int getLatestBlockIndex() { return this.latestBlockIndex; }
 	// TODO: HBaseから取得
-	public Block getLatestBlock() { return this.blocks.get(latestBlockIndex - 1); }
+	public Block getLatestBlock() throws IOException {
+		Block block = blockChainRepository.findOne(latestBlockIndex);
+		return block;
+	}
 	public Block getBlock(int blockHeight) { return this.blocks.get(blockHeight); }
 
-	public void createGenesisBlock(long blockSize, String previousHash, String merkleRoot, String blockHash, BloomFilter logsBloom, int nonce, long timeStamp, List<Transaction> transactions) {
+	public void createGenesisBlock(long blockSize, String previousHash, String merkleRoot, String blockHash, String logsBloom, int nonce, long timeStamp, List<Transaction> transactions) {
 
 		Block block = new Block(
 				blockSize,
+				latestBlockIndex,
 				previousHash,
 				blockHash,
 				merkleRoot,
 				logsBloom,
 				nonce,
-				timeStamp,
-				transactions
+				timeStamp
 				);
 
 		append(block);
@@ -39,8 +48,13 @@ public final class BlockchainService {
 	public void append(Block block) {
 		block.setHeight(latestBlockIndex);
 		// TODO: HBaseに保存
-		blocks.add(block);
-		latestBlockIndex++;
+		// blocks.add(block);
+		try {
+			blockChainRepository.save(block);
+			latestBlockIndex++;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**

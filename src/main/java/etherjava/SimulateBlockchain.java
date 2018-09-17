@@ -1,82 +1,77 @@
 package etherjava;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.bouncycastle.jcajce.provider.digest.Keccak;
 import org.bouncycastle.util.encoders.Hex;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import etherjava.domain.model.blockchain.Block;
 import etherjava.domain.model.transaction.Transaction;
 import etherjava.domain.service.blockchain.BlockchainService;
-import etherjava.domain.service.consensus.PoW;
-import etherjava.domain.service.consensus.PoWResult;
 import etherjava.utils.trie.BloomFilter;
 import etherjava.utils.trie.MerkleHash;
 import etherjava.utils.trie.MerkleTree;
 
-@Component
+@Service
 public class SimulateBlockchain {
 	int i = 0;
-	private BlockchainService blockChainService;
+	@Autowired
+	BlockchainService blockChainService;
 
-	public SimulateBlockchain() {
-		blockChainService = new BlockchainService();
-	}
+	/*
+	public void createBlock() throws IOException {
+		List<String> txs = new ArrayList<>();
+		BloomFilter logsBloom = new BloomFilter();
+		List<MerkleHash> merkleHashList = new ArrayList<>();
 
-	@Scheduled(initialDelay = 60000, fixedRate = 5000)
-	public void createBlock() {
-		if (i == 0) {
-			createGenesisBlock();
-		} else {
-			List<String> txs = new ArrayList<>();
-			BloomFilter logsBloom = new BloomFilter();
-			List<MerkleHash> merkleHashList = new ArrayList<>();
+		txs.add("transaction-" + String.valueOf(i));
 
-			txs.add("transaction-" + String.valueOf(i));
-
-			for (int l = 0; l < txs.size(); l++) {
-				logsBloom.add(txs.get(l));
-				merkleHashList.add(new MerkleHash(txs.get(l)));
-			}
-
-			// Create Merkle Tree
-			MerkleTree merkleTree = MerkleTree.createMerkleTree(merkleHashList);
-			String merkleRoot =  merkleTree.getMerkleRoot().getMerkleHash().sha256HexBinary();
-
-			List<Transaction> transactions = new ArrayList<>();
-			// blockHashがnullのblockを生成する
-			Block block = new Block(
-					blockChainService.getLatestBlock().getBlockHeader().getBlockHash(),
-					merkleRoot,
-					logsBloom,
-					transactions
-					);
-			PoW pow = new PoW(block, merkleRoot);
-			PoWResult powResult = pow.exec();
-			// PoWに成功したらBlockHeaderをセットする
-			block.setBlockHeader(powResult.blockHash, powResult.nonce,powResult.timeStamp);
-
-			long blockSize = blockChainService.calcBlockSize(
-					block.getBlockHeader().getParentHash(),
-					block.getBlockHeader().getBlockHash(),
-					block.getBlockHeader().getMerkleRoot(),
-					block.getBlockHeader().getLogsBloom().getBitFilterToString(),
-					block.getBlockHeader().getNonce(),
-					block.getBlockHeader().getTimeStamp());
-
-			block.setBlockSize(blockSize);
-			blockChainService.append(block);
-
-			Block latestBlock = blockChainService.getBlock(i);
-			display(latestBlock);
-			i++;
+		for (int l = 0; l < txs.size(); l++) {
+			logsBloom.add(txs.get(l));
+			merkleHashList.add(new MerkleHash(txs.get(l)));
 		}
-	}
 
-	private void createGenesisBlock() {
+		// Create Merkle Tree
+		MerkleTree merkleTree = MerkleTree.createMerkleTree(merkleHashList);
+		String merkleRoot =  merkleTree.getMerkleRoot().getMerkleHash().sha256HexBinary();
+
+		List<Transaction> transactions = new ArrayList<>();
+		// blockHashがnullのblockを生成する
+		Block block = new Block(
+				blockChainService.getLatestBlock().getBlockHeader().getBlockHash(),
+				merkleRoot,
+				logsBloom.getBitFilterToString(),
+				transactions
+				);
+		PoW pow = new PoW(block, merkleRoot);
+		PoWResult powResult = pow.exec();
+		// PoWに成功したらBlockHeaderをセットする
+		block.setBlockHeader(powResult.blockHash, powResult.nonce,powResult.timeStamp);
+
+		long blockSize = blockChainService.calcBlockSize(
+				block.getBlockHeader().getParentHash(),
+				block.getBlockHeader().getBlockHash(),
+				block.getBlockHeader().getMerkleRoot(),
+				block.getBlockHeader().getLogsBloom(),
+				block.getBlockHeader().getNonce(),
+				block.getBlockHeader().getTimeStamp());
+
+		block.setBlockSize(blockSize);
+		blockChainService.append(block);
+
+		Block latestBlock = blockChainService.getBlock(i);
+		display(latestBlock);
+		i++;
+	}
+	*/
+
+	@Scheduled(initialDelay = 30000, fixedRate = 5000)
+	public void createGenesisBlock() throws IOException {
 
 		List<String> txs = new ArrayList<>();
 		BloomFilter logsBloom = new BloomFilter();
@@ -109,9 +104,10 @@ public class SimulateBlockchain {
 		// TODO: 真面目に計算（transactionsを含めていない）
 		long blockSize = blockChainService.calcBlockSize(previousHash, blockHash, merkleRoot, logsBloomToString, nonce, timeStamp);
 
-		blockChainService.createGenesisBlock(blockSize, previousHash, merkleRoot, blockHash, logsBloom, nonce, timeStamp, transactions);
-		Block latestBlock = blockChainService.getLatestBlock();
-		display(latestBlock);
+		blockChainService.createGenesisBlock(blockSize, previousHash, merkleRoot, blockHash, logsBloomToString, nonce, timeStamp, transactions);
+		System.out.println("BlockHash: " + blockHash);
+//		Block latestBlock = blockChainService.getLatestBlock();
+//		display(latestBlock);
 		i++;
 	}
 
@@ -125,7 +121,6 @@ public class SimulateBlockchain {
 		System.out.printf("Merkle Root: %s%n", block.getBlockHeader().getMerkleRoot());
 		System.out.printf("Logs Bloom: %s%n", block.getBlockHeader().getLogsBloom());
 		System.out.printf("Nonce: %d%n", block.getBlockHeader().getNonce());
-		System.out.printf("Transactions: %s%n", block.getTransactions().toString());
 		System.out.println();
 
 	}

@@ -3,25 +3,26 @@ package etherjava.domain.model.blockchain;
 import java.util.List;
 
 import etherjava.domain.model.transaction.Transaction;
-import etherjava.utils.trie.BloomFilter;
 
 public class Block {
 	private int height;
 	private long blockSize;               // ブロックヘッダとトランザクションを合わせたブロックサイズ
-	private List<Transaction> transactions;
 	private BlockHeader blockHeader;
 
 	public Block() {}
 
-	public Block(long blockSize,
+	public Block(
+			long blockSize,
+			int height,
 			String parentHash,
 			String blockHash,
 			String merkleRoot,
-			BloomFilter logsBloom,
+			String logsBloom,
 			int nonce,
-			long timeStamp,
-			List<Transaction> transactions) {
+			long timeStamp
+			) {
 		this.blockSize = blockSize;
+		this.height = height;
 		BlockHeader blockHeader = new BlockHeader(
 				parentHash,
 				blockHash,
@@ -31,24 +32,21 @@ public class Block {
 				timeStamp
 				);
 		this.blockHeader = blockHeader;
-		this.transactions = transactions;
 	}
 
 	// generate pending block
-	public Block(String parentHash, String merkleRoot, BloomFilter logsBloom, List<Transaction> transactions) {
+	public Block(String parentHash, String merkleRoot, String logsBloom, List<Transaction> transactions) {
 		BlockHeader blockHeader = new BlockHeader(
 				parentHash,
 				merkleRoot,
 				logsBloom
 				);
 		this.blockHeader = blockHeader;
-		this.transactions = transactions;
 	}
 
 	// getter
 	public int getHeight() { return height; }
 	public BlockHeader getBlockHeader() { return blockHeader; }
-	public List<Transaction> getTransactions() { return transactions; }
 	public long getBlockSize() { return blockSize; }
 
 	// setter
@@ -58,6 +56,5 @@ public class Block {
 		this.blockHeader.setNonce(nonce);
 		this.blockHeader.setTimeStamp(timeStamp);
 	}
-	public void setTransactions(List<Transaction> transactions) { this.transactions = transactions; }
 	public void setBlockSize(long blockSize) { this.blockSize = blockSize; }
 }
