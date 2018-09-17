@@ -17,9 +17,9 @@ public interface TransactionServiceAPI {
      */
 	String sendTransaction(@JsonRpcParam(value = "toAddress") String toAddress,
 						   @JsonRpcParam(value = "fromAddress") String fromAddress,
-						   @JsonRpcParam(value = "value") double value,
-						   @JsonRpcParam(value = "gasLimit") double gasLimit,
-						   @JsonRpcParam(value = "gasPrice") double gasPrice);
+						   @JsonRpcParam(value = "value") String value,
+						   @JsonRpcParam(value = "gasLimit") String gasLimit,
+						   @JsonRpcParam(value = "gasPrice") String gasPrice);
 
 	String getTransactionByHash(@JsonRpcParam(value = "txHash") String txHash);
 }

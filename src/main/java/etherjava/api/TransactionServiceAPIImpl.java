@@ -20,7 +20,11 @@ public class TransactionServiceAPIImpl implements TransactionServiceAPI {
 	TransactionService transactionService;
 
 	@Override
-	public String sendTransaction(String toAddress, String fromAddress, double value, double gasLimit, double gasPrice) {
+	public String sendTransaction(String toAddress, String fromAddress, String valueToString, String gasLimitToString, String gasPriceToString) {
+
+		double value = Double.parseDouble(valueToString);
+		double gasLimit = Double.parseDouble(gasLimitToString);
+		double gasPrice = Double.parseDouble(gasPriceToString);
 
 		// 別サービスを直接呼び出すのってspringの設計的にあり...？
 		Account toAccount;
