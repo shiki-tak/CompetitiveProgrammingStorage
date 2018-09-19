@@ -61,6 +61,11 @@ curl -X  POST -H "Content-Type:application/json" -d '{"id":"1","jsonrpc":"2.0","
 curl -X  POST -H "Content-Type:application/json" -d '{"id":"1","jsonrpc":"2.0","method":"sendTransaction","params":["to", "from", "value", "gasLimit", "gasPrice"]}' http://localhost:8080/transaction
 ```
 
+#### Get Transaction By Hash
+```
+curl -X  POST -H "Content-Type:application/json" -d '{"id":"1","jsonrpc":"2.0","method":"getTransactionByHash","params":["transactionHash"]}' http://localhost:8080/transaction
+```
+
 #### Get Block By Height
 ```
 curl -X  POST -H "Content-Type:application/json" -d '{"id":"1","jsonrpc":"2.0","method":"getBlockByHeight","params":["height"]}' http://localhost:8080/blockchain
