@@ -12,7 +12,7 @@ import etherjava.domain.service.blockchain.BlockchainService;
 @Service
 public class MinerService {
 
-	static boolean miningFlag = false;
+	boolean miningFlag = false;
 
 	@Autowired
 	AccountService accountService;

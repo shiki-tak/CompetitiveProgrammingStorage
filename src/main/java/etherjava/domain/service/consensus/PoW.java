@@ -7,7 +7,7 @@ import etherjava.domain.model.blockchain.Block;
 
 public final class PoW {
 	// TODO: targetの計算
-	private final String target = "00000100111111111111111111111111111111111111111111111111111111";
+	private final String target = "00001000111111111111111111111111111111111111111111111111111111";
 	private Block block;
 	private String merkleRoot;
 
