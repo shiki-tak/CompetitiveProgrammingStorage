@@ -80,6 +80,16 @@ curl -X  POST -H "Content-Type:application/json" -d '{"id":"1","jsonrpc":"2.0","
 curl -X  POST -H "Content-Type:application/json" -d '{"id":"1","jsonrpc":"2.0","method":"createGenesisBlock","params":[]}' http://localhost:8080/blockchain
 ```
 
+#### Start Mining
+```
+curl -X  POST -H "Content-Type:application/json" -d '{"id":"1","jsonrpc":"2.0","method":"start","params":["coinBaseAddress"]}' http://localhost:8080/miner
+```
+
+#### Stop Mining
+```
+curl -X  POST -H "Content-Type:application/json" -d '{"id":"1","jsonrpc":"2.0","method":"stop","params":[]}' http://localhost:8080/miner
+```
+
 ## Reference
 #### Account
 - [Ruby で Ethereum のアドレスを生成する](http://diary.piyopiyo.jp/entry/ruby_ethereum_address_generator)
