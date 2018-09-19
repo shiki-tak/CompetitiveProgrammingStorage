@@ -1,11 +1,10 @@
-package etherjava;
+package etherjava.domain.service.miner;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import etherjava.domain.model.blockchain.Block;
@@ -17,13 +16,15 @@ import etherjava.utils.trie.BloomFilter;
 import etherjava.utils.trie.MerkleHash;
 import etherjava.utils.trie.MerkleTree;
 
+/*
+ * MinerServiceを作るまでの仮のクラス
+ */
 @Service
 public class SimulateBlockchain {
 	int i = 0;
 	@Autowired
 	BlockchainService blockChainService;
 
-	@Scheduled(initialDelay = 60000, fixedRate = 5000)
 	public void createBlock() throws IOException {
 		List<String> txs = new ArrayList<>();
 		BloomFilter logsBloom = new BloomFilter();
