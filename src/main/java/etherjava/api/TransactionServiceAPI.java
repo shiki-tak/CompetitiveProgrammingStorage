@@ -15,8 +15,8 @@ public interface TransactionServiceAPI {
      * @param gasPrice              送信者が支払う、１計算ステップあたりの手数料
      * @return txHash
      */
-	String sendTransaction(@JsonRpcParam(value = "toAddress") String toAddress,
-						   @JsonRpcParam(value = "fromAddress") String fromAddress,
+	String sendTransaction(@JsonRpcParam(value = "to") String to,
+						   @JsonRpcParam(value = "from") String from,
 						   @JsonRpcParam(value = "value") String value,
 						   @JsonRpcParam(value = "gasLimit") String gasLimit,
 						   @JsonRpcParam(value = "gasPrice") String gasPrice);

@@ -20,7 +20,7 @@ public class TransactionServiceAPIImpl implements TransactionServiceAPI {
 	TransactionService transactionService;
 
 	@Override
-	public String sendTransaction(String toAddress, String fromAddress, String valueToString, String gasLimitToString, String gasPriceToString) {
+	public String sendTransaction(String to, String from, String valueToString, String gasLimitToString, String gasPriceToString) {
 
 		double value = Double.parseDouble(valueToString);
 		double gasLimit = Double.parseDouble(gasLimitToString);
@@ -29,15 +29,15 @@ public class TransactionServiceAPIImpl implements TransactionServiceAPI {
 		// 別サービスを直接呼び出すのってspringの設計的にあり...？
 		Account toAccount;
 		Account fromAccount;
-		toAccount = accountRepository.findOne(toAddress);
+		toAccount = accountRepository.findOne(to);
 
 		if (toAccount == null) {
-			return toAddress + " does not exist";
+			return to + " does not exist";
 		}
 
-		fromAccount = accountRepository.findOne(fromAddress);
+		fromAccount = accountRepository.findOne(from);
 		if (fromAccount == null) {
-			return fromAddress + " does not exist";
+			return from + " does not exist";
 		}
 
 		int fromAccountNonce = fromAccount.getNonce();
