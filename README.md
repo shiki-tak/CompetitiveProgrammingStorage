@@ -61,6 +61,15 @@ curl -X  POST -H "Content-Type:application/json" -d '{"id":"1","jsonrpc":"2.0","
 curl -X  POST -H "Content-Type:application/json" -d '{"id":"1","jsonrpc":"2.0","method":"sendTransaction","params":["to", "from", "value", "gasLimit", "gasPrice"]}' http://localhost:8080/transaction
 ```
 
+#### Get Block By Height
+```
+curl -X  POST -H "Content-Type:application/json" -d '{"id":"1","jsonrpc":"2.0","method":"getBlockByHeight","params":["height"]}' http://localhost:8080/blockchain
+```
+#### Get Block By Hash
+```
+curl -X  POST -H "Content-Type:application/json" -d '{"id":"1","jsonrpc":"2.0","method":"getBlockByHash","params":["blockHash"]}' http://localhost:8080/blockchain
+```
+
 #### Create Genesis Block
 ```
 curl -X  POST -H "Content-Type:application/json" -d '{"id":"1","jsonrpc":"2.0","method":"createGenesisBlock","params":[]}' http://localhost:8080/blockchain

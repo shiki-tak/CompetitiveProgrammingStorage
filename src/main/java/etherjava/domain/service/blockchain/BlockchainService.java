@@ -34,11 +34,7 @@ public final class BlockchainService {
 		// 一致するblockHashが見つかるまでループ
 		while (index < blockIndex) {
 			Block block = blockChainRepository.findOne(index);
-			System.out.println("search blockHash: " + blockHash);
-			System.out.println("search result: " + block.getBlockHeader().getBlockHash());
-			String searchResult = block.getBlockHeader().getBlockHash();
-			if (searchResult == blockHash) {
-				System.out.println("match!");
+			if (blockHash.equals(block.getBlockHeader().getBlockHash())) {
 				return block;
 			} else {
 				index++;
