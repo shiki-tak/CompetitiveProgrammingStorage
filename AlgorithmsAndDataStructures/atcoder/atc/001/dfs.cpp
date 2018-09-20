@@ -8,7 +8,7 @@ int sX = 0, sY = 0;
 int dx[4] = {0, 1, 0, -1};
 int dy[4] = {1, 0, -1, 0}; 
 
-bool bfs(int x, int y, int ans) {
+bool dfs(int x, int y, int ans) {
     citySection[x][y] = 'E';
 
     for (int i = 0; i < 4; i++) {
