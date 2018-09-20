@@ -14,7 +14,7 @@ bool dfs(int x, int y, int ans) {
     for (int i = 0; i < 4; i++) {
         if (x + dx[i] >= 0 && x + dx[i] < h && y + dy[i] >= 0 && y + dy[i] < w) {
             if (citySection[x + dx[i]][y + dy[i]] == '.') {
-                ans = bfs(x + dx[i], y + dy[i], ans);
+                ans = dfs(x + dx[i], y + dy[i], ans);
             } else if (citySection[x + dx[i]][y + dy[i]] == 'g') {
                 ans = true;
                 return ans;
@@ -35,7 +35,7 @@ int main()
             if (citySection[i][j] == 's') { sX = i; sY = j; }
         }
     }
-    cout << (bfs(sX, sY, false) ? "Yes" : "No") << endl;
+    cout << (dfs(sX, sY, false) ? "Yes" : "No") << endl;
 
     return 0;
 }
