@@ -3,12 +3,14 @@
 #include <tuple>
 
 using namespace std;
+typedef pair<int , int> P;
 
 int h = 0, w = 0;
 char maze[501][501];
 int visited[501][501][3] = { 0 };
 int dx[4] = {1, 0, -1, 0};
 int dy[4] = {0, 1, 0, -1};
+P start, goal;
 
 bool bfs(int sX, int sY) {
     bool ans = false;
@@ -29,11 +31,11 @@ bool bfs(int sX, int sY) {
         for (int i = 0; i < 4; i++) {
             int nx = x + dx[i], ny = y + dy[i];
             if (nx >= 0 && nx < h && ny >= 0 && ny < w) {
-                if (visited[nx][ny][d] == 1) continue;          // すでに探索済み
+                if (visited[nx][ny][d] == 1)       continue;    // すでに探索済み
                 if (maze[nx][ny] == '#' && d == 2) continue;    // 2回、器物損壊した
                 if (maze[nx][ny] == '#' && d < 2) {
                     visited[nx][ny][d + 1] = 1;
-                    que.push(make_tuple(nx, ny, d + 1)); 
+                    que.push(make_tuple(nx, ny, d + 1));        // 破壊
                 } else {
                     visited[nx][ny][d] = 1;
                     que.push(make_tuple(nx, ny, d));
@@ -52,11 +54,12 @@ int main()
     for (int i = 0; i < h; i++) {
         for (int j = 0; j < w; j++) {
             cin >> maze[i][j];
-            if (maze[i][j] == 's') { sX = i; sY = j; }
+            if (maze[i][j] == 's') { start.first = i; start.second = j; }
+            if (maze[i][j] == 'g') { goal.first = i; goal.second = j; }
         }
     }
 
-    cout << (bfs(sX, sY) ? "YES" : "NO") << endl;
+    cout << (bfs(start.first, start.second) ? "YES" : "NO") << endl;
 
     return 0;
 }
