@@ -12,8 +12,6 @@ int dy[4] = {0, 1, 0, -1};
 
 int cnt = 0;
 
-// 最短経路をbfsで決める
-// ゴールした後に訪れていおらず、かつ黒のマスをカウントする
 bool bfs(int x, int y)
 {
     bool goal = false;
