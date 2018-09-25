@@ -50,7 +50,6 @@ bool bfs(int sX, int sY) {
 int main()
 {
     cin >> h >> w;
-    int sX, sY = 0;
     for (int i = 0; i < h; i++) {
         for (int j = 0; j < w; j++) {
             cin >> maze[i][j];
