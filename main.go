@@ -51,8 +51,8 @@ func main() {
 				switch message := event.Message.(type) {
                 case *linebot.TextMessage:
                     if message.Text == "夕日" {
-                        url := awsCredential.ShowSignedURL("uploads/yatsugatake_yuhi.JPG")
-                        
+                        // url := awsCredential.ShowSignedURL("uploads/yatsugatake_yuhi.JPG")
+                        url := os.Getenv("TES_URL")
                     if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewImageMessage(url, url)).Do(); err != nil {
                             log.Print(err)
                         }
