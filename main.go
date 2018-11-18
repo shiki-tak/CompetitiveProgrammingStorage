@@ -25,8 +25,8 @@ func main() {
 
     // aws session
     awsCredential := AWSCredential{
-        AccessKey:       "AWS_ACCESS_KEY_ID",
-        SecretAccessKey: "AWS_SECRET_KEY",
+        AccessKey:       os.Getenv("AWS_ACCESS_KEY_ID"),
+        SecretAccessKey: os.Getenv("AWS_SECRET_KEY"),
         Region:          "ap-northeast-1",
         Bucket:          "lisa-line-bot-develop",
     }
