@@ -81,11 +81,11 @@ type AWSCredential struct {
 
 
 func getResMessage(reqMessage string) (message string) {
-    resMessages := [6]string{"わかるわかる", "それで？それで？", "からの〜？", "えぇぇ〜!（◎ー◎；）", "それはすごい！", "かんぺきですね"}
+    resMessages := [6]string{"わかるわかる", "それで？それで？", "からの〜？", "えぇぇ〜!（◎ー◎；）", "かんぺきですね"}
 
     rand.Seed(time.Now().UnixNano())
     r := rand.Intn(10)
-    if (r >= 0 && r <= 5) {
+    if (r >= 0 && r <= 4) {
         message = resMessages[r]
     } else {
         message = reqMessage + "じゃねーよw"
