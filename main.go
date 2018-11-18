@@ -107,7 +107,7 @@ func (a *AWSCredential) ShowSignedURL(filename string) (url string) {
             Bucket: aws.String(a.Bucket),
             Key:    aws.String(filename),
     })
-    url, err = req.Presign(5 * time.Minute)
+    url, err = req.Presign(15 * time.Minute)
     if err != nil {
             fmt.Println(err.Error())
     }
