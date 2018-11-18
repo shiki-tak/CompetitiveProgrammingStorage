@@ -4,12 +4,16 @@ import (
 	"log"
 	"net/http"
 	"os"
-
-	"github.com/gin-gonic/gin"
-    "github.com/line/line-bot-sdk-go/linebot"
 	"fmt"
 	"time"
 	"math/rand"
+
+	"github.com/gin-gonic/gin"
+    "github.com/line/line-bot-sdk-go/linebot"
+    "github.com/aws/aws-sdk-go/aws"
+    "github.com/aws/aws-sdk-go/aws/credentials"
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/s3"
 )
 
 func main() {
@@ -18,6 +22,14 @@ func main() {
 	if port == "" {
 		log.Fatal("$PORT must be set")
 	}
+
+    // aws session
+    awsCredential := AWSCredential{
+        AccessKey:       "AWS_ACCESS_KEY_ID",
+        SecretAccessKey: "AWS_SECRET_KEY",
+        Region:          "ap-northeast-1",
+        Bucket:          "lisa-line-bot-develop",
+    }
 
 	router := gin.New()
 	router.Use(gin.Logger())
@@ -38,6 +50,13 @@ func main() {
 			if event.Type == linebot.EventTypeMessage {
 				switch message := event.Message.(type) {
                 case *linebot.TextMessage:
+                    if message.Text == "夕日" {
+                        url := awsCredential.ShowSignedURL("uploads/yatsugatake_yuhi.JPG")
+                        
+                    if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewImageMessage(url, url)).Do(); err != nil {
+                            log.Print(err)
+                        }
+                    }
                     resMessage := getResMessage(message.Text)
                     fmt.Println("resMessage: " + resMessage)
                     if resMessage != "" {
@@ -53,6 +72,14 @@ func main() {
 	router.Run(":" + port)
 }
 
+type AWSCredential struct {
+    AccessKey       string
+    SecretAccessKey string
+    Region          string
+    Bucket          string
+}
+
+
 func getResMessage(reqMessage string) (message string) {
     resMessages := [6]string{"わかるわかる", "それで？それで？", "からの〜？", "えぇぇ〜!（◎ー◎；）", "それはすごい！", "かんぺきですね"}
 
@@ -63,5 +90,27 @@ func getResMessage(reqMessage string) (message string) {
     } else {
         message = reqMessage + "じゃねーよw"
     }
+    return
+}
+
+func (a *AWSCredential) ShowSignedURL(filename string) (url string) {
+    session, err := session.NewSession(&aws.Config{
+            Credentials: credentials.NewStaticCredentials(a.AccessKey, a.SecretAccessKey, ""),
+            Region:      aws.String(a.Region),
+    })
+    if err != nil {
+            fmt.Println(err.Error())
+    }
+
+    client := s3.New(session)
+    req, _ := client.GetObjectRequest(&s3.GetObjectInput{
+            Bucket: aws.String(a.Bucket),
+            Key:    aws.String(filename),
+    })
+    url, err = req.Presign(5 * time.Minute)
+    if err != nil {
+            fmt.Println(err.Error())
+    }
+    fmt.Println(url)
     return
 }
