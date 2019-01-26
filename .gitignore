@@ -7,3 +7,5 @@
 .classpath
 .project
 .hi
+target/
+.settings
