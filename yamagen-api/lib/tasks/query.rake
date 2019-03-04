@@ -8,6 +8,9 @@ namespace :query do
       end
     end
     task :delete => :environment do
-      Word.where(text: 'test').delete()
+      @words = Word.all
+      @words.each do |word|
+        Word.where(text: word.text).delete()
+      end
     end
   end

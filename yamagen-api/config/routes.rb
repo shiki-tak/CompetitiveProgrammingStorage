@@ -2,9 +2,8 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   namespace :api, { format: 'json' } do
     namespace :v1 do
-      namespace :word do
-        get "/", :action => "index"
-      end
+      # TODO: remove unneccesary routes
+      resources :words
     end
   end
 end
