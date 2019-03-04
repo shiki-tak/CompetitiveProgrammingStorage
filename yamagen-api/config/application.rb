@@ -18,6 +18,9 @@ Bundler.require(*Rails.groups)
 
 module YamagenApi
   class Application < Rails::Application
+  config.generators do |g|
+    g.orm :mongoid
+  end
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
 
