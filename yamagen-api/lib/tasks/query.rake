@@ -1,6 +1,6 @@
 namespace :query do
     task :create => :environment do
-      p Word.create(text: 'test', image_url: 'test-image_url')
+      p Word.create(text: 'test2', image_url: 'test-image_url2')
     end
     task :show => :environment do
       Word.where(text: 'test').each do |word|
