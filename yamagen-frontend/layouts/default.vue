@@ -4,6 +4,20 @@
   </div>
 </template>
 
+<script>
+  export default {
+    data () {
+      return {
+        drawer: null,
+        items: [
+          { title: 'Home', icon: 'dashboard' },
+          { title: 'About', icon: 'question_answer' }
+        ]
+      }
+    }
+  }
+</script>
+
 <style>
 html {
   font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;

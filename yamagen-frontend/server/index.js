@@ -23,8 +23,8 @@ app.use(passport.session());
 passport.use(
   new TwitterStrategy(
     {
-      consumerKey: CONSUMER_KEY,
-      consumerSecret: CONSUMER_SECRET,
+      consumerKey: "CONSUMER_KEY",
+      consumerSecret: "CONSUMER_SECRET",
       callbackURL: 'http://127.0.0.1:3000/callback',
     },
     function(token, tokenSecret, profile, done) {
