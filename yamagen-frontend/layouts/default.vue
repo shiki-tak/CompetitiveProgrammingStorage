@@ -1,7 +1,33 @@
 <template>
-  <div>
+  <v-app id="inspire">
+    <v-layout
+      wrap
+      style="height: 200px;"
+    >
+      <v-toolbar-side-icon large class="menu_icon" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <v-navigation-drawer
+        v-model="drawer"
+        absolute
+        temporary
+      >
+        <v-list class="pt-0" dense>
+          <v-list-tile
+            v-for="item in items"
+            :key="item.title"
+            @click="handleClick"
+          >
+          <v-list-tile-content>
+            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+          </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+      </v-navigation-drawer>
+    </v-layout>
+    <h1 class="subtitle">
+      そこに、山があるから
+    </h1>
     <nuxt/>
-  </div>
+  </v-app>
 </template>
 
 <script>
@@ -10,9 +36,15 @@
       return {
         drawer: null,
         items: [
-          { title: 'Home', icon: 'dashboard' },
-          { title: 'About', icon: 'question_answer' }
+          { title: 'Home', icon: '' },
+          { title: 'About', icon: '' },
+          { title: 'Login', icon: '' }
         ]
+      }
+    },
+    methods: {
+      handleClick() {
+        
       }
     }
   }
@@ -62,6 +94,20 @@ html {
 .button--grey:hover {
   color: #fff;
   background-color: #35495e;
+}
+
+.subtitle {
+  font-weight: 300;
+  font-size: 42px;
+  color: #526488;
+  word-spacing: 5px;
+  padding-bottom: 15px;
+  text-align: center;
+}
+
+.menu_icon {
+  margin-left: 5%;
+  margin-top: 5%;
 }
 </style>
 

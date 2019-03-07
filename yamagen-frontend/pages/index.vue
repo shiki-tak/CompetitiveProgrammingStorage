@@ -3,11 +3,8 @@
     <div>
       <app-logo/>
       <h1 class="title">
-        yamagen-frontend
+        Yama Lover's Word
       </h1>
-      <h2 class="subtitle">
-        Nuxt.js project
-      </h2>
       <div class="links">
         <a
           href="http://127.0.0.1:3000/server/auth/twitter"
