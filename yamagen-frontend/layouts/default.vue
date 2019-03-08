@@ -23,7 +23,7 @@
         </v-list>
       </v-navigation-drawer>
     </v-layout>
-    <h1 class="subtitle">
+    <h1 class="app_title">
       そこに、山があるから
     </h1>
     <nuxt/>
@@ -96,9 +96,9 @@ html {
   background-color: #35495e;
 }
 
-.subtitle {
+.app_title {
   font-weight: 300;
-  font-size: 42px;
+  font-size: 32px;
   color: #526488;
   word-spacing: 5px;
   padding-bottom: 15px;
