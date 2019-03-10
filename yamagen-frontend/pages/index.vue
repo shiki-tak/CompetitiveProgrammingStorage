@@ -4,8 +4,7 @@
       grid-list-xl
       align-center
     >
-      <div class="main" style="text-align: center">
-        <app-logo/>
+      <div class="main">
         <h1 class="title">
           Yama Lover's Word
         </h1>
@@ -18,15 +17,10 @@
       <v-layout v-for="word in words" :key="word.id">
         <v-card
           class="mx-auto"
-          color="#26c6da"
-          dark
-          max-width="600"
-          max-height="400"
-          style="margin-bottom: 90px; width: 600px; height: 400px;"
         >
           <v-img
-            v-bind:src="word.image_url"
-          style="width: 600px; height: 400px;"
+            class="word_image"
+            v-bind:src="word.background_image_url"
           >
             <v-card-title>
               <v-icon
@@ -46,12 +40,12 @@
                 <v-list-tile-avatar color="grey darken-3">
                   <v-img
                     class="elevation-6"
-                    src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+                    v-bind:src=word.user_image_url
                   ></v-img>
                 </v-list-tile-avatar>
 
                 <v-list-tile-content>
-                  <v-list-tile-title>{{ word.user_name }}</v-list-tile-title>
+                  <v-list-tile-title class="user_name">{{ word.user_name }}</v-list-tile-title>
                 </v-list-tile-content>
 
                 <v-layout
@@ -70,45 +64,21 @@
 
 <script>
 import AppLogo from '~/components/AppLogo.vue'
+import axios from 'axios'
 
 export default {
   components: {
     AppLogo
   },
+  asyncData ({ params }) {
+    return axios
+      .get("http://localhost:8080/api/v1/words")
+      .then((response) => {
+        return { words : response.data }
+      })
+  },
   data() {
     return {
-      words: [
-        {
-          id: 0,
-          text: "そこに山があるから。",
-          user_name: "ジョージ・マロリー",
-          image_url: "https://yamabluesky.files.wordpress.com/2019/01/slide01-2.jpg"
-        },
-        {
-          id: 1,
-          text: "山はこれ以上大きくならないが、私たちはいくらでも成長できる。",
-          user_name: "エドモンド・ヒラリー",
-          image_url: "https://yamabluesky.files.wordpress.com/2019/01/pexels-photo-26419.jpg"
-        },
-        {
-          id: 3,
-          text: "登頂がすべてではない。登山をするということすべてを楽しみたい。",
-          user_name: "竹内洋岳 ",
-          image_url: "https://yamabluesky.files.wordpress.com/2019/01/mountkinabalu-1024x682.jpg"
-        },
-        {
-          id: 4,
-          text: "目の前の山に登りたまえ。山は君の全ての疑問に答えてくれるだろう。",
-          user_name: "ラインポルト・メスナー",
-          image_url: "https://yamabluesky.files.wordpress.com/2019/01/1024px-mount_aino_fom_mount_kita_2001-7-2.jpg"
-        },
-        {
-          id: 5,
-          text: "単独行者よ、強くなれ！",
-          user_name: "加藤文太郎",
-          image_url: "https://yamabluesky.files.wordpress.com/2019/01/75d1d9e2.jpg"
-        }        
-      ]
     }
   }
 }
@@ -130,11 +100,34 @@ export default {
 
 .main {
   margin-bottom: 5%;
+  text-align: center;
 }
 
 .v-card__actions {
-    position: absolute;
-    bottom: 0;
+  position: absolute;
+  bottom: 0;
 }
+
+.mx-auto {
+  margin-bottom: 90px;
+  max-width: 600;
+  max-height: 400;
+  width: 600px;
+  height: 400px;
+  border-radius: 20px;
+}
+
+.headline.font-weight-bold {
+  color: white;
+}
+
+.v-responsive__content {
+  background-color: rgba(0,0,0,0.5);
+}
+
+.user_name {
+  color: white;
+}
+
 </style>
 

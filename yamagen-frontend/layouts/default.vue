@@ -2,7 +2,6 @@
   <v-app id="inspire">
     <v-layout
       wrap
-      style="height: 200px;"
     >
       <v-toolbar-side-icon large class="menu_icon" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-navigation-drawer
@@ -15,6 +14,7 @@
             v-for="item in items"
             :key="item.title"
             @click="handleClick"
+            v-bind:to="item.url"
           >
           <v-list-tile-content>
             <v-list-tile-title>{{ item.title }}</v-list-tile-title>
@@ -36,9 +36,8 @@
       return {
         drawer: null,
         items: [
-          { title: 'Home', icon: '' },
-          { title: 'About', icon: '' },
-          { title: 'Login', icon: '' }
+          { title: 'Home', url: '/' },
+          { title: 'About', url: '/about' }
         ]
       }
     },
@@ -94,6 +93,10 @@ html {
 .button--grey:hover {
   color: #fff;
   background-color: #35495e;
+}
+
+.layout.wrap {
+  max-height: 110px;
 }
 
 .app_title {

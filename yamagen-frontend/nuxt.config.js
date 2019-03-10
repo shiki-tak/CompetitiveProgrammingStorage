@@ -1,3 +1,7 @@
+require('dotenv').config();
+const { TWITTER_API_KEY } = process.env.TWITTER_API_KEY
+const { TWITTER_API_SECRET_KEY } = process.env.TWITTER_API_SECRET_KEY
+
 module.exports = {
   /*
   ** Headers of the page
@@ -47,6 +51,10 @@ module.exports = {
         })
       }
     }
+  },
+  env: {
+    TWITTER_API_KEY,
+    TWITTER_API_SECRET_KEY
   },
   serverMiddleware: ['~/server'],
 }

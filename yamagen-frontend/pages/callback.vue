@@ -1,6 +1,7 @@
 <template>
   <section class="wrapper">
     <div>twitter user id: {{ user.id }}</div>
+    <p>{{ user }}</p>
     <div>error: {{ error }}</div>
     <a href="http://127.0.0.1:3000/server/logout">logout</a>
   </section>
