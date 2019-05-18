@@ -1,10 +1,11 @@
 use chrono:: {Utc, DateTime };
-use model::task::Task;
 
+use feature::task_controller;
 
 fn main() {
     println!("Hello, Todo");
     let deadline: DateTime<Utc> = Utc::now();
-    let task = Task::new("".to_string(), "".to_string(), deadline);
+
+    let task = task_controller::create("".to_string(), "".to_string(), deadline);
     println!("{:?}", task);
 }

@@ -1,3 +1,5 @@
+pub mod task_controller;
+
 #[cfg(test)]
 mod tests {
     #[test]
