@@ -5,3 +5,4 @@ authors = ["shiki <shiki.tak@gmail.com>"]
 edition = "2018"
 
 [dependencies]
+chrono = ""
