@@ -11,6 +11,7 @@ target/
 .settings
 /target/
 !.mvn/wrapper/maven-wrapper.jar
+**/Sample/*
 
 ### STS ###
 .apt_generated
