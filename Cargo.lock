@@ -11,6 +11,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "feature"
+version = "0.1.0"
+
+[[package]]
 name = "libc"
 version = "0.2.55"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -45,6 +49,7 @@ name = "rust_todo"
 version = "0.1.0"
 dependencies = [
  "chrono 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "feature 0.1.0",
  "model 0.1.0",
 ]
 

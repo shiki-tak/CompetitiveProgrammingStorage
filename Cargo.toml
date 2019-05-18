@@ -7,3 +7,4 @@ edition = "2018"
 [dependencies]
 chrono = ""
 model = { package = "model", path = "./model/" }
+feature = { package = "feature", path = "./feature/" }
