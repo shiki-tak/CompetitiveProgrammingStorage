@@ -2,6 +2,7 @@ use chrono::{Utc, DateTime};
 
 #[derive(Debug)]
 pub struct Task {
+    id: i32,
     title: String,
     content: String,
     // TODO: change to enum
@@ -11,7 +12,7 @@ pub struct Task {
 }
 
 impl Task {
-    pub fn new(title: String, content: String, deadline: DateTime<Utc>) -> Self {
-        Self { title: title, content: content, deadline: deadline, done: false }
+    pub fn new(id: i32, title: String, content: String, deadline: DateTime<Utc>) -> Self {
+        Self { id: id, title: title, content: content, deadline: deadline, done: false }
     }
 }
