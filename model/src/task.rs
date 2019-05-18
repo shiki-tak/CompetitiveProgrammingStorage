@@ -1,18 +1,16 @@
-use chrono::{Utc, DateTime};
-
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Task {
-    id: i32,
-    title: String,
-    content: String,
+    pub id: i32,
+    pub title: String,
+    pub content: String,
     // TODO: change to enum
     // category: String,
-    deadline: DateTime<Utc>,
-    done: bool,
+    pub deadline: i64,
+    pub done: bool,
 }
 
 impl Task {
-    pub fn new(id: i32, title: String, content: String, deadline: DateTime<Utc>) -> Self {
+    pub fn new(id: i32, title: String, content: String, deadline: i64) -> Self {
         Self { id: id, title: title, content: content, deadline: deadline, done: false }
     }
 }
