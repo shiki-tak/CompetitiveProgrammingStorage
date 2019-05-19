@@ -19,6 +19,6 @@ pub fn gets() -> Vec<Task> {
     redis_client::gets()
 }
 
-pub fn delete() {
-
+pub fn delete(id: i32) {
+    redis_client::delete(id);
 }

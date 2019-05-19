@@ -39,6 +39,7 @@ pub fn gets() -> Vec<Task> {
     let key_pattern = PREFIX.get(&0).unwrap().to_string() + &"*".to_string();
     let mut tasks: Vec<Task> = Vec::new();
 
+    // FIXME: use scan
     let task_keys: Vec<String> = con.keys(key_pattern).unwrap();
     for key in task_keys {
         let task: String = con.get(key).unwrap();
@@ -47,6 +48,11 @@ pub fn gets() -> Vec<Task> {
     tasks
 }
 
-pub fn delete() {
+pub fn delete(id: i32) {
+    let client = redis::Client::open("redis://127.0.0.1:6379/").unwrap();
+    let con = client.get_connection().unwrap();
 
+    let key = PREFIX.get(&0).unwrap().to_string() + &id.to_string();
+
+    let _ : () = con.del(key).unwrap();
 }
