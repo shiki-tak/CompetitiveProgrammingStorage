@@ -13,7 +13,7 @@ fn main() {
     // let task = task_controller::get(0);
     // println!("{:?}", task);
 
-    task_controller::delete(1);
+    // task_controller::delete(1);
 
     let tasks = task_controller::gets();
     println!("{:?}", tasks);
