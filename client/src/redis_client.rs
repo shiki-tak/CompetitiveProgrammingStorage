@@ -32,8 +32,19 @@ pub fn get(id: i32) -> Task {
     serde_json::from_str(&res).unwrap()
 }
 
-pub fn gets() {
+pub fn gets() -> Vec<Task> {
+    let client = redis::Client::open("redis://127.0.0.1:6379/").unwrap();
+    let con = client.get_connection().unwrap();
 
+    let key_pattern = PREFIX.get(&0).unwrap().to_string() + &"*".to_string();
+    let mut tasks: Vec<Task> = Vec::new();
+
+    let task_keys: Vec<String> = con.keys(key_pattern).unwrap();
+    for key in task_keys {
+        let task: String = con.get(key).unwrap();
+        tasks.push(serde_json::from_str(&task).unwrap());
+    }
+    tasks
 }
 
 pub fn delete() {
