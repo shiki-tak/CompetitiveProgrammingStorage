@@ -11,8 +11,8 @@ pub fn update(id: i32, title: String, content: String, deadline: i64) -> Task {
     task
 }
 
-pub fn get() {
-
+pub fn get(id: i32) -> Task {
+    redis_client::get(id)
 }
 
 pub fn gets() {
