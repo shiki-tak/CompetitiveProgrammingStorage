@@ -1,5 +1,8 @@
 pub mod redis_client;
 
+#[macro_use]
+extern crate lazy_static;
+
 #[cfg(test)]
 mod tests {
     #[test]
