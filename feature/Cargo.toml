@@ -1,0 +1,11 @@
+[package]
+name = "feature"
+version = "0.1.0"
+authors = ["shiki <shiki.tak@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+chrono = ""
+
+client = { package = "client", path = "../client/" }
+model = { package = "model", path = "../model/" }

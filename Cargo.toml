@@ -1,0 +1,10 @@
+[package]
+name = "rust_todo"
+version = "0.1.0"
+authors = ["shiki <shiki.tak@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+chrono = ""
+model = { package = "model", path = "./model/" }
+feature = { package = "feature", path = "./feature/" }
