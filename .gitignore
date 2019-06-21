@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 .vs/
 .vscode/
 *.o
@@ -36,6 +35,3 @@ target/
 /dist/
 /nbdist/
 /.nb-gradle/
-=======
-**/target/*
->>>>>>> rust_todo/master
