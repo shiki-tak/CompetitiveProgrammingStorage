@@ -1,8 +1,9 @@
 use std::collections::HashMap;
 
+use utils::signatures;
 use merkle::fixed_merkle::FixedMerkle;
 
-// FIXME: create constants.rs
+// TODO: create constants.rs
 pub const NULL_SIG: &'static str = "00000000000000000000000000000000000000000000000000000000000000000";
 
 #[derive(Debug)]
@@ -21,7 +22,7 @@ pub struct Block {
 
 impl Block {
     pub fn new(transactoin_set: Vec<String>) -> Self {
-        let encoded: Vec<u8> = Vec::new();
+        let encoded: Vec<u8> = Vec::new();  // FIXME: use rlp module
 
         Self { transactoin_set: transactoin_set,
         number: 0,
@@ -34,5 +35,9 @@ impl Block {
         is_deposit_block: false,
         encoded: encoded
         }
+    }
+
+    pub fn sign(key: String) -> String {
+        signatures::sign(&key)
     }
 }
