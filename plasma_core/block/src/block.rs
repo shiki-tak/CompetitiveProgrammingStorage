@@ -2,13 +2,14 @@ use std::collections::HashMap;
 
 use utils::signatures;
 use merkle::fixed_merkle::FixedMerkle;
+use transaction::transaction::Transaction;
 
 // TODO: create constants.rs
 pub const NULL_SIG: &'static str = "00000000000000000000000000000000000000000000000000000000000000000";
 
 #[derive(Debug)]
 pub struct Block {
-    pub transactoin_set: Vec<String>,
+    pub transactoin_set: Vec<Transaction>,
     pub number: i32,
     pub sig: String,
     pub spent_utxos: HashMap<String, i64>,
@@ -21,7 +22,7 @@ pub struct Block {
 }
 
 impl Block {
-    pub fn new(transactoin_set: Vec<String>) -> Self {
+    pub fn new(transactoin_set: Vec<Transaction>) -> Self {
         let encoded: Vec<u8> = Vec::new();  // FIXME: use rlp module
 
         Self { transactoin_set: transactoin_set,
@@ -37,7 +38,12 @@ impl Block {
         }
     }
 
-    pub fn sign(key: String) -> String {
+    pub fn sign(&self, key: String) -> String {
         signatures::sign(&key)
+    }
+
+    pub fn add_transaction(&mut self, tx: Transaction) {
+        self.transactoin_set.push(tx)
+
     }
 }

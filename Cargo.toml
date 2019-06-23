@@ -6,3 +6,4 @@ edition = "2018"
 
 [dependencies]
 block = { package = "block", path = "./plasma_core/block" }
+transaction = { package = "transaction", path = "./plasma_core/transaction/" }

@@ -5,6 +5,7 @@ name = "block"
 version = "0.1.0"
 dependencies = [
  "merkle 0.1.0",
+ "transaction 0.1.0",
  "utils 0.1.0",
 ]
 
@@ -17,7 +18,12 @@ name = "plasma-mvp-rust"
 version = "0.1.0"
 dependencies = [
  "block 0.1.0",
+ "transaction 0.1.0",
 ]
+
+[[package]]
+name = "transaction"
+version = "0.1.0"
 
 [[package]]
 name = "utils"
