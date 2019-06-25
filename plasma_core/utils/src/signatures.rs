@@ -1,7 +1,11 @@
 // FIXME: use sign api in parity-common?
-pub fn sign(key: &str) -> String {
-    let mut result = String::with_capacity(key.len() + 7);
-    result.push_str(key);
-    result.push_str(" signed");
-    result
+pub fn sign(key: &str) -> Vec<u8> {
+    let res = "dummy_result";
+    res.as_bytes().to_vec()
+}
+
+pub fn get_signer(hash: Vec<u8>, sig: Vec<u8>) -> Vec<u8> {
+    // FIXME: implement
+    let v: Vec<u8> = Vec::new();
+    v
 }
