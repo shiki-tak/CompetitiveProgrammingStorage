@@ -7,7 +7,7 @@ use utils::signatures;
 pub const NULL_SIG: &'static str = "00000000000000000000000000000000000000000000000000000000000000000";
 pub const KECCAK256_BYTES: usize = 32;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Transaction {
     pub blk_num1: u128,
     pub tx_index1: u128,
