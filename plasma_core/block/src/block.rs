@@ -21,9 +21,9 @@ pub struct Block {
 impl Block {
     pub fn new(transaction_set: Vec<Transaction>) -> Self {
         Self { transaction_set: transaction_set,
-        number: 0,
-        sig: NULL_SIG.to_string().as_bytes().to_vec(),
-        spent_utxos: HashMap::new(),
+            number: 0,
+            sig: NULL_SIG.to_string().as_bytes().to_vec(),
+            spent_utxos: HashMap::new(),
         }
     }
 

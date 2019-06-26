@@ -44,7 +44,7 @@ impl Transaction {
             sig2: NULL_SIG.to_string().as_bytes().to_vec(),
             spent1: false,
             spent2: false,
-            }
+        }
     }
 
     pub fn hash(&self) -> Vec<u8> {
