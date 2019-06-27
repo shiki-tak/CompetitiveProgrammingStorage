@@ -1,3 +1,4 @@
+#[derive(Debug)]
 pub struct Utxo {
     pub owner: String,
     pub amount: u128,

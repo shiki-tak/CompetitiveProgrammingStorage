@@ -4,6 +4,7 @@ use ethereum_rust_utils;
 use utils::signatures;
 use utxo::utxo::Utxo;
 
+#[derive(Debug)]
 pub struct Transaction {
     pub blk_num1: u128,
     pub tx_index1: u128,
