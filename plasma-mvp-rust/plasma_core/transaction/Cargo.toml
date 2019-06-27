@@ -1,0 +1,11 @@
+[package]
+name = "transaction"
+version = "0.1.0"
+authors = ["shiki <shiki.tak@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+ethereum-rust-utils = ""
+rlp = ""
+
+utils = { package = "utils", path = "../utils/"}
