@@ -1,4 +1,4 @@
-struct Utxo {
+pub struct Utxo {
     pub owner: String,
     pub amount: u128,
 }
