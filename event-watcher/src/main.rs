@@ -79,7 +79,7 @@ fn main() {
     println!("Sample Watcher started");
 
     // eventをhandleするcontract address
-    let address: Address = match "74Dc8eB318b63a2bA0878FA427e079D040c19bDF".parse() {
+    let address: Address = match "a48a70eff76Da4e084e601420adF3b6Bc82D9c8C".parse() {
         Ok(v) => v,
         Err(e) => panic!(e),
     };
@@ -107,6 +107,6 @@ fn main() {
         anonymous: false,
     }];
 
-    let mut watcher = EventWatcher::new("http://localhost:8545", address, abi);
+    let mut watcher = EventWatcher::new("http://localhost:9545", address, abi);
     tokio::run(watcher)
 }
