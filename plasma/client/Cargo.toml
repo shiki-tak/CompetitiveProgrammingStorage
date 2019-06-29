@@ -1,8 +1,9 @@
 [package]
-name = "plasma-rust"
+name = "client"
 version = "0.1.0"
 authors = ["shiki <shiki.tak@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-client = { package = "client", path = "./plasma/client/" }
+web3 = { git = "https://github.com/tomusdrw/rust-web3" }
+ethereum-types = "0.5.2"
