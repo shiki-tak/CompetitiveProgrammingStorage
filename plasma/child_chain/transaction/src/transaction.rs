@@ -2,9 +2,12 @@ use rlp;
 use ethereum_rust_utils;
 
 use utils::signatures;
-use utxo::utxo::Utxo;
 
-#[derive(Debug)]
+// TODO: create constants.rs
+pub const NULL_SIG: &'static str = "00000000000000000000000000000000000000000000000000000000000000000";
+pub const KECCAK256_BYTES: usize = 32;
+
+#[derive(Debug, Clone)]
 pub struct Transaction {
     pub blk_num1: u128,
     pub tx_index1: u128,
@@ -12,30 +15,35 @@ pub struct Transaction {
     pub blk_num2: u128,
     pub tx_index2: u128,
     pub output_index2: u128,
-    pub utxos: Vec<Utxo>,
-    pub fee: u128,
+    pub cur12: String,
+    pub new_owner1: String,
+    pub amount1: u128,
+    pub new_owner2: String,
+    pub amount2: u128,
     pub sig1: Vec<u8>,
     pub sig2: Vec<u8>,
+    // pub confirmation1: ,
+    // pub confirmation2: ,
+    pub spent1: bool,
+    pub spent2: bool
 }
 
 impl Transaction {
     pub fn new (blk_num1: u128, tx_index1: u128, output_index1: u128,
                 blk_num2: u128, tx_index2: u128, output_index2: u128,
+                cur12: String,
                 new_owner1: String, amount1: u128,
-                new_owner2: String, amount2: u128,
-                fee: u128
+                new_owner2: String, amount2: u128
                 ) -> Self {
-
-        let sig1: Vec<u8> = vec![0, 0, 0];
-        let sig2: Vec<u8> = vec![0, 0, 0];
-        let utxos: Vec<Utxo> = vec![Utxo::new(new_owner1, amount1), Utxo::new(new_owner2, amount2)];
-
         Self { blk_num1: blk_num1, tx_index1: tx_index1, output_index1: output_index1,
             blk_num2: blk_num2, tx_index2: tx_index2, output_index2: output_index2,
-            utxos: utxos,
-            fee: fee,
-            sig1: sig1,
-            sig2: sig2,
+            cur12: cur12,
+            new_owner1: new_owner1, amount1: amount1,
+            new_owner2: new_owner2, amount2: amount2,
+            sig1: NULL_SIG.to_string().as_bytes().to_vec(),
+            sig2: NULL_SIG.to_string().as_bytes().to_vec(),
+            spent1: false,
+            spent2: false,
         }
     }
 
