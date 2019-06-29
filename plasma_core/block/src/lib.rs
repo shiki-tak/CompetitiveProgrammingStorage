@@ -1,5 +1,4 @@
-pub mod signatures;
-pub mod transactions;
+pub mod block;
 
 #[cfg(test)]
 mod tests {

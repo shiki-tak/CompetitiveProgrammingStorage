@@ -8,5 +8,4 @@ edition = "2018"
 ethereum-rust-utils = ""
 rlp = ""
 
-utils = { package = "utils", path = "../../../plasma_core/utils/" }
-utxo = { package = "utxo", path = "../utxo/" }
+utils = { package = "utils", path = "../utils/"}
