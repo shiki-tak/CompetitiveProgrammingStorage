@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .vs/
 .vscode/
 *.o
@@ -35,3 +36,7 @@ target/
 /dist/
 /nbdist/
 /.nb-gradle/
+=======
+**/build/*
+**/target/*
+>>>>>>> plasma-rust/master
