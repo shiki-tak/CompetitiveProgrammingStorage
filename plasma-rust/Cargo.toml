@@ -1,8 +1,0 @@
-[package]
-name = "plasma-rust"
-version = "0.1.0"
-authors = ["shiki <shiki.tak@gmail.com>"]
-edition = "2018"
-
-[dependencies]
-client = { package = "client", path = "./plasma/client/" }
